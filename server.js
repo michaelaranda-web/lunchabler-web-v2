@@ -12,7 +12,7 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 var db_url = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_URI : 'mongodb://localhost:27017';
-const dbName = 'lunchabler';
+var dbName = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_DB_NAME : 'lunchabler';
 
 MongoClient.connect(db_url, function(err, client) {
   assert.equal(null, err);
