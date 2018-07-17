@@ -21,7 +21,7 @@ MongoClient.connect(db_url, function(err, client) {
   const db = client.db(dbName);
   const restaurants = db.collection('restaurants');
 
-  router.get('/restaurants', function(req, res) {
+  router.get('/api/restaurants', function(req, res) {
     restaurants.find({}).toArray(function(err, docs) {
       assert.equal(err, null);
       res.send(docs);
