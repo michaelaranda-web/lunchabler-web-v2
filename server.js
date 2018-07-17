@@ -6,7 +6,7 @@ var express = require('express');
 var router = express();
 var server = http.createServer(router);
 
-router.use(express.static(path.resolve(__dirname, 'client')));
+router.use(express.static(path.resolve(__dirname, 'dist')));
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
