@@ -12,6 +12,7 @@ module.exports = {
   },
   devServer: {
     contentBase: BUILD_DIR,
+    historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:8081'
     }

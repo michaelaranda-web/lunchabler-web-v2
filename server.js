@@ -28,6 +28,10 @@ MongoClient.connect(db_url, function(err, client) {
     });
   })
   
+  router.get('*', function(req, res) {
+    res.sendfile(path.resolve(__dirname, 'dist/index.html'));
+  });
+  
   server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
     var addr = server.address();
     console.log("Server listening at", addr.address + ":" + addr.port);
