@@ -11,6 +11,7 @@
     "dev-server": "PORT=8081 nodemon server.js",
     "dev-client": "webpack-dev-server --config ./webpack.config.js --host $IP --port $PORT --public $C9_HOSTNAME",
     "heroku-postbuild": "npm run build",
+    "seed": "seed -s ./db/seeds",
     "start": "node server.js"
   },
   "dependencies": {
@@ -28,6 +29,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "mongodb": "~3.0.8",
+    "node-mongo-seeds": "^3.1.0",
     "nodemon": "^1.18.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
