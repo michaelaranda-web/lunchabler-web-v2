@@ -1,11 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-
-const Home = () => (
-  <div>
-    Home
-  </div>
-)
+import HomePage from './home/homePage';
 
 const Restaurants = () => (
   <div>
@@ -36,7 +31,7 @@ export class Routes extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={Home}/>
+          <Route exact path="/" component={HomePage}/>
           <Route path="/restaurants/:restaurant_id" component={RestaurantInfo}/>
           <Route path="/restaurants" component={Restaurants}/>
           <Route path="/manage_restaurants" component={ManageRestaurants}/>
