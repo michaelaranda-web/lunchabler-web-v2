@@ -19,14 +19,36 @@ MongoClient.connect(db_url, function(err, client) {
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
-  const restaurants = db.collection('restaurants');
+  const restaurantsCol = db.collection('restaurants');
+  const usersCol = db.collection('users');
 
-  router.get('/api/restaurants', function(req, res) {
-    restaurants.find({}).toArray(function(err, docs) {
+  router.get('/api/users', function(req, res) {
+    usersCol.find({}).toArray(function(err, docs) {
       assert.equal(err, null);
       res.send(docs);
     });
-  })
+  });
+  
+  router.get('/api/restaurants', function(req, res) {
+    restaurantsCol.find({}).toArray(function(err, docs) {
+      assert.equal(err, null);
+      res.send(docs);
+    });
+  });
+  
+  // router.put('/api/users', (req, res) => {
+  //   let user = {
+  //     name: req.body.name
+  //   };
+  
+  //   usersCol.insert(user, (err) => {
+  //     if(err) {
+  //       console.log(err);
+  //     }
+  //     console.log("[Server] Added Name: " + req.body.name);
+  //     res.send(req.body);
+  //   });
+  // });
   
   router.get('*', function(req, res) {
     res.sendfile(path.resolve(__dirname, 'dist/index.html'));
