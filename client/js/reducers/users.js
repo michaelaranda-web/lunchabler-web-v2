@@ -1,6 +1,7 @@
 import { ADD_USER, RECEIVE_USERS, RECEIVE_USERS_SUCCESS, RECEIVE_USERS_ERROR } from '../constants/constants';
+import { combineReducers } from 'redux';
 
-export function users(state = [], action) {
+function users(state = {}, action) {
   switch (action.type) {
     case RECEIVE_USERS:
       return action.users
@@ -9,11 +10,12 @@ export function users(state = [], action) {
     case RECEIVE_USERS_ERROR:
       return state
     case ADD_USER:
-      return [
-        ...state,
-        action.user
-      ]
+      return {...state, [action.userId] : action.user }
     default:
       return state
   }
 }
+
+export const usersReducer = combineReducers({
+  byId: users
+}) 

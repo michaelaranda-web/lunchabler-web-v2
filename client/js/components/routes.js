@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import HomePage from './home/homePage';
+import ManageUsersPage from './manage_users/manageUsersPage';
 
 const Restaurants = () => (
   <div>
@@ -20,12 +21,6 @@ const ManageRestaurants = () => (
   </div>
 )
 
-const ManageUsers = () => (
-  <div>
-    Manage Users
-  </div>
-)
-
 export class Routes extends React.Component {
   render() {
     return (
@@ -35,7 +30,7 @@ export class Routes extends React.Component {
           <Route path="/restaurants/:restaurant_id" component={RestaurantInfo}/>
           <Route path="/restaurants" component={Restaurants}/>
           <Route path="/manage_restaurants" component={ManageRestaurants}/>
-          <Route path="/manage_users" component={ManageUsers}/>
+          <Route path="/manage_users" component={ManageUsersPage}/>
         </Switch>
       </Router>
     )

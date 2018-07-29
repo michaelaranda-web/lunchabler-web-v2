@@ -1,4 +1,4 @@
-import { REQUEST_USERS, RECEIVE_USERS } from '../constants/constants';
+import { REQUEST_USERS, RECEIVE_USERS, ADD_USER } from '../constants/constants';
 import fetch from 'cross-fetch';
 
 function requestUsers() {
@@ -14,11 +14,15 @@ function receiveUsers(users) {
   }
 }
 
-export function fetchUsers() {
-  // Thunk middleware knows how to handle functions.
-  // It passes the dispatch method as an argument to the function,
-  // thus making it able to dispatch actions itself.
+function addUserEntry(user) {
+  return {
+    type: ADD_USER,
+    userId: user.id,
+    user: user
+  }
+}
 
+export function fetchUsers() {
   return function (dispatch) {
     dispatch(requestUsers())
 
@@ -31,4 +35,8 @@ export function fetchUsers() {
         dispatch(receiveUsers(json))
       )
   }
+}
+
+export function addUser(user) {
+  return addUserEntry(user)
 }

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import entities from './entities';
+import { usersReducer as users } from './users';
 
 export default combineReducers({
-  entities
+  users
 })

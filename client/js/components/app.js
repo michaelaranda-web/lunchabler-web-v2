@@ -19,7 +19,7 @@ export class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    users: state.users
+    users: state.entities.users
   }
 }
 
