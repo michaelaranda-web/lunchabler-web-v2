@@ -25,7 +25,8 @@ MongoClient.connect(db_url, function(err, client) {
   router.get('/api/users', function(req, res) {
     usersCol.find({}).toArray(function(err, docs) {
       assert.equal(err, null);
-      res.send(docs);
+      
+      res.json(collectionAsObject(docs));
     });
   });
   
@@ -59,3 +60,10 @@ MongoClient.connect(db_url, function(err, client) {
     console.log("Server listening at", addr.address + ":" + addr.port);
   });  
 });
+
+let collectionAsObject = (coll) => {
+  return coll.reduce(function(acc, cur) {
+    acc[cur._id] = cur;
+    return acc;
+  }, {});
+}
