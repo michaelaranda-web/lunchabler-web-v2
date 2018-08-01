@@ -22,6 +22,8 @@ MongoClient.connect(db_url, function(err, client) {
   const restaurantsCol = db.collection('restaurants');
   const usersCol = db.collection('users');
 
+  //TODO: Reference https://community.risingstack.com/redis-node-js-introduction-to-caching/ for caching eventual Yelp calls.
+
   router.get('/api/users', function(req, res) {
     usersCol.find({}).toArray(function(err, docs) {
       assert.equal(err, null);
