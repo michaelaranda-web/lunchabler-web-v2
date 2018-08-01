@@ -1,22 +1,18 @@
+# Lunchabler Web App
 
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
-
-
-Welcome to your Node.js project on Cloud9 IDE!
-
-This chat example showcases how to use `socket.io` with a static `express` server.
+A MERN web app that helps groups agree on where to grab some food. Specify who is going out to eat, and Lunchabler will provide the optimal restaurant choices based on user-provided restaurant preferences. 
 
 ## Running the server
+(Assumes a Cloud9 development environment.)
 
-1) Open `server.js` and start the app by clicking on the "Run" button in the top menu.
+1) Start MongoDB. If MongoDB is not yet installed on the C9 workspace, follow instructions here: https://community.c9.io/t/setting-up-mongodb/1717
 
-2) Alternatively you can launch the app from the Terminal:
+2) Seed the database
 
-    $ node server.js
+    $ npm run seed
+    
+3) Start the development server
 
-Once the server is running, open the project in the shape of 'https://projectname-username.c9users.io/'. As you enter your name, watch the Users list (on the left) update. Once you press Enter or Send, the message is shared with all connected clients.
+    $ npm run dev
+
+Once the server is running, open the project in the shape of 'https://projectname-username.c9users.io/'.
