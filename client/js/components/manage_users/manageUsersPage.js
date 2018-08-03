@@ -7,9 +7,9 @@ export class ManageUsersPage extends React.Component {
     return (
       <div id="manage-users-page">
         {
-            Object.keys(this.props.usersById).map((userId) => {
-              return <p>{this.props.usersById[userId].name}</p>
-            })
+          Object.keys(this.props.usersById).map((userId) => {
+            return <p>{this.props.usersById[userId].name}</p>
+          })
         }
         <a onClick={() => this.addUser()}>Add User</a>
       </div>
