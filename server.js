@@ -1,6 +1,9 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
+
 var http = require('http');
 var path = require('path');
-
 var express = require('express');
 
 var router = express();
@@ -10,6 +13,8 @@ router.use(express.static(path.resolve(__dirname, 'dist')));
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+
+const yelp = require('yelp-fusion');
 
 var db_url = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_URI : 'mongodb://localhost:27017';
 var dbName = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_DB_NAME : 'lunchabler';
@@ -36,6 +41,23 @@ MongoClient.connect(db_url, function(err, client) {
     restaurantsCol.find({}).toArray(function(err, docs) {
       assert.equal(err, null);
       res.send(docs);
+    });
+  });
+  
+  router.get('/api/yelp_search', function(req, res) {
+    const searchRequest = {
+      term: req.query.searchText,
+      location: 'rancho bernardo, ca',
+      limit: 10
+    };
+    
+    const client = yelp.client(process.env.YELP_API_KEY);
+    
+    client.search(searchRequest).then(response => {
+      res.send(response.jsonBody.businesses);
+    }).catch(e => {
+      res.status(500);
+      res.send("Error searching for restaurant on Yelp");
     });
   });
   

@@ -1,3 +1,4 @@
 data
 mongod
 dist/bundle.js
+.env
