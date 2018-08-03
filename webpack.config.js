@@ -41,11 +41,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.png$/,
-        loader: "url-loader?limit=100000"
-      },
-      {
-        test: /\.jpg$/,
+        test: /\.(png|svg|jpg|gif)$/,
         loader: "file-loader"
       },
       {
@@ -59,10 +55,6 @@ module.exports = {
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader'
-      },
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
       }
     ]
   }

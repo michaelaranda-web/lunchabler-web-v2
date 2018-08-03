@@ -1,4 +1,6 @@
 data
 mongod
 dist/bundle.js
+dist/*.jpg
+dist/*.png
 .env
