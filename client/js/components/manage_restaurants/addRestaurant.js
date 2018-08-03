@@ -21,9 +21,10 @@ export class AddRestaurant extends React.Component {
         <input 
           id="yelp-search-bar" 
           onChange={ (e) => this.onInputChange(e) } 
+          onKeyPress={ (e) => this.onKeyPress(e) }
           value={this.state.searchText}  
         />
-        <button onClick={ () => this.onSearch() }>Search</button>
+        <button onClick={ () => this.submitSearch() }>Search</button>
         {
           this.state.searchResults.map((restaurant, i) => {
             return <YelpSearchResultItem key={i} restaurant={restaurant}/>
@@ -33,7 +34,7 @@ export class AddRestaurant extends React.Component {
     );
   }
   
-  onSearch() {
+  submitSearch() {
     var self = this;
     axios.get('/api/yelp_search', {params: {searchText: this.state.searchText}})
       .then((response) => {
@@ -50,5 +51,11 @@ export class AddRestaurant extends React.Component {
     this.setState({
       searchText: e.target.value
     });
+  }
+  
+  onKeyPress(e){
+    if (e.key == "Enter") {
+      this.submitSearch();
+    }
   }
 }
