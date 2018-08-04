@@ -2,14 +2,9 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import HomePage from './home/homePage';
 import StartPage from './start/startPage';
+import ResultsPage from './results/resultsPage';
 import ManageUsersPage from './manage_users/manageUsersPage';
 import ManageRestaurantsPage from './manage_restaurants/manageRestaurantsPage';
-
-const ResultsPage = () => (
-  <div>
-    Results
-  </div>
-)
 
 const RestaurantInfo = ({match}) => (
   <div>
