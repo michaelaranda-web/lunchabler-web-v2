@@ -6,7 +6,7 @@ export class YelpSearchResultItem extends React.Component {
     const restaurant = new YelpRestaurantParser(this.props.restaurant);
     
     return (
-      <div class="yelp-search-result-item">
+      <div className="yelp-search-result-item">
         <img src={restaurant.imageUrl()} />
         <h4>{restaurant.name()}</h4>
         <p>{restaurant.displayAddress1()}</p>

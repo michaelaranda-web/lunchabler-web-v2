@@ -1,29 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import LunchGroup from './lunchGroup';
 
 export class StartPage extends React.Component {
   render() {
     return (
       <div id="start-page">
-        {
-          Object.keys(this.props.usersById).map((userId) => {
-            return <p>{this.props.usersById[userId].name}</p>
-          })
-        }
+        <LunchGroup />
         <Link to='/results'>Get Suggestions</Link>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    usersById: state.entities.users.byId
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  null
-)(StartPage);
+export default StartPage;
