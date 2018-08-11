@@ -1,40 +1,40 @@
-const userObjectIds = require('../userObjectIds');
+const UserIds = require('../userIds');
 
 module.exports = [
   {
-   "_id" : userObjectIds["michael"],
+   "_id" : UserIds["michael"],
    "name" : "Michael"
   },
   {
-   "_id" : userObjectIds["geoff"],
+   "_id" : UserIds["geoff"],
    "name" : "Geoff"
   },
   {
-   "_id" : userObjectIds["larry"],
+   "_id" : UserIds["larry"],
    "name" : "Larry"
   },
   {
-   "_id" : userObjectIds["jill"],
+   "_id" : UserIds["jill"],
    "name" : "Jill"
   },
   {
-   "_id" : userObjectIds["beth"],
+   "_id" : UserIds["beth"],
    "name" : "Beth"
   },
   {
-   "_id" : userObjectIds["arlene"],
+   "_id" : UserIds["arlene"],
    "name" : "Arlene"
   },
   {
-   "_id" : userObjectIds["matt"],
+   "_id" : UserIds["matt"],
    "name" : "Matt"
   },
   {
-   "_id" : userObjectIds["brad"],
+   "_id" : UserIds["brad"],
    "name" : "Brad"
   },
   {
-   "_id" : userObjectIds["franz"],
+   "_id" : UserIds["franz"],
    "name" : "Franz"
   }
 ]

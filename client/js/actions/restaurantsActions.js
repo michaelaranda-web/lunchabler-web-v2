@@ -7,18 +7,31 @@ function requestRestaurants() {
   }
 }
 
-function receiveRestaurants(restaurants) {
+function receiveRestaurants(sortedRestaurants) {
   return {
     type: RECEIVE_RESTAURANTS,
-    restaurants: restaurants
+    sortedRestaurants: sortedRestaurants
   }
 }
 
-export function fetchRestaurants() {
+export function fetchRestaurants(lunchGroupIdsParam) {
   return function (dispatch) {
     dispatch(requestRestaurants())
+    
+    var lunchGroupIds = lunchGroupIdsParam || [];
+    
+    var params = '';
+    if (lunchGroupIds.length > 0) {
+      params = '?';
+      lunchGroupIds.map((userId, i) => {
+        if (i > 0) {
+          params += '&';
+        }
+        params += `lunchGroupUserIds[]=${userId}`;
+      })
+    }
 
-    return fetch('/api/restaurants')
+    return fetch('/api/restaurants' + params)
       .then(
         response => response.json(),
         error => console.log('An error occurred.', error)

@@ -1,34 +1,47 @@
-const userObjectIds = require('../userObjectIds');
+const UserIds = require('../userIds');
+const RestaurantIds = require('../restaurantIds');
 
 module.exports = [
   {
-    "name":"McDonalds", 
-    "mehs": [userObjectIds["michael"], userObjectIds["geoff"], userObjectIds["larry"]], 
-    "nos": [userObjectIds["jill"],userObjectIds["beth"]], 
+    "_id": RestaurantIds["McDonalds"],
+    "name":"McDonalds",
     "comments":
       [
-        {"user": userObjectIds["michael"], "content": "Prices are good but the food is unhealthy."},
-        {"user": userObjectIds["jill"], "content": "Why is McDonald's even on this list?"},
-        {"user": userObjectIds["larry"], "content": "What are the McNuggets made of?"},
-        {"user": userObjectIds["geoff"], "content": "I just wanted to add a comment."},
-        {"user": userObjectIds["beth"], "content": "Never again."}
+        {"user": UserIds["michael"], "content": "Prices are good but the food is unhealthy."},
+        {"user": UserIds["jill"], "content": "Why is McDonald's even on this list?"},
+        {"user": UserIds["larry"], "content": "What are the McNuggets made of?"},
+        {"user": UserIds["geoff"], "content": "I just wanted to add a comment."},
+        {"user": UserIds["beth"], "content": "Never again."}
       ]
   },
   {
-    "name":"Nutmeg", 
-    "mehs": [userObjectIds["arlene"]], 
-    "nos": [], 
+    "_id": RestaurantIds["Nutmeg"],
+    "name":"Nutmeg",
     "comments": []
   },
   {
-    "name":"Snooze", 
-    "mehs": [userObjectIds["matt"], userObjectIds["jill"], userObjectIds["larry"], userObjectIds["brad"]], 
-    "nos": [userObjectIds["beth"]], 
+    "_id": RestaurantIds["Snooze"],
+    "name":"Snooze",
     "comments":
       [
-        {"user": userObjectIds["michael"], "content": "The best!"},
-        {"user": userObjectIds["matt"], "content": "The eggs benedict are pretty good, but there should be more hollandaise sauce."},
-        {"user": userObjectIds["beth"], "content": "I will never wait in that line again."}
+        {"user": UserIds["michael"], "content": "The best!"},
+        {"user": UserIds["matt"], "content": "The eggs benedict are pretty good, but there should be more hollandaise sauce."},
+        {"user": UserIds["beth"], "content": "I will never wait in that line again."}
       ]
+  },
+  {
+    "_id": RestaurantIds["Prepkitchen"],
+    "name":"Prepkitchen", 
+    "comments": []
+  },
+  {
+    "_id": RestaurantIds["Cafe Gratitude"],
+    "name":"Cafe Gratitude",
+    "comments": []
+  },
+  {
+    "_id": RestaurantIds["Puesto"],
+    "name":"Puesto",
+    "comments": []
   }
 ]

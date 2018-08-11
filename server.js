@@ -13,18 +13,21 @@ router.use(express.static(path.resolve(__dirname, 'dist')));
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+const RestaurantRanker = require('./db/helpers/restaurantRanker');
+const collectionAsObject = require('./helpers/helpers.js');
 
 const yelp = require('yelp-fusion');
 
 var db_url = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_URI : 'mongodb://localhost:27017';
 var dbName = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_DB_NAME : 'lunchabler';
 
+//TODO: Should MongoClient connect/disconnect per db call?
 MongoClient.connect(db_url, function(err, client) {
   assert.equal(null, err);
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
-  const restaurantsCol = db.collection('restaurants');
+  // const restaurantsCol = db.collection('restaurants');
   const usersCol = db.collection('users');
 
   //TODO: Reference https://community.risingstack.com/redis-node-js-introduction-to-caching/ for caching eventual Yelp calls.
@@ -38,9 +41,10 @@ MongoClient.connect(db_url, function(err, client) {
   });
   
   router.get('/api/restaurants', function(req, res) {
-    restaurantsCol.find({}).toArray(function(err, docs) {
-      assert.equal(err, null);
-      res.send(docs);
+    var lunchGroupUserIds = req.query.lunchGroupUserIds || [];
+    
+    new RestaurantRanker(db, lunchGroupUserIds).getRankedRestaurants(function(restaurants) {
+      res.send(restaurants);
     });
   });
   
@@ -84,10 +88,3 @@ MongoClient.connect(db_url, function(err, client) {
     console.log("Server listening at", addr.address + ":" + addr.port);
   });  
 });
-
-let collectionAsObject = (coll) => {
-  return coll.reduce(function(acc, cur) {
-    acc[cur._id] = cur;
-    return acc;
-  }, {});
-}
