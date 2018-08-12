@@ -5,7 +5,7 @@ export class Checkbox extends React.Component {
     super(props);
     
     this.state = {
-      checked: false
+      checked: this.props.checkedByDefault
     }
   }
   

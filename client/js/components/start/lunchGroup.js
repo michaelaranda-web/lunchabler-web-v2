@@ -9,6 +9,7 @@ export class LunchGroup extends React.Component {
       <div id="lunch-group-section">
         {
           Object.keys(this.props.usersById).map((userId) => {
+            var checkedByDefault = this.props.lunchGroup.includes(userId);
             var userName = this.props.usersById[userId].name;
           
             return (
@@ -17,6 +18,7 @@ export class LunchGroup extends React.Component {
                 value={userId}
                 label={userName}
                 checkboxId={userId}
+                checkedByDefault={checkedByDefault}
                 onChange={ (checked) => this.onCheckboxChange(userId, checked) }
               />
             )
@@ -37,7 +39,8 @@ export class LunchGroup extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    usersById: state.entities.users.byId
+    usersById: state.entities.users.byId,
+    lunchGroup: state.ui.lunchGroup
   }
 }
 
