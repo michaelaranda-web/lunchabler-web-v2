@@ -69,11 +69,6 @@ MongoClient.connect(db_url, function(err, client) {
   });
   
   router.post('/api/users', (req, res) => {
-    
-    console.log(req.params);
-    console.log(req.body);
-    console.log("***");
-    
     let user = {
       name: req.body.name
     };
