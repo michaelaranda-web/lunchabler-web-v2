@@ -1,8 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addUser } from '../../actions/usersActions';
+import { addUserAndRefetchUsers } from '../../actions/usersActions';
 
 export class ManageUsersPage extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      nameInput: ''
+    }
+  }
+  
+  renderErrorMessage() {
+    if (this.state.showErrorMessage) {
+      return <p className="error-message">User cannot be blank.</p>
+    }
+  }
+  
   render() {
     return (
       <div id="manage-users-page">
@@ -11,18 +25,35 @@ export class ManageUsersPage extends React.Component {
             return <p>{this.props.usersById[userId].name}</p>
           })
         }
-        <a onClick={() => this.addUser()}>Add User</a>
+        <input 
+          value={this.state.nameInput} 
+          onChange={(e) => this.onNameInputChange(e)}
+        />
+        <button onClick={() => this.addUser()}>Add User</button>
+        {this.renderErrorMessage()}
       </div>
     );
   }
   
+  onNameInputChange(e) {
+    this.setState({
+      nameInput: e.target.value,
+      showErrorMessage: false
+    })
+  }
+  
   addUser() {
-    let user = {
-      name: "Test User",
-      id: "test123"
+    if (this.validateNameInput(this.state.nameInput)) {
+      this.props.addUserAndRefetchUsers(this.state.nameInput);  
+    } else {
+      this.setState({
+        showErrorMessage: true
+      })
     }
-    
-    this.props.addUser(user);
+  }
+  
+  validateNameInput() {
+    return this.state.nameInput != "";
   }
 }
 
@@ -34,7 +65,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addUser: (user) => { dispatch(addUser(user)) }
+    addUserAndRefetchUsers: (user) => { dispatch(addUserAndRefetchUsers(user)) }
   }
 }
 

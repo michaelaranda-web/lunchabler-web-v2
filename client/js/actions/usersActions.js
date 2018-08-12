@@ -1,5 +1,6 @@
 import { REQUEST_USERS, RECEIVE_USERS, ADD_USER } from '../constants/constants';
 import fetch from 'cross-fetch';
+import axios from 'axios';
 
 function requestUsers() {
   return {
@@ -37,6 +38,16 @@ export function fetchUsers() {
   }
 }
 
-export function addUser(user) {
-  return addUserEntry(user)
+export function addUserAndRefetchUsers(userName) {
+  return function(dispatch) {
+    axios.post('/api/users',{
+      name: userName
+    })
+    .then(function (response) {
+      dispatch(fetchUsers())
+    })
+    .catch(function (error) {
+      console.log(error);
+    }); 
+  }
 }

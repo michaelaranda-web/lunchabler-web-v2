@@ -9,7 +9,10 @@ var express = require('express');
 var router = express();
 var server = http.createServer(router);
 
+var bodyParser = require('body-parser');
 router.use(express.static(path.resolve(__dirname, 'dist')));
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
@@ -65,19 +68,24 @@ MongoClient.connect(db_url, function(err, client) {
     });
   });
   
-  // router.put('/api/users', (req, res) => {
-  //   let user = {
-  //     name: req.body.name
-  //   };
+  router.post('/api/users', (req, res) => {
+    
+    console.log(req.params);
+    console.log(req.body);
+    console.log("***");
+    
+    let user = {
+      name: req.body.name
+    };
   
-  //   usersCol.insert(user, (err) => {
-  //     if(err) {
-  //       console.log(err);
-  //     }
-  //     console.log("[Server] Added Name: " + req.body.name);
-  //     res.send(req.body);
-  //   });
-  // });
+    usersCol.insert(user, (err) => {
+      if(err) {
+        console.log(err);
+      }
+      console.log("[Server] Added Name: " + req.body.name);
+      res.send(req.body);
+    });
+  });
   
   router.get('*', function(req, res) {
     res.sendfile(path.resolve(__dirname, 'dist/index.html'));
