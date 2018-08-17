@@ -15,6 +15,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 const assert = require('assert');
 const RestaurantRanker = require('./db/helpers/restaurantRanker');
 const collectionAsObject = require('./helpers/helpers.js');
@@ -32,6 +33,8 @@ MongoClient.connect(db_url, function(err, client) {
   const db = client.db(dbName);
   // const restaurantsCol = db.collection('restaurants');
   const usersCol = db.collection('users');
+  const preferencesCol = db.collection('preferences');
+  
 
   //TODO: Reference https://community.risingstack.com/redis-node-js-introduction-to-caching/ for caching eventual Yelp calls.
 
@@ -80,6 +83,31 @@ MongoClient.connect(db_url, function(err, client) {
       console.log("[Server] Added Name: " + req.body.name);
       res.send(req.body);
     });
+  });
+  
+  router.post('/api/preferences', (req, res) => {
+    //TODO: Check if user preference already exists for restaurant. If so, replace instead of adding new preference.
+    var requestBodyValid = ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.body.restaurantId) && ["meh", "no"].includes(req.body.preference);
+    
+    if (requestBodyValid) {
+      let preference = {
+        restaurant: ObjectId(req.body.restaurantId),
+        user: ObjectId(req.body.userId),
+        preference: req.body.preference
+      };
+    
+      preferencesCol.insert(preference, (err) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log("[Server] User " + req.body.userId + ": Added " + req.body.preference + " preference for restaurant " + req.body.restaurantId);
+        res.send(req.body);
+      });
+    } else {
+      console.log("[Server] Error while creating preference for User " + req.body.userId + " and Restaurant " + req.body.restaurantId);
+      res.status(400);
+      res.send("Error searching for restaurant on Yelp");
+    }
   });
   
   router.get('*', function(req, res) {

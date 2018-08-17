@@ -5,12 +5,7 @@ import StartPage from './start/startPage';
 import ResultsPage from './results/resultsPage';
 import ManageUsersPage from './manage_users/manageUsersPage';
 import ManageRestaurantsPage from './manage_restaurants/manageRestaurantsPage';
-
-const RestaurantInfo = ({match}) => (
-  <div>
-    Restaurant Info {match.params.restaurant_id}
-  </div>
-)
+import RestaurantInfo from './restaurant_info/restaurantInfo';
 
 export class Routes extends React.Component {
   render() {
