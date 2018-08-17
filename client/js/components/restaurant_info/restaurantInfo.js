@@ -8,13 +8,17 @@ export class RestaurantInfo extends React.Component {
       <div id="restaurant-info-page">
         {
           Object.keys(this.props.usersById).map((userId) => {
+            var user = this.props.usersById[userId];
             return (
               <div>
-                <p>{this.props.usersById[userId].name}</p>
+                <p>{user.name}</p>
                 <div>
-                  <i className="fa fa-grin-beam"></i>
-                  <i className="fa fa-meh"></i>
-                  <i className="fa fa-angry"></i>
+                  <i className="far fa-grin-beam" 
+                     onClick={() => {/* REMOVE EXISTING PREFERENCE */}}></i>
+                  <i className="far fa-meh"
+                     onClick={() => {this.props.addPreferenceAndRefetchRestaurants(user._id, this.props.match.params.restaurant_id, "meh")}}></i>
+                  <i className="far fa-angry"
+                     onClick={() => {this.props.addPreferenceAndRefetchRestaurants(user._id, this.props.match.params.restaurant_id, "no")}}></i>
                 </div>
               </div>
             )
