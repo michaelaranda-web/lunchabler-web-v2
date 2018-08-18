@@ -5,7 +5,7 @@ import StartPage from './start/startPage';
 import ResultsPage from './results/resultsPage';
 import ManageUsersPage from './manage_users/manageUsersPage';
 import ManageRestaurantsPage from './manage_restaurants/manageRestaurantsPage';
-import RestaurantInfo from './restaurant_info/restaurantInfo';
+import RestaurantInfoPage from './restaurant_info/restaurantInfoPage';
 
 export class Routes extends React.Component {
   render() {
@@ -13,7 +13,7 @@ export class Routes extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/" component={HomePage}/>
-          <Route path="/restaurants/:restaurant_id" component={RestaurantInfo}/>
+          <Route path="/restaurants/:restaurant_id" component={RestaurantInfoPage}/>
           <Route path="/results" component={ResultsPage}/>
           <Route path="/start" component={StartPage}/>
           <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>

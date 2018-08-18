@@ -2,7 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 const APP_DIR = path.resolve(__dirname, 'client');
 const BUILD_DIR = path.resolve(__dirname, 'dist');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: APP_DIR + '/js/index.js',
@@ -28,17 +29,10 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
-        loader: "style-loader!css-loader",
-        exclude: /node_modules/
-      },
-      {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader!sass-loader"
-        }),
-        exclude: /node_modules/
+        test: /\.(sa|sc|c)ss$/,
+        use: devMode 
+          ? ['style-loader', 'css-loader', 'sass-loader'] 
+          : [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader',],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -57,5 +51,11 @@ module.exports = {
         loader: 'file-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
+  ]
 };

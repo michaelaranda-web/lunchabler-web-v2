@@ -1,0 +1,11 @@
+#restaurant-info-page {
+  .user-preference-options {
+    .far {
+      opacity: 0.37;
+      
+      &.current-preference {
+        opacity: 1.0;
+      }
+    }
+  }
+}

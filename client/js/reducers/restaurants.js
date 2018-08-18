@@ -1,6 +1,6 @@
 import { RECEIVE_RESTAURANTS, RECEIVE_RESTAURANTS_SUCCESS, RECEIVE_RESTAURANTS_ERROR } from '../constants/constants';
 import { combineReducers } from 'redux';
-import collectionAsObject from '../../../helpers/helpers.js';
+import { collectionAsObject } from '../../../helpers/helpers.js';
 
 function sortedRestaurants(state = [], action) {
   switch (action.type) {

@@ -18,7 +18,8 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 const assert = require('assert');
 const RestaurantRanker = require('./db/helpers/restaurantRanker');
-const collectionAsObject = require('./helpers/helpers.js');
+const collectionAsObject = require('./helpers/helpers.js').collectionAsObject;
+const restaurantPreferencesByUserId = require('./helpers/helpers.js').restaurantPreferencesByUserId;
 
 const yelp = require('yelp-fusion');
 
@@ -51,6 +52,27 @@ MongoClient.connect(db_url, function(err, client) {
     
     new RestaurantRanker(db, lunchGroupUserIds).getRankedRestaurants(function(restaurants) {
       res.send(restaurants);
+    });
+  });
+  
+  router.get('/api/preferences', function(req, res) {
+    var preferencesQuery = {}
+    
+    if (!!req.query.restaurant) {
+      if (!ObjectId.isValid(req.query.restaurant)) {
+        res.status(400);
+        res.send("Error fetching preferences for restaurant " + req.query.restaurant);
+      } else {
+        preferencesQuery = {
+          restaurant: ObjectId(req.query.restaurant)
+        }
+      }
+    }
+    
+    preferencesCol.find(preferencesQuery).toArray(function(err, docs) {
+      assert.equal(err, null);
+      
+      res.json(restaurantPreferencesByUserId(docs));
     });
   });
   
