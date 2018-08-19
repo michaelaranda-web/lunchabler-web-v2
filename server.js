@@ -108,23 +108,26 @@ MongoClient.connect(db_url, function(err, client) {
   });
   
   router.post('/api/preferences', (req, res) => {
-    //TODO: Check if user preference already exists for restaurant. If so, replace instead of adding new preference.
+    //TODO: Add separate DELETE preference endpoint for the "Yes" preference on Restaurant Info page.
     var requestBodyValid = ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.body.restaurantId) && ["meh", "no"].includes(req.body.preference);
     
     if (requestBodyValid) {
       let preference = {
         restaurant: ObjectId(req.body.restaurantId),
-        user: ObjectId(req.body.userId),
-        preference: req.body.preference
+        user: ObjectId(req.body.userId)
       };
     
-      preferencesCol.insert(preference, (err) => {
-        if (err) {
+      var update = {$set: {preference: req.body.preference}};
+      var updateOptions = {upsert: true};
+      
+      preferencesCol.updateOne(preference, update, updateOptions)
+        .then(() => {
+          console.log("[Server] User " + req.body.userId + ": Added " + req.body.preference + " preference for restaurant " + req.body.restaurantId);
+          res.send(req.body);
+        })
+        .catch((err) => {
           console.log(err);
-        }
-        console.log("[Server] User " + req.body.userId + ": Added " + req.body.preference + " preference for restaurant " + req.body.restaurantId);
-        res.send(req.body);
-      });
+        });
     } else {
       console.log("[Server] Error while creating preference for User " + req.body.userId + " and Restaurant " + req.body.restaurantId);
       res.status(400);
