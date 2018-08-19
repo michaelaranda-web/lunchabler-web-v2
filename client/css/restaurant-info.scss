@@ -1,11 +1,22 @@
 #restaurant-info-page {
   .user-preference-options {
-    .far {
-      opacity: 0.37;
+    .user-name {
+      width: 150px;
+    }
       
-      &.current-preference {
-        opacity: 1.0;
-      }
+    .preference-options {
+      display: inline-block;
+      margin-left: 5px;
+      
+      .far {
+        font-size: 16px;
+        opacity: 0.37;
+        padding: 0 2px;
+        
+        &.current-preference {
+          opacity: 1.0;
+        }
+      }  
     }
   }
 }
