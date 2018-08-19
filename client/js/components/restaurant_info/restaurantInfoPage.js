@@ -28,7 +28,7 @@ export class RestaurantInfoPage extends React.Component {
                 <div className="preference-options">
                   <i className={`far fa-grin-beam ${this.currentPreferenceClass(user._id, "yes")}`}
                      onClick={() => {/* REMOVE EXISTING PREFERENCE */}}></i>
-                  <i className={`far fa-meh ${this.currentPreferenceClass(user._id, "meh'")}`}
+                  <i className={`far fa-meh ${this.currentPreferenceClass(user._id, "meh")}`}
                      onClick={() => {this.props.addPreferenceAndRefetchRestaurants(user._id, this.props.match.params.restaurant_id, "meh", this.props.lunchGroup)}}></i>
                   <i className={`far fa-angry ${this.currentPreferenceClass(user._id, "no")}`}
                      onClick={() => {this.props.addPreferenceAndRefetchRestaurants(user._id, this.props.match.params.restaurant_id, "no", this.props.lunchGroup)}}></i>
