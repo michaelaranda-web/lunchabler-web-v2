@@ -81,14 +81,6 @@ module.exports = class RestaurantRanker {
       }
     });
     
-    
-    console.log("***with prefs")
-    console.log(restaurantsWithPreferences)
-    console.log("***without prefs")
-    console.log(restaurantsWithoutPreferences)
-    console.log("***concatenated")
-    console.log(restaurantsWithoutPreferences.concat(restaurantsWithPreferences))
-    
     return restaurantsWithoutPreferences.concat(restaurantsWithPreferences)
   }
   
