@@ -57,6 +57,7 @@ module.exports = class RestaurantRanker {
     });
     
     var rankedRestaurantIds = restaurantsToBeRanked.sort(this.restaurantSort);
+    
     var restaurantRankings = rankedRestaurantIds.map((preferenceItem) => {
       return preferenceItem.restaurant.toString();
     });
@@ -80,6 +81,14 @@ module.exports = class RestaurantRanker {
       }
     });
     
+    
+    console.log("***with prefs")
+    console.log(restaurantsWithPreferences)
+    console.log("***without prefs")
+    console.log(restaurantsWithoutPreferences)
+    console.log("***concatenated")
+    console.log(restaurantsWithoutPreferences.concat(restaurantsWithPreferences))
+    
     return restaurantsWithoutPreferences.concat(restaurantsWithPreferences)
   }
   
@@ -96,9 +105,9 @@ module.exports = class RestaurantRanker {
   }
   
   restaurantSort(a, b) {
-    if (a.score > b.score) {
+    if (a.score < b.score) {
       return -1;
-    } else if (a.score < b.score) {
+    } else if (a.score > b.score) {
       return 1;
     } else {
       return 0;
