@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addPreferenceAndRefetchRestaurants } from '../../actions/preferencesActions';
-import fetch from 'cross-fetch';
+import { fetchPreferences, removePreference, addPreferenceAndRefetchRestaurants } from '../../actions/preferencesActions';
+import { fetchRestaurants } from '../../actions/restaurantsActions';
 
 export class RestaurantInfoPage extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
+      addingPreference: false,
       preferences: {}
     }
   }
@@ -27,11 +28,11 @@ export class RestaurantInfoPage extends React.Component {
                 <label className="user-name">{user.name}</label>
                 <div className="preference-options">
                   <i className={`far fa-grin-beam ${this.currentPreferenceClass(user._id, "yes")}`}
-                     onClick={() => {/* REMOVE EXISTING PREFERENCE */}}></i>
+                     onClick={() => this.onPreferenceClick(user._id, "yes")}></i>
                   <i className={`far fa-meh ${this.currentPreferenceClass(user._id, "meh")}`}
-                     onClick={() => {this.props.addPreferenceAndRefetchRestaurants(user._id, this.props.match.params.restaurant_id, "meh", this.props.lunchGroup)}}></i>
+                     onClick={() => this.onPreferenceClick(user._id, "meh")}></i>
                   <i className={`far fa-angry ${this.currentPreferenceClass(user._id, "no")}`}
-                     onClick={() => {this.props.addPreferenceAndRefetchRestaurants(user._id, this.props.match.params.restaurant_id, "no", this.props.lunchGroup)}}></i>
+                     onClick={() => this.onPreferenceClick(user._id, "no")}></i>
                 </div>
               </div>
             )
@@ -41,6 +42,49 @@ export class RestaurantInfoPage extends React.Component {
     )
   }
   
+  fetchRestaurantPreferences() {
+    var self = this;
+    
+    return new Promise((resolve) => {
+      fetchPreferences(this.props.match.params.restaurant_id)
+        .then(preferences =>
+          self.setState({preferences: preferences}, () => {
+            resolve();
+          })
+        )
+    })
+  }
+  
+  onPreferenceClick(userId, preference) {
+    if (this.state.addingPreference) { return }
+    
+    this.setState({addingPreference: true}, () => {
+      if (preference === "yes") {
+        removePreference(userId, this.props.match.params.restaurant_id)
+          .then(() => {
+            return this.fetchRestaurantPreferences();
+          })
+          .then(() => {
+            return this.props.fetchRestaurants(this.props.lunchGroup);
+          })
+          .then(() => {
+            this.setState({addingPreferences: false});
+          })
+        .catch((err) => {
+          console.log(err)
+        })
+      } else {
+        this.props.addPreferenceAndRefetchRestaurants(userId, this.props.match.params.restaurant_id, preference, this.props.lunchGroup)
+        .then(() => {
+          this.fetchRestaurantPreferences();
+        })
+        .then(() => {
+          this.setState({addingPreference: false});
+        })  
+      }
+    });
+  }
+  
   currentPreferenceClass(userId, preference) {
     var noPref = this.state.preferences[userId] == undefined && preference == "yes";
     var prefExists = this.state.preferences[userId] == preference;
@@ -48,18 +92,6 @@ export class RestaurantInfoPage extends React.Component {
       return "current-preference";
     }
     return "";
-  }
-  
-  fetchRestaurantPreferences() {
-    var self = this;
-    
-    fetch(`/api/preferences?restaurant=${this.props.match.params.restaurant_id}`)
-      .then(
-        response => response.json(),
-        error => console.log('An error occurred.', error)
-      ).then(preferences =>
-        self.setState({preferences: preferences})
-      )
   }
 }
 
@@ -72,7 +104,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addPreferenceAndRefetchRestaurants: (userId, restaurantId, preference, lunchGroup) => { dispatch(addPreferenceAndRefetchRestaurants(userId, restaurantId, preference, lunchGroup))}
+    addPreferenceAndRefetchRestaurants: (userId, restaurantId, preference, lunchGroup) => { return dispatch(addPreferenceAndRefetchRestaurants(userId, restaurantId, preference, lunchGroup))},
+    fetchRestaurants: (lunchGroup) => { return dispatch(fetchRestaurants(lunchGroup))}
   }
 }
 

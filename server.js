@@ -135,6 +135,30 @@ MongoClient.connect(db_url, function(err, client) {
     }
   });
   
+  router.delete('/api/preferences', (req, res) => {
+    var requestBodyValid = ObjectId.isValid(req.query.userId) && ObjectId.isValid(req.query.restaurantId);
+    
+    if (requestBodyValid) {
+      let preference = {
+        restaurant: ObjectId(req.query.restaurantId),
+        user: ObjectId(req.query.userId)
+      };
+      
+      preferencesCol.deleteOne(preference)
+        .then(() => {
+          console.log("[Server] Deleted user " + req.query.userId + "'s preference for restaurant " + req.query.restaurantId);
+          res.send(req.body);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("[Server] Error while deleting preference for User " + req.query.userId + " and Restaurant " + req.query.restaurantId);
+      res.status(400);
+      res.send("Error searching for restaurant on Yelp");
+    }
+  });
+  
   router.get('*', function(req, res) {
     res.sendfile(path.resolve(__dirname, 'dist/index.html'));
   });
