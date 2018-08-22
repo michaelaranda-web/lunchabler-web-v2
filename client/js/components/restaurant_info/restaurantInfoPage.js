@@ -68,7 +68,7 @@ export class RestaurantInfoPage extends React.Component {
             return this.props.fetchRestaurants(this.props.lunchGroup);
           })
           .then(() => {
-            this.setState({addingPreferences: false});
+            this.setState({addingPreference: false});
           })
         .catch((err) => {
           console.log(err)
