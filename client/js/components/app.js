@@ -29,7 +29,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchUsers: () => { dispatch(fetchUsers()) },
-    fetchRestaurants: (lunchGroupIds) => { dispatch(fetchRestaurants(lunchGroupIds)) }
+    fetchRestaurants: () => { dispatch(fetchRestaurants()) }
   }
 }
 
