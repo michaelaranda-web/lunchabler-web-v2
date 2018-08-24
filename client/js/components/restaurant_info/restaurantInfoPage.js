@@ -65,7 +65,7 @@ export class RestaurantInfoPage extends React.Component {
             return this.fetchRestaurantPreferences();
           })
           .then(() => {
-            return this.props.fetchRestaurants(this.props.lunchGroup);
+            return this.props.fetchRestaurants();
           })
           .then(() => {
             this.setState({addingPreference: false});
@@ -74,7 +74,7 @@ export class RestaurantInfoPage extends React.Component {
           console.log(err)
         })
       } else {
-        this.props.addPreferenceAndRefetchRestaurants(userId, this.props.match.params.restaurant_id, preference, this.props.lunchGroup)
+        this.props.addPreferenceAndRefetchRestaurants(userId, this.props.match.params.restaurant_id, preference)
         .then(() => {
           this.fetchRestaurantPreferences();
         })
@@ -97,15 +97,14 @@ export class RestaurantInfoPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    usersById: state.entities.users.byId,
-    lunchGroup: state.ui.lunchGroup
+    usersById: state.entities.users.byId
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addPreferenceAndRefetchRestaurants: (userId, restaurantId, preference, lunchGroup) => { return dispatch(addPreferenceAndRefetchRestaurants(userId, restaurantId, preference, lunchGroup))},
-    fetchRestaurants: (lunchGroup) => { return dispatch(fetchRestaurants(lunchGroup))}
+    addPreferenceAndRefetchRestaurants: (userId, restaurantId, preference) => { return dispatch(addPreferenceAndRefetchRestaurants(userId, restaurantId, preference))},
+    fetchRestaurants: () => { return dispatch(fetchRestaurants())}
   }
 }
 

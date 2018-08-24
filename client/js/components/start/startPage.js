@@ -29,7 +29,7 @@ export class StartPage extends React.Component {
   
   onGetSuggestionsClick(history) {
     if (this.props.lunchGroup.length > 0) {
-      this.props.fetchRestaurants(this.props.lunchGroup);
+      this.props.fetchRestaurants();
       //TODO: Use Promises to chain redirecting to the fetchRestaurants call
       history.push('/results');
     }
@@ -44,7 +44,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchRestaurants: lunchGroup => { dispatch(fetchRestaurants(lunchGroup)) }
+    fetchRestaurants: () => { dispatch(fetchRestaurants()) }
   }
 }
 

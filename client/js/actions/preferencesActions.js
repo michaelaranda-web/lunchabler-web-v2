@@ -21,7 +21,7 @@ export function removePreference(userId, restaurantId) {
 }
 
 //TODO: Figure out a way not to have to manually include LunchGroup when refetching restaurants
-export function addPreferenceAndRefetchRestaurants(userId, restaurantId, preference, lunchGroup) {
+export function addPreferenceAndRefetchRestaurants(userId, restaurantId, preference) {
   return function(dispatch) {
     return axios.post('/api/preferences', {
       userId: userId,
@@ -29,7 +29,7 @@ export function addPreferenceAndRefetchRestaurants(userId, restaurantId, prefere
       preference: preference
     })
     .then(function (response) {
-      return dispatch(fetchRestaurants(lunchGroup));
+      return dispatch(fetchRestaurants());
     })
     .catch(function (error) {
       console.log(error);

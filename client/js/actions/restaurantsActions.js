@@ -14,16 +14,16 @@ function receiveRestaurants(sortedRestaurants) {
   }
 }
 
-export function fetchRestaurants(lunchGroupIdsParam) {
-  return function (dispatch) {
+export function fetchRestaurants() {
+  return function (dispatch, getState) {
+    var lunchGroup = getState().ui.lunchGroup;
+    
     dispatch(requestRestaurants())
     
-    var lunchGroupIds = lunchGroupIdsParam || [];
-    
     var params = '';
-    if (lunchGroupIds.length > 0) {
+    if (lunchGroup.length > 0) {
       params = '?';
-      lunchGroupIds.map((userId, i) => {
+      lunchGroup.map((userId, i) => {
         if (i > 0) {
           params += '&';
         }
