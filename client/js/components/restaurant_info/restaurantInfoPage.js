@@ -59,29 +59,26 @@ export class RestaurantInfoPage extends React.Component {
     if (this.state.addingPreference) { return }
     
     this.setState({addingPreference: true}, () => {
-      if (preference === "yes") {
-        removePreference(userId, this.props.match.params.restaurant_id)
-          .then(() => {
-            return this.fetchRestaurantPreferences();
-          })
-          .then(() => {
-            return this.props.fetchRestaurants();
-          })
-          .then(() => {
+      var modifyPreferencePromise;
+      if (preference == "yes") {
+        modifyPreferencePromise = removePreference(userId, this.props.match.params.restaurant_id);
+      } else {
+        modifyPreferencePromise = this.props.addPreferenceAndRefetchRestaurants(userId, this.props.match.params.restaurant_id, preference)
+      }
+      
+      modifyPreferencePromise
+        .then(() => {
+          return this.fetchRestaurantPreferences();
+        })
+        .then(() => {
+          return this.props.fetchRestaurants();
+        })
+        .then(() => {
             this.setState({addingPreference: false});
           })
-        .catch((err) => {
-          console.log(err)
-        })
-      } else {
-        this.props.addPreferenceAndRefetchRestaurants(userId, this.props.match.params.restaurant_id, preference)
-        .then(() => {
-          this.fetchRestaurantPreferences();
-        })
-        .then(() => {
-          this.setState({addingPreference: false});
-        })  
-      }
+      .catch((err) => {
+        console.log(err)
+      })
     });
   }
   
