@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { YelpSearchResultItem } from './yelpSearchResultItem';
+import { Link } from 'react-router-dom';
+import YelpSearchResultItem from './yelpSearchResultItem';
 import YelpIcon from '../../../img/yelp_icon.png';
 
 export class AddRestaurant extends React.Component {
@@ -30,6 +31,10 @@ export class AddRestaurant extends React.Component {
             return <YelpSearchResultItem key={i} restaurant={restaurant}/>
           })
         }
+        
+        <div>
+          <Link to="/results">Results</Link>
+        </div>
       </div>
     );
   }

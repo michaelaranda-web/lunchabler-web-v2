@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPreferences, removePreference, addPreferenceAndRefetchRestaurants } from '../../actions/preferencesActions';
 import { fetchRestaurants } from '../../actions/restaurantsActions';
+import { Link } from 'react-router-dom';
 
 export class RestaurantInfoPage extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ export class RestaurantInfoPage extends React.Component {
             )
           })
         }
+        <Link to="/results">Back to results</Link>
       </div>
     )
   }
