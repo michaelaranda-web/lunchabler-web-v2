@@ -17,6 +17,7 @@ export class RestaurantInfoPage extends React.Component {
     this.fetchRestaurantPreferences();
   }
   
+  //TODO: Refactor user preference options into a UserPreferenceRow component.
   render() {
     return (
       <div id="restaurant-info-page">

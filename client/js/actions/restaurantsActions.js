@@ -1,4 +1,5 @@
 import { REQUEST_RESTAURANTS, RECEIVE_RESTAURANTS } from '../constants/constants';
+import axios from 'axios';
 import fetch from 'cross-fetch';
 
 function requestRestaurants() {
@@ -12,6 +13,12 @@ function receiveRestaurants(sortedRestaurants) {
     type: RECEIVE_RESTAURANTS,
     sortedRestaurants: sortedRestaurants
   }
+}
+
+export function addRestaurant(restaurant) {
+  return axios.post('/api/restaurants', {
+    restaurant: restaurant
+  }) 
 }
 
 export function fetchRestaurants() {

@@ -32,7 +32,7 @@ MongoClient.connect(db_url, function(err, client) {
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
-  // const restaurantsCol = db.collection('restaurants');
+  const restaurantsCol = db.collection('restaurants');
   const usersCol = db.collection('users');
   const preferencesCol = db.collection('preferences');
   
@@ -47,11 +47,45 @@ MongoClient.connect(db_url, function(err, client) {
     });
   });
   
+  router.post('/api/users', (req, res) => {
+    let user = {
+      name: req.body.name
+    };
+  
+    usersCol.insert(user, (err) => {
+      if(err) {
+        console.log(err);
+      }
+      console.log("[Server] Added User: " + req.body.name);
+      res.send(req.body);
+    });
+  });
+  
   router.get('/api/restaurants', function(req, res) {
     var lunchGroupUserIds = req.query.lunchGroupUserIds || [];
     
     new RestaurantRanker(db, lunchGroupUserIds).getRankedRestaurants(function(restaurants) {
       res.send(restaurants);
+    });
+  });
+  
+  router.post('/api/restaurants', (req, res) => {
+    var submittedRestaurant = req.body.restaurant; 
+    
+    let restaurant = {
+      name: submittedRestaurant.name,
+      displayAddress1: submittedRestaurant.displayAddress1,
+      displayAddress2: submittedRestaurant.displayAddress2,
+      distance: submittedRestaurant.distance,
+      url: submittedRestaurant.url
+    };
+  
+    restaurantsCol.insert(restaurant, (err) => {
+      if(err) {
+        console.log(err);
+      }
+      console.log("[Server] Added Restaurant: " + restaurant.name);
+      res.send(req.body);
     });
   });
   
@@ -90,20 +124,6 @@ MongoClient.connect(db_url, function(err, client) {
     }).catch(e => {
       res.status(500);
       res.send("Error searching for restaurant on Yelp");
-    });
-  });
-  
-  router.post('/api/users', (req, res) => {
-    let user = {
-      name: req.body.name
-    };
-  
-    usersCol.insert(user, (err) => {
-      if(err) {
-        console.log(err);
-      }
-      console.log("[Server] Added Name: " + req.body.name);
-      res.send(req.body);
     });
   });
   

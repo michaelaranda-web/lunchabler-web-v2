@@ -20,7 +20,7 @@ export class YelpRestaurantParser {
   }
   
   distance() {
-    return getMilesFromMeters(this.restaurant.distance).toFixed(2);
+    return parseFloat(getMilesFromMeters(this.restaurant.distance).toFixed(2));
   }
   
   displayAddress1() {
