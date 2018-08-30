@@ -21,6 +21,12 @@ export function addRestaurant(restaurant) {
   }) 
 }
 
+export function addComment(restaurantId, comment) {
+  return axios.put(`/api/restaurants/${restaurantId}/add_comment`, {
+    comment: comment
+  }) 
+}
+
 export function fetchRestaurants() {
   return function (dispatch, getState) {
     var lunchGroup = getState().ui.lunchGroup;

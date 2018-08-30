@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPreferences, removePreference, addPreferenceAndRefetchRestaurants } from '../../actions/preferencesActions';
-import { fetchRestaurants } from '../../actions/restaurantsActions';
+import { addComment, fetchRestaurants } from '../../actions/restaurantsActions';
 import { Link } from 'react-router-dom';
 
 export class RestaurantInfoPage extends React.Component {
@@ -10,12 +10,52 @@ export class RestaurantInfoPage extends React.Component {
     
     this.state = {
       addingPreference: false,
-      preferences: {}
+      preferences: {},
+      comments: [],
+      commentUserInput: "",
+      commentTextInput: ""
     }
   }
   
   componentDidMount() {
     this.fetchRestaurantPreferences();
+  }
+  
+  renderCommentsSection() {
+    return (
+      <div>
+        <div>
+          {
+            this.state.comments.map((comment) => {
+              return <p>{comment}</p>  
+            })
+          }
+        </div>
+        <div>
+          <div>
+            <label>
+              User:
+              <input 
+                value={this.state.commentUserInput} 
+                onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Comment:
+              <textarea 
+                value={this.state.commentTextInput}
+                onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
+              />
+            </label>
+          </div>
+          <div>
+            <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
+          </div>
+        </div>
+      </div>
+    )
   }
   
   //TODO: Refactor user preference options into a UserPreferenceRow component.
@@ -40,9 +80,21 @@ export class RestaurantInfoPage extends React.Component {
             )
           })
         }
+        {this.renderCommentsSection()}
         <Link to="/results">Back to results</Link>
       </div>
     )
+  }
+  
+  commentSubmitClick() {
+    if (this.state.commentUserInput !== "" && this.state.commentTextInput !== "") {
+      addComment(this.props.match.params.restaurant_id, {
+        user: this.state.commentUserInput,
+        text: this.state.commentTextInput
+      })
+    }
+    
+    console.log("Fill out all fields before submitting comment.");
   }
   
   fetchRestaurantPreferences() {

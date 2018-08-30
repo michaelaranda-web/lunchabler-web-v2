@@ -69,6 +69,29 @@ MongoClient.connect(db_url, function(err, client) {
     });
   });
   
+  router.put('/api/restaurants/:id/add_comment', (req, res) => {
+    var commentUser = req.body.comment.user;
+    var commentText = req.body.comment.text;
+    var comment = {
+      user: commentUser,
+      text: commentText
+    }
+    var restaurantId = req.params.id
+    console.log(restaurantId);
+    
+    restaurantsCol.updateOne(
+      {"_id": ObjectId(restaurantId)},
+      {$push: { comments: comment }},
+      (err, restaurantDoc) => {
+        if(err) {
+          console.log(err);
+        }
+        console.log(restaurantDoc);
+        console.log("[Server] Added Comment to Restaurant: " + restaurantId);
+        res.send(req.body);
+      });
+  });
+  
   router.post('/api/restaurants', (req, res) => {
     var submittedRestaurant = req.body.restaurant; 
     

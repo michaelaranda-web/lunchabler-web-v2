@@ -17,6 +17,7 @@ export class ResultsPage extends React.Component {
             )
           })
         }
+        <Link to="/start">Edit Lunch Group</Link>
       </div>
     )
   }
