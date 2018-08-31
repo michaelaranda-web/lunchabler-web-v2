@@ -27,40 +27,42 @@ export class RestaurantInfoPage extends React.Component {
   }
   
   renderCommentsSection(restaurant) {
-    return (
-      <div>
-        <div>
-          {
-            restaurant.comments.map((comment) => {
-              return <div><p>{comment.user}: </p><p>{comment.text}</p></div>  
-            })
-          }
-        </div>
+    if (!!restaurant.comments) {
+      return (
         <div>
           <div>
-            <label>
-              User:
-              <input 
-                value={this.state.commentUserInput} 
-                onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
-              />
-            </label>
+            {
+              restaurant.comments.map((comment) => {
+                return <div><p>{comment.user}: </p><p>{comment.text}</p></div>  
+              })
+            }
           </div>
           <div>
-            <label>
-              Comment:
-              <textarea 
-                value={this.state.commentTextInput}
-                onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
-              />
-            </label>
-          </div>
-          <div>
-            <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
+            <div>
+              <label>
+                User:
+                <input 
+                  value={this.state.commentUserInput} 
+                  onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Comment:
+                <textarea 
+                  value={this.state.commentTextInput}
+                  onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
+                />
+              </label>
+            </div>
+            <div>
+              <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
   
   //TODO: Refactor user preference options into a UserPreferenceRow component.
