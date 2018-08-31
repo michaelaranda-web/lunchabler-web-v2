@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPreferences, removePreference, addPreferenceAndRefetchRestaurants } from '../../actions/preferencesActions';
 import { addComment, fetchRestaurants } from '../../actions/restaurantsActions';
+import { fetchRestaurantVisits } from '../../actions/visitsActions';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 export class RestaurantInfoPage extends React.Component {
   constructor(props) {
@@ -12,18 +14,33 @@ export class RestaurantInfoPage extends React.Component {
       updating: false,
       preferences: {},
       commentUserInput: "",
-      commentTextInput: ""
+      commentTextInput: "",
+      visits: []
     }
   }
   
   componentDidMount() {
     this.fetchRestaurantPreferences();
+    this.fetchVisits();
   }
   
   renderUpdatingMessage() {
     if (this.state.updating) {
       return <h1><strong>Updating...</strong></h1>
     }
+  }
+  
+  renderRecentVisits() {
+    return (
+      <div>
+        <p>Recent visits</p>
+        {
+          this.state.visits.map((visit) => {
+            return <p>{this.formatVisitDate(visit.date)}</p>
+          })
+        }
+      </div>
+    )
   }
   
   renderCommentsSection(restaurant) {
@@ -92,6 +109,7 @@ export class RestaurantInfoPage extends React.Component {
               )
             })
           }
+          {this.renderRecentVisits()}
           {this.renderCommentsSection(restaurant)}
           <Link to="/results">Back to results</Link>
         </div>
@@ -138,6 +156,13 @@ export class RestaurantInfoPage extends React.Component {
     })
   }
   
+  fetchVisits() {
+    fetchRestaurantVisits(this.props.match.params.restaurant_id)
+      .then(visits =>
+        this.setState({visits: visits})
+      )
+  }
+  
   onPreferenceClick(userId, preference) {
     if (this.state.updating) { return }
     
@@ -164,6 +189,10 @@ export class RestaurantInfoPage extends React.Component {
         this.setState({updating: false});
       })
     });
+  }
+  
+  formatVisitDate(visitDate) {
+    return moment(visitDate).format('MMMM Do YYYY');
   }
   
   currentPreferenceClass(userId, preference) {

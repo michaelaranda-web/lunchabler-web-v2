@@ -9,11 +9,17 @@ export function fetchRecentVisits(numVisits=5) {
 }
 
 export function fetchRestaurantVisits(restaurantId, numVisits=5) {
-  // return axios.get(`/api/visits?restaurant=${restaurantId}&limit=${numVisits}`)
-  //   .then(
-  //     response => response.data,
-  //     error => console.log('An error occurred.', error)
-  //   )
+  var visitsQuery = `/api/visits?limit=${numVisits}`;
+  
+  if (!!restaurantId) {
+    visitsQuery += `&restaurant=${restaurantId}`;
+  }
+  
+  return axios.get(visitsQuery)
+    .then(
+      response => response.data,
+      error => console.log('An error occurred.', error)
+    )
 }
 
 export function addVisit(restaurantId) {
