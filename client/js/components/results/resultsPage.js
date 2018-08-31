@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { addVisit } from '../../actions/visitsActions';
 
 export class ResultsPage extends React.Component {
   render() {
@@ -13,6 +14,7 @@ export class ResultsPage extends React.Component {
               <div>
                 <p>{restaurant.name}</p>
                 <Link to={`/restaurants/${restaurant._id}`}>More Info</Link>
+                <a onClick={() => this.restaurantSelected(restaurant._id)}>I choose you!</a>
               </div>
             )
           })
@@ -20,6 +22,13 @@ export class ResultsPage extends React.Component {
         <Link to="/start">Edit Lunch Group</Link>
       </div>
     )
+  }
+  
+  restaurantSelected(restaurantId) {
+    addVisit(restaurantId)
+      .then(() => {
+        console.log("successfully added a visit");
+      });
   }
 }
 

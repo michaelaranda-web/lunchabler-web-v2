@@ -35,6 +35,7 @@ MongoClient.connect(db_url, function(err, client) {
   const restaurantsCol = db.collection('restaurants');
   const usersCol = db.collection('users');
   const preferencesCol = db.collection('preferences');
+  const visitsCol = db.collection('visits');
   
 
   //TODO: Reference https://community.risingstack.com/redis-node-js-introduction-to-caching/ for caching eventual Yelp calls.
@@ -150,7 +151,6 @@ MongoClient.connect(db_url, function(err, client) {
   });
   
   router.post('/api/preferences', (req, res) => {
-    //TODO: Add separate DELETE preference endpoint for the "Yes" preference on Restaurant Info page.
     var requestBodyValid = ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.body.restaurantId) && ["meh", "no"].includes(req.body.preference);
     
     if (requestBodyValid) {
@@ -198,6 +198,32 @@ MongoClient.connect(db_url, function(err, client) {
       console.log("[Server] Error while deleting preference for User " + req.query.userId + " and Restaurant " + req.query.restaurantId);
       res.status(400);
       res.send("Error searching for restaurant on Yelp");
+    }
+  });
+  
+  router.post('/api/visits', (req, res) => {
+    var requestBodyValid = ObjectId.isValid(req.body.restaurantId);
+    
+    if (requestBodyValid) {
+      var now = new Date();
+      
+      let visit = {
+        restaurant: ObjectId(req.body.restaurantId),
+        date: now
+      };
+      
+      visitsCol.insertOne(visit)
+        .then(() => {
+          console.log("[Server] Record added: " + req.body.restaurantId + "was visited on " + now);
+          res.send(req.body);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("[Server] Error while adding visit for " + req.body.restaurantId);
+      res.status(400);
+      res.send("Invalid request made: adding visit for " + req.body.restaurantId);
     }
   });
   
