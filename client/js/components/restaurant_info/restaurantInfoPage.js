@@ -26,72 +26,75 @@ export class RestaurantInfoPage extends React.Component {
     }
   }
   
-  renderCommentsSection() {
-    if (!!this.props.restaurantsById[this.props.match.params.restaurant_id]) {
-      return (
+  renderCommentsSection(restaurant) {
+    return (
+      <div>
         <div>
-          {this.renderUpdatingMessage()}
+          {
+            restaurant.comments.map((comment) => {
+              return <div><p>{comment.user}: </p><p>{comment.text}</p></div>  
+            })
+          }
+        </div>
+        <div>
           <div>
-            {
-              this.props.restaurantsById[this.props.match.params.restaurant_id].comments.map((comment) => {
-                return <div><p>{comment.user}: </p><p>{comment.text}</p></div>  
-              })
-            }
+            <label>
+              User:
+              <input 
+                value={this.state.commentUserInput} 
+                onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
+              />
+            </label>
           </div>
           <div>
-            <div>
-              <label>
-                User:
-                <input 
-                  value={this.state.commentUserInput} 
-                  onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Comment:
-                <textarea 
-                  value={this.state.commentTextInput}
-                  onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
-                />
-              </label>
-            </div>
-            <div>
-              <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
-            </div>
+            <label>
+              Comment:
+              <textarea 
+                value={this.state.commentTextInput}
+                onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
+              />
+            </label>
+          </div>
+          <div>
+            <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
           </div>
         </div>
-      )
-    }
+      </div>
+    )
   }
   
   //TODO: Refactor user preference options into a UserPreferenceRow component.
   render() {
-    return (
-      <div id="restaurant-info-page">
-        {
-          Object.keys(this.props.usersById).map((userId) => {
-            var user = this.props.usersById[userId];
-            return (
-              <div className="user-preference-options">
-                <label className="user-name">{user.name}</label>
-                <div className="preference-options">
-                  <i className={`far fa-grin-beam ${this.currentPreferenceClass(user._id, "yes")}`}
-                     onClick={() => this.onPreferenceClick(user._id, "yes")}></i>
-                  <i className={`far fa-meh ${this.currentPreferenceClass(user._id, "meh")}`}
-                     onClick={() => this.onPreferenceClick(user._id, "meh")}></i>
-                  <i className={`far fa-angry ${this.currentPreferenceClass(user._id, "no")}`}
-                     onClick={() => this.onPreferenceClick(user._id, "no")}></i>
+    var restaurant = this.props.restaurantsById[this.props.match.params.restaurant_id];
+    
+    if (!!restaurant) {
+      return (
+        <div id="restaurant-info-page">
+          <h1>{restaurant.name}</h1>
+            {this.renderUpdatingMessage()}
+          {
+            Object.keys(this.props.usersById).map((userId) => {
+              var user = this.props.usersById[userId];
+              return (
+                <div className="user-preference-options">
+                  <label className="user-name">{user.name}</label>
+                  <div className="preference-options">
+                    <i className={`far fa-grin-beam ${this.currentPreferenceClass(user._id, "yes")}`}
+                       onClick={() => this.onPreferenceClick(user._id, "yes")}></i>
+                    <i className={`far fa-meh ${this.currentPreferenceClass(user._id, "meh")}`}
+                       onClick={() => this.onPreferenceClick(user._id, "meh")}></i>
+                    <i className={`far fa-angry ${this.currentPreferenceClass(user._id, "no")}`}
+                       onClick={() => this.onPreferenceClick(user._id, "no")}></i>
+                  </div>
                 </div>
-              </div>
-            )
-          })
-        }
-        {this.renderCommentsSection()}
-        <Link to="/results">Back to results</Link>
-      </div>
-    )
+              )
+            })
+          }
+          {this.renderCommentsSection(restaurant)}
+          <Link to="/results">Back to results</Link>
+        </div>
+      )
+    } else { return null; }
   }
   
   commentSubmitClick() {
