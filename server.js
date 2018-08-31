@@ -86,7 +86,6 @@ MongoClient.connect(db_url, function(err, client) {
         if(err) {
           console.log(err);
         }
-        console.log(restaurantDoc);
         console.log("[Server] Added Comment to Restaurant: " + restaurantId);
         res.send(req.body);
       });

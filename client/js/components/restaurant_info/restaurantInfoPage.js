@@ -9,9 +9,8 @@ export class RestaurantInfoPage extends React.Component {
     super(props);
     
     this.state = {
-      addingPreference: false,
+      updating: false,
       preferences: {},
-      comments: [],
       commentUserInput: "",
       commentTextInput: ""
     }
@@ -21,41 +20,50 @@ export class RestaurantInfoPage extends React.Component {
     this.fetchRestaurantPreferences();
   }
   
+  renderUpdatingMessage() {
+    if (this.state.updating) {
+      return <h1><strong>Updating...</strong></h1>
+    }
+  }
+  
   renderCommentsSection() {
-    return (
-      <div>
+    if (!!this.props.restaurantsById[this.props.match.params.restaurant_id]) {
+      return (
         <div>
-          {
-            this.state.comments.map((comment) => {
-              return <p>{comment}</p>  
-            })
-          }
+          {this.renderUpdatingMessage()}
+          <div>
+            {
+              this.props.restaurantsById[this.props.match.params.restaurant_id].comments.map((comment) => {
+                return <div><p>{comment.user}: </p><p>{comment.text}</p></div>  
+              })
+            }
+          </div>
+          <div>
+            <div>
+              <label>
+                User:
+                <input 
+                  value={this.state.commentUserInput} 
+                  onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Comment:
+                <textarea 
+                  value={this.state.commentTextInput}
+                  onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
+                />
+              </label>
+            </div>
+            <div>
+              <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
+            </div>
+          </div>
         </div>
-        <div>
-          <div>
-            <label>
-              User:
-              <input 
-                value={this.state.commentUserInput} 
-                onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Comment:
-              <textarea 
-                value={this.state.commentTextInput}
-                onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
-              />
-            </label>
-          </div>
-          <div>
-            <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
-          </div>
-        </div>
-      </div>
-    )
+      )
+    }
   }
   
   //TODO: Refactor user preference options into a UserPreferenceRow component.
@@ -87,14 +95,29 @@ export class RestaurantInfoPage extends React.Component {
   }
   
   commentSubmitClick() {
-    if (this.state.commentUserInput !== "" && this.state.commentTextInput !== "") {
-      addComment(this.props.match.params.restaurant_id, {
-        user: this.state.commentUserInput,
-        text: this.state.commentTextInput
-      })
-    }
-    
-    console.log("Fill out all fields before submitting comment.");
+    this.setState({updating: true}, () => {
+      if (this.state.commentUserInput !== "" && this.state.commentTextInput !== "") {
+        addComment(this.props.match.params.restaurant_id, {
+          user: this.state.commentUserInput,
+          text: this.state.commentTextInput
+        })
+          .then(() => {
+            return this.fetchRestaurantPreferences();
+          })
+          .then(() => {
+            return this.props.fetchRestaurants();
+          })
+          .then(() => {
+            this.setState({updating: false});
+          })
+        .catch((err) => {
+          console.log(err);
+          this.setState({updating: false});
+        })
+      } else {
+        console.log("Fill out all fields before submitting comment.");  
+      }
+    });
   }
   
   fetchRestaurantPreferences() {
@@ -111,9 +134,9 @@ export class RestaurantInfoPage extends React.Component {
   }
   
   onPreferenceClick(userId, preference) {
-    if (this.state.addingPreference) { return }
+    if (this.state.updating) { return }
     
-    this.setState({addingPreference: true}, () => {
+    this.setState({updating: true}, () => {
       var modifyPreferencePromise;
       if (preference == "yes") {
         modifyPreferencePromise = removePreference(userId, this.props.match.params.restaurant_id);
@@ -129,10 +152,11 @@ export class RestaurantInfoPage extends React.Component {
           return this.props.fetchRestaurants();
         })
         .then(() => {
-            this.setState({addingPreference: false});
-          })
+          this.setState({updating: false});
+        })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
+        this.setState({updating: false});
       })
     });
   }
@@ -149,7 +173,8 @@ export class RestaurantInfoPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    usersById: state.entities.users.byId
+    usersById: state.entities.users.byId,
+    restaurantsById: state.entities.restaurants.byId
   }
 }
 
