@@ -2,15 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from '../checkbox';
 import { addUserToLunchGroup, removeUserFromLunchGroup } from '../../actions/lunchGroupActions';
+import { alphabetizedUsers } from '../../helpers/helpers';
 
-export class LunchGroup extends React.Component {
+export class LunchGroupSelector extends React.Component {
   render() {
     return (
       <div id="lunch-group-section">
         {
-          Object.keys(this.props.usersById).map((userId) => {
+          alphabetizedUsers(this.props.usersById).map((user) => {
+            var userId = user._id;
+            var userName = user.name;
             var checkedByDefault = this.props.lunchGroup.includes(userId);
-            var userName = this.props.usersById[userId].name;
           
             return (
               <Checkbox 
@@ -54,4 +56,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LunchGroup);
+)(LunchGroupSelector);

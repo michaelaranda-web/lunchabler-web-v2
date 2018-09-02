@@ -1,14 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import LunchGroup from './lunchGroup';
+import LunchGroupSelector from './lunchGroupSelector';
 import { fetchRestaurants } from '../../actions/restaurantsActions';
 
 export class StartPage extends React.Component {
   render() {
     return (
       <div id="start-page">
-        <LunchGroup />
+        <h1>Lunch Time!</h1>
+        <p>Specify today's lunch group to see the optimal restaurant choices.</p>
+        <LunchGroupSelector />
         {this.renderGetSuggestionsButton()}
       </div>
     )
