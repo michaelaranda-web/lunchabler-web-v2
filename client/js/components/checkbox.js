@@ -17,20 +17,19 @@ export class Checkbox extends React.Component {
     }
     
     return (
-      <div id={`checkbox-${this.props.checkboxId}`}>
+      <div id={`checkbox-${this.props.checkboxId}`} onClick={ () => this.onClick() }>
         {label}
         <input 
+          id={this.props.name}
           type="checkbox" 
           value={this.props.value}
-          name={this.props.name}
           checked={this.state.checked}
-          onChange={ () => this.onChange() }
         />
       </div>
     )
   }
   
-  onChange() {
+  onClick() {
     this.setState({
       checked: !this.state.checked
     }, () => this.props.onChange(this.state.checked));
