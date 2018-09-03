@@ -1,0 +1,19 @@
+#start-page {
+  .user-button {
+    @media (max-width: 414px) {
+      display: block;
+    }
+    
+    display: inline-block;
+    border: 3px solid lightgrey;
+    border-radius: 5px;
+    padding: .5em .8em;
+    margin: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    
+    &.selected {
+      border-color: #78d449;
+    }
+  }
+}
