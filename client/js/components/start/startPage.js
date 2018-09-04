@@ -8,10 +8,13 @@ export class StartPage extends React.Component {
   render() {
     return (
       <div id="start-page">
-        <h1>Lunch Time!</h1>
-        <p>Specify today's lunch group to see the optimal restaurant choices.</p>
+        <h1>LUNCH TIME</h1>
+        <h3>1. LUNCH GROUP</h3>
+        <p>Specify today's lunch group, so that user preferences can be taken into consideration.</p>
         <LunchGroupSelector />
-        {this.renderGetSuggestionsButton()}
+        <div className="button-row">
+          {this.renderGetSuggestionsButton()}
+        </div>
       </div>
     )
   }
@@ -19,12 +22,13 @@ export class StartPage extends React.Component {
   renderGetSuggestionsButton() {
     return (
       <Route render={({history}) => (
-        <button
-          type='button'
+        <a
+          id="submit-button"
+          href="#"
           onClick={() => { this.onGetSuggestionsClick(history) }}
         >
           Get Suggestions
-        </button>
+        </a>
       )} />  
     )
   }

@@ -100,7 +100,8 @@ MongoClient.connect(db_url, function(err, client) {
       displayAddress1: submittedRestaurant.displayAddress1,
       displayAddress2: submittedRestaurant.displayAddress2,
       distance: submittedRestaurant.distance,
-      url: submittedRestaurant.url
+      url: submittedRestaurant.url,
+      imageUrl: submittedRestaurant.imageUrl
     };
   
     restaurantsCol.insert(restaurant, (err) => {

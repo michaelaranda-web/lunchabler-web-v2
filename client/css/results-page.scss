@@ -1,0 +1,27 @@
+#results-page {
+  .restaurant-result {
+    display: flex;
+    margin: 12px 0;
+    
+    .image-container {
+      height: 80px;
+      width: 80px;
+      background-color: #c1c1c1;
+      
+      img {
+        max-width: 100%;
+      }
+    }
+    
+    .restaurant-details-container {
+      h4 {
+        margin: 0;
+      }
+    }
+    
+    .actions-container {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

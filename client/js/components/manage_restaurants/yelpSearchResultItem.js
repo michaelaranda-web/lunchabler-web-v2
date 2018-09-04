@@ -24,6 +24,7 @@ export class YelpSearchResultItem extends React.Component {
   onImportClick(yelpRestaurant) {
     addRestaurant({
       name: yelpRestaurant.name(),
+      imageUrl: yelpRestaurant.imageUrl(),
       displayAddress1: yelpRestaurant.displayAddress1(),
       displayAddress2: yelpRestaurant.displayAddress2(),
       distance: yelpRestaurant.distance(),
