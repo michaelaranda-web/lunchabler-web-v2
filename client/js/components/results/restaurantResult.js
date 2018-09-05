@@ -4,8 +4,7 @@ import { Route } from 'react-router-dom';
 import { addVisit } from '../../actions/visitsActions';
 
 export class RestaurantResult extends React.Component {
-  renderDetails() {
-    var restaurant = this.props.restaurant;
+  renderDetails(restaurant) {
     var distance = restaurant.distance ? <p>{`${restaurant.distance} miles`}</p> : null;
     
     return (
@@ -16,6 +15,14 @@ export class RestaurantResult extends React.Component {
     )
   }
   
+  renderImage(restaurant) {
+    if (!!restaurant.imageUrl) {
+      return <img src={restaurant.imageUrl} />
+    } else {
+      return <i className="fas fa-camera" />
+    }
+  }
+  
   render() {
     var restaurant = this.props.restaurant;
     
@@ -24,9 +31,9 @@ export class RestaurantResult extends React.Component {
         <Route render={({history}) => (
           <div className="restaurant-info" onClick={() => this.showRestaurantInfo(history)}>
             <div className="image-container">
-              <img src={restaurant.imageUrl} />
+              {this.renderImage(restaurant)}
             </div>
-            {this.renderDetails()}
+            {this.renderDetails(restaurant)}
           </div>
         )} />
         <div className="actions-container">
