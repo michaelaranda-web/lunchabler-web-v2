@@ -3,25 +3,55 @@
     display: flex;
     margin: 12px 0;
     
-    .image-container {
-      height: 80px;
-      width: 80px;
-      background-color: #c1c1c1;
+    .restaurant-info {
+      display: flex;
       
-      img {
-        max-width: 100%;
+      .image-container {
+        flex-shrink: 0;
+        height: 80px;
+        width: 80px;
+        background-color: #c1c1c1;
+        
+        img {
+          max-width: 100%;
+        }
       }
-    }
-    
-    .restaurant-details-container {
-      h4 {
-        margin: 0;
+      
+      .restaurant-details-container {
+        h4, p {
+          margin: 0;
+          font-size: 14px;
+          
+          @media (min-width: 415px) {
+            font-size: 16px;
+          }
+        }
+        
+        p {
+          font-size: 12px;
+          
+          @media (min-width: 415px) {
+            font-size: 14px;
+          }
+        }
       }
     }
     
     .actions-container {
       display: flex;
       flex-direction: column;
+      
+      .select-restaurant {
+        text-align: center;
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 2px 8px;
+        cursor: pointer;
+        
+        .fas {
+          font-size: 22px;
+        }
+      }
     }
   }
 }

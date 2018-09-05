@@ -8,8 +8,8 @@ export class ResultsPage extends React.Component {
     return (
       <div id="results-page">
         {
-          Object.keys(this.props.restaurantsById).map((restaurantId, i) => {
-            return <RestaurantResult key={i} restaurant={this.props.restaurantsById[restaurantId]} />
+          this.props.sortedRestaurants.map((restaurant, i) => {
+            return <RestaurantResult key={i} restaurant={restaurant} />
           })
         }
         <Link to="/start">Edit Lunch Group</Link>
@@ -20,7 +20,7 @@ export class ResultsPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    restaurantsById: state.entities.restaurants.byId
+    sortedRestaurants: state.entities.restaurants.sorted
   }
 }
 
