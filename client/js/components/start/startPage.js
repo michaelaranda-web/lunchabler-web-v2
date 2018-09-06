@@ -9,11 +9,13 @@ export class StartPage extends React.Component {
     return (
       <div id="start-page">
         <h1>LUNCH TIME</h1>
-        <h3>1. LUNCH GROUP</h3>
-        <p>Specify today's lunch group, so that user preferences can be taken into consideration.</p>
-        <LunchGroupSelector />
-        <div className="button-row">
-          {this.renderGetSuggestionsButton()}
+        <div id="main-content">
+          <h3>1. LUNCH GROUP</h3>
+          <p>Specify today's lunch group, so that user preferences can be taken into consideration.</p>
+          <LunchGroupSelector />
+          <div className="button-row">
+            {this.renderGetSuggestionsButton()}
+          </div>
         </div>
       </div>
     )

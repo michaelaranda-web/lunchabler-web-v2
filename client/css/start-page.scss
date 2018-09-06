@@ -1,51 +1,52 @@
 #start-page {
   font-size: 14px;
   
-  h1 {
-    font-size: 28px;
-  }
-  
   h3, p {
-    margin: 5px 0;
+    margin: 10px 5px;
   }
   
-  .user-button {
-    @media (max-width: 414px) {
-      display: block;
-    }
+  #main-content {
+    margin-top: 15px;  
     
-    display: inline-block;
-    border: 3px solid lightgrey;
-    border-radius: 5px;
-    padding: .5em .8em;
-    margin: 5px;
-    text-decoration: none;
-    cursor: pointer;
-    
-    &.selected {
-      border-color: $success-green;
+    .user-button {
+      @media (max-width: 414px) {
+        display: block;
+      }
+      
+      display: inline-block;
+      background-color: white;
+      border: 3px solid lightgrey;
+      border-radius: 5px;
+      padding: .5em .8em;
+      margin: 5px;
+      text-decoration: none;
+      cursor: pointer;
+      
+      &.selected {
+        border-color: $success-green;
+      }
     }
-  }
   
-  .button-row {
-    margin: 15px 0px;
-    text-align: right;
-    
-    #submit-button {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
-    display: inline-block;
-    background-color: $action-blue;
-    margin: 5px auto;
-    border-radius: 5px;
-    color: #fff;
-    padding: .8em;
-    margin: 0 5px;
-    text-decoration: none;
-    cursor: pointer;
-    
-    &:hover {
-      background-color: #1181b7;
+    .button-row {
+      margin: 15px 0px;
+      text-align: right;
+      
+      #submit-button {
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+        display: inline-block;
+        background-color: $action-blue;
+        margin: 5px auto;
+        border-radius: 5px;
+        color: #fff;
+        padding: .8em;
+        margin: 0 5px;
+        text-decoration: none;
+        cursor: pointer;
+        
+        &:hover {
+          background-color: #1181b7;
+        }
+      }
     }
-  }
   }
 }

@@ -11,9 +11,9 @@ export class UserButton extends React.Component {
   
   render() {
     return (
-      <a className={`user-button ${this.selectedClass()}`} onClick={() => this.onSelect()}>
+      <span className={`user-button ${this.selectedClass()}`} onClick={() => this.onSelect()}>
         {this.props.userName}
-      </a>
+      </span>
     )
   }
   
