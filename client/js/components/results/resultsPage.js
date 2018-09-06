@@ -9,7 +9,7 @@ export class ResultsPage extends React.Component {
       <div id="results-page">
         {
           this.props.sortedRestaurants.map((restaurant, i) => {
-            return <RestaurantResult key={i} restaurant={restaurant} />
+            return <RestaurantResult key={i} rank={i+1} restaurant={restaurant} />
           })
         }
         <Link to="/start">Edit Lunch Group</Link>

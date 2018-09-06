@@ -23,6 +23,28 @@ export class RestaurantResult extends React.Component {
     }
   }
   
+  renderRank() {
+    var rankClass;
+    
+    switch (this.props.rank) {
+      case 1:
+        rankClass = "gold"
+        break;
+      case 2:
+        rankClass = "silver"
+        break;
+      case 3:
+        rankClass = "bronze"
+        break;
+      default:
+        rankClass = "";
+    }
+    
+    return (
+      <div className={`restaurant-rank ${rankClass}`}>{this.props.rank}</div>  
+    )
+  }
+  
   render() {
     var restaurant = this.props.restaurant;
     
@@ -30,6 +52,7 @@ export class RestaurantResult extends React.Component {
       <div className="restaurant-result">
         <Route render={({history}) => (
           <div className="restaurant-info" onClick={() => this.showRestaurantInfo(history)}>
+            {this.renderRank()}
             <div className="image-container">
               {this.renderImage(restaurant)}
             </div>

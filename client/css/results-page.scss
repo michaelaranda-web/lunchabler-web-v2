@@ -1,12 +1,37 @@
 #results-page {
   .restaurant-result {
     display: flex;
-    padding: 10px 5px;
+    padding: 10px 0;
     width: 100%;
     max-width: 450px;
     
     .restaurant-info {
       display: flex;
+      
+      .restaurant-rank {
+        display: flex;
+        background-color: white;
+        color: black;
+        font-weight: bold;
+        justify-content: center;
+        margin-right: 5px;
+        width: 15px;
+        
+        &.gold {
+          color: white;
+          background-color: #ffd75e;
+        }
+        
+        &.silver {
+          color: white;
+          background-color: #b1aeae;
+        }
+        
+        &.bronze {
+          color: white;
+          background-color: #c18b51;
+        }
+      }
       
       .image-container {
         flex-shrink: 0;
@@ -16,7 +41,12 @@
 
         display: flex;
         justify-content: center;
-        align-items: center;        
+        align-items: center;   
+        
+        @media (max-width: 414px) {
+          height: 70px;
+          width: 70px;
+        }
         
         .fa-camera {
           color: white;
