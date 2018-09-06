@@ -1,7 +1,9 @@
 #results-page {
   .restaurant-result {
     display: flex;
-    margin: 12px 0;
+    padding: 10px 5px;
+    width: 100%;
+    max-width: 450px;
     
     .restaurant-info {
       display: flex;
@@ -27,6 +29,8 @@
       }
       
       .restaurant-details-container {
+        padding: 0 3px;
+        
         h4, p {
           margin: 0;
           font-size: 15px;
@@ -49,6 +53,9 @@
     .actions-container {
       display: flex;
       flex-direction: column;
+      flex-grow: 1;
+      align-items: flex-end;
+      padding: 0 5px;
       
       .select-restaurant {
         text-align: center;
