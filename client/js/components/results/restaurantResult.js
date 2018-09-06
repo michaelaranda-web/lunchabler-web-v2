@@ -2,8 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { addVisit } from '../../actions/visitsActions';
+import { Modal, Button } from 'react-bootstrap';
 
 export class RestaurantResult extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      showSelectRestaurantModal: false
+    }
+  }
+  
   renderDetails(restaurant) {
     var distance = restaurant.distance ? <p>{`${restaurant.distance} miles`}</p> : null;
     
@@ -45,6 +54,23 @@ export class RestaurantResult extends React.Component {
     )
   }
   
+  renderSelectRestaurantModal(restaurant) {
+    return (
+      <Modal show={this.state.showSelectRestaurantModal} onHide={() => this.closeSelectRestaurantModal()}>
+        <Modal.Header closeButton>
+          <Modal.Title>Select Restaurant</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Select {restaurant.name} for lunch today?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => this.closeSelectRestaurantModal()}>Close</Button>
+          <Button onClick={() => this.onSelectRestaurantConfirm()} bsStyle="primary">Confirm</Button>
+        </Modal.Footer>
+      </Modal>  
+    )
+  }
+  
   render() {
     var restaurant = this.props.restaurant;
     
@@ -60,10 +86,11 @@ export class RestaurantResult extends React.Component {
           </div>
         )} />
         <div className="actions-container">
-          <div className="select-restaurant" onClick={() => this.restaurantSelected(restaurant._id)}>
+          <div className="select-restaurant" onClick={() => this.showSelectRestaurantModal()}>
             <i className="fas fa-utensils" />
           </div>
         </div>
+        {this.renderSelectRestaurantModal(restaurant)}
       </div>
     )
   }
@@ -72,10 +99,22 @@ export class RestaurantResult extends React.Component {
     history.push(`/restaurants/${this.props.restaurant._id}`);
   }
   
-  restaurantSelected(restaurantId) {
-    addVisit(restaurantId)
+  showSelectRestaurantModal() {
+    this.setState({
+      showSelectRestaurantModal: true
+    })
+  }
+  
+  closeSelectRestaurantModal() {
+    this.setState({
+      showSelectRestaurantModal: false
+    })
+  }
+  
+  onSelectRestaurantConfirm() {
+    addVisit(this.props.restaurant._id)
       .then(() => {
-        console.log("successfully added a visit");
+        this.closeSelectRestaurantModal()
       });
   }
 }
