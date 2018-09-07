@@ -43,7 +43,7 @@ export class RestaurantInfoPage extends React.Component {
     )
   }
   
-  renderCommentsSection(restaurant) {
+  renderExistingComments(restaurant) {
     if (!!restaurant.comments) {
       return (
         <div>
@@ -54,32 +54,37 @@ export class RestaurantInfoPage extends React.Component {
               })
             }
           </div>
-          <div>
-            <div>
-              <label>
-                User:
-                <input 
-                  value={this.state.commentUserInput} 
-                  onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Comment:
-                <textarea 
-                  value={this.state.commentTextInput}
-                  onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
-                />
-              </label>
-            </div>
-            <div>
-              <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
-            </div>
-          </div>
         </div>
       )
     }
+  }
+  
+  renderAddComments() {
+    return (
+      <div>
+        <div>
+          <label>
+            User:
+            <input 
+              value={this.state.commentUserInput} 
+              onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Comment:
+            <textarea 
+              value={this.state.commentTextInput}
+              onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
+            />
+          </label>
+        </div>
+        <div>
+          <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
+        </div>
+      </div>  
+    )
   }
   
   //TODO: Refactor user preference options into a UserPreferenceRow component.
@@ -110,7 +115,8 @@ export class RestaurantInfoPage extends React.Component {
             })
           }
           {this.renderRecentVisits()}
-          {this.renderCommentsSection(restaurant)}
+          {this.renderExistingComments(restaurant)}
+          {this.renderAddComments()}
           <Link to="/results">Back to results</Link>
         </div>
       )
