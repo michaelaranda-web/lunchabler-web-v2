@@ -1,4 +1,4 @@
-import { RECEIVE_RESTAURANTS, RECEIVE_RESTAURANTS_SUCCESS, RECEIVE_RESTAURANTS_ERROR } from '../constants/constants';
+import { REQUEST_RESTAURANTS, RECEIVE_RESTAURANTS, RECEIVE_RESTAURANTS_SUCCESS, RECEIVE_RESTAURANTS_ERROR } from '../constants/constants';
 import { combineReducers } from 'redux';
 import { collectionAsObject } from '../../../helpers/helpers.js';
 
@@ -28,7 +28,19 @@ function restaurantsById(state = {}, action) {
   }
 }
 
+function isFetching(state = false, action) {
+  switch(action.type) {
+    case REQUEST_RESTAURANTS:
+      return true
+    case RECEIVE_RESTAURANTS:
+      return false
+    default:
+      return state
+  }
+}
+
 export const restaurantsReducer = combineReducers({
   byId: restaurantsById,
-  sorted: sortedRestaurants
+  sorted: sortedRestaurants,
+  isFetching: isFetching
 })
