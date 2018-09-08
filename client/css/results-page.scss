@@ -1,127 +1,137 @@
-#results-loading-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
 #results-page {
-  .restaurant-result {
-    display: flex;
-    padding: 10px 0;
-    width: 100%;
-    max-width: 450px;
+  #main-content {
+    &.page-loading {
+      display: none;
+    }
     
-    .restaurant-info {
+    .restaurant-result {
       display: flex;
-      flex-grow: 1;
-      cursor: pointer;
+      padding: 10px 0;
+      width: 100%;
+      max-width: 450px;
       
-      .restaurant-rank {
+      .restaurant-info {
         display: flex;
-        background-color: white;
-        color: black;
-        font-weight: bold;
-        justify-content: center;
-        margin-right: 5px;
-        width: 15px;
+        flex-grow: 1;
+        cursor: pointer;
         
-        &.gold {
-          color: white;
-          background-color: #ffd75e;
-        }
-        
-        &.silver {
-          color: white;
-          background-color: #b1aeae;
-        }
-        
-        &.bronze {
-          color: white;
-          background-color: #c18b51;
-        }
-      }
-      
-      .image-container {
-        flex-shrink: 0;
-        height: 80px;
-        width: 80px;
-        background-color: #e0e0e0;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;   
-        
-        @media (max-width: 414px) {
-          height: 70px;
-          width: 70px;
-        }
-        
-        .fa-camera {
-          color: white;
-          font-size: 35px;
-        }
-        
-        img {
-          max-width: 100%;
-        }
-      }
-      
-      .restaurant-details-container {
-        padding: 0 3px;
-        
-        h4, p {
-          margin: 0;
-          font-size: 15px;
+        .restaurant-rank {
+          display: flex;
+          background-color: white;
+          color: black;
+          font-weight: bold;
+          justify-content: center;
+          margin-right: 5px;
+          width: 15px;
           
-          @media (min-width: 415px) {
-            font-size: 16px;
+          &.gold {
+            color: white;
+            background-color: #ffd75e;
+          }
+          
+          &.silver {
+            color: white;
+            background-color: #b1aeae;
+          }
+          
+          &.bronze {
+            color: white;
+            background-color: #c18b51;
           }
         }
         
-        p {
-          font-size: 13px;
+        .image-container {
+          flex-shrink: 0;
+          height: 80px;
+          width: 80px;
+          background-color: #e0e0e0;
+  
+          display: flex;
+          justify-content: center;
+          align-items: center;   
           
-          @media (min-width: 415px) {
-            font-size: 14px;
+          @media (max-width: 414px) {
+            height: 70px;
+            width: 70px;
+          }
+          
+          .fa-camera {
+            color: white;
+            font-size: 35px;
+          }
+          
+          img {
+            max-width: 100%;
+          }
+        }
+        
+        .restaurant-details-container {
+          padding: 0 3px;
+          
+          h4, p {
+            margin: 0;
+            font-size: 15px;
+            
+            @media (min-width: 415px) {
+              font-size: 16px;
+            }
+          }
+          
+          p {
+            font-size: 13px;
+            
+            @media (min-width: 415px) {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+      
+      .actions-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 0 5px;
+        
+        .select-restaurant {
+          text-align: center;
+          border: 1px solid grey;
+          border-radius: 5px;
+          padding: 2px 8px;
+          cursor: pointer;
+          
+          background-color: #f7f7f7;
+          background: -webkit-linear-gradient(#fff, #e4e4e4);
+          background: linear-gradient(#fff, #e4e4e4);
+          
+          &:hover {
+            background-color: white;
+            background: none;
+          }
+          
+          .fas {
+            font-size: 15px;
+            line-height: 15px;
+            padding: 2px 0;
           }
         }
       }
     }
+  }
+  
+  #results-loading-screen {
+    display: none;
     
-    .actions-container {
+    &.page-loading {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
-      padding: 0 5px;
-      
-      .select-restaurant {
-        text-align: center;
-        border: 1px solid grey;
-        border-radius: 5px;
-        padding: 2px 8px;
-        cursor: pointer;
-        
-        background-color: #f7f7f7;
-        background: -webkit-linear-gradient(#fff, #e4e4e4);
-        background: linear-gradient(#fff, #e4e4e4);
-        
-        &:hover {
-          background-color: white;
-          background: none;
-        }
-        
-        .fas {
-          font-size: 15px;
-          line-height: 15px;
-          padding: 2px 0;
-        }
-      }
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;  
     }
   }
 }
