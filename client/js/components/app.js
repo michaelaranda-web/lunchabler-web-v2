@@ -7,7 +7,6 @@ import { fetchRestaurants } from '../actions/restaurantsActions';
 export class App extends React.Component {
   componentDidMount() {
     this.props.fetchUsers();
-    //TODO: Get user ids from front-end
     this.props.fetchRestaurants();
   }
   
