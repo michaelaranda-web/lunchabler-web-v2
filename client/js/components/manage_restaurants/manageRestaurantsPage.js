@@ -5,7 +5,7 @@ import { AddRestaurant } from './addRestaurant';
 export class ManageRestaurantsPage extends React.Component {
   render() {
     return (
-      <div id="manage-restaurants-page">
+      <div id="manage-restaurants-page" className="page-content">
         {
           Object.keys(this.props.restaurantsById).map((restaurantId) => {
             return <p>{this.props.restaurantsById[restaurantId].name}</p>

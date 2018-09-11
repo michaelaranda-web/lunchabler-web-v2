@@ -19,7 +19,7 @@ export class ManageUsersPage extends React.Component {
   
   render() {
     return (
-      <div id="manage-users-page">
+      <div id="manage-users-page" className="page-content">
         {
           Object.keys(this.props.usersById).map((userId) => {
             return <p>{this.props.usersById[userId].name}</p>

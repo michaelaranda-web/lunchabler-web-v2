@@ -1,9 +1,18 @@
-html, body {
-  font-family: 'Heebo', serif;
+html {
+  height: 100vh;
 }
 
-body {
-  padding: 5px;
+body, #lunchabler-container, #app, #app-content, #side-nav-bar {
+  height: inherit;
+}
+
+html, body {
+  font-family: 'Heebo', serif;
+  background-color: #f3f3f3;
+}
+
+#app-content {
+  display: flex;
 }
 
 h1 {
@@ -12,6 +21,10 @@ h1 {
 
 h3 {
   font-size: 18px;
+}
+
+.page-content {
+  padding: 5px 10px;
 }
 
 $success-green: #4caf50;

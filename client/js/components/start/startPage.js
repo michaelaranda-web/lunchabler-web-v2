@@ -7,7 +7,7 @@ import { fetchRestaurants } from '../../actions/restaurantsActions';
 export class StartPage extends React.Component {
   render() {
     return (
-      <div id="start-page">
+      <div id="start-page" className="page-content">
         <h1>LUNCH TIME</h1>
         <div id="main-content">
           <h3>1. LUNCH GROUP</h3>

@@ -93,7 +93,7 @@ export class RestaurantInfoPage extends React.Component {
     
     if (!!restaurant) {
       return (
-        <div id="restaurant-info-page">
+        <div id="restaurant-info-page" className="page-content">
           <h1>{restaurant.name}</h1>
             {this.renderUpdatingMessage()}
           {

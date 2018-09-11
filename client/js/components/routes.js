@@ -6,19 +6,23 @@ import ResultsPage from './results/resultsPage';
 import ManageUsersPage from './manage_users/manageUsersPage';
 import ManageRestaurantsPage from './manage_restaurants/manageRestaurantsPage';
 import RestaurantInfoPage from './restaurant_info/restaurantInfoPage';
+import SideNavBar from './sideNavBar';
 
 export class Routes extends React.Component {
   render() {
     return (
       <Router>
-        <Switch>
-          <Route exact path="/" component={HomePage}/>
-          <Route path="/restaurants/:restaurant_id" component={RestaurantInfoPage}/>
-          <Route path="/results" component={ResultsPage}/>
-          <Route path="/start" component={StartPage}/>
-          <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>
-          <Route path="/manage_users" component={ManageUsersPage}/>
-        </Switch>
+        <div id="app-content">
+          <SideNavBar />
+          <Switch>
+            <Route exact path="/" component={HomePage}/>
+            <Route path="/restaurants/:restaurant_id" component={RestaurantInfoPage}/>
+            <Route path="/results" component={ResultsPage}/>
+            <Route path="/start" component={StartPage}/>
+            <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>
+            <Route path="/manage_users" component={ManageUsersPage}/>
+          </Switch>
+        </div>
       </Router>
     )
   }
