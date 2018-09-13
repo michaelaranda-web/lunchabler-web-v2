@@ -14,7 +14,7 @@ export default class SideNavBar extends React.Component {
             <li>Home</li>
           </Link>
           <Link to="/start">
-            <li>Start</li>
+            <li>Lunch Time</li>
           </Link>
           <Link to="/manage_restaurants">
             <li>Manage Restaurants</li>

@@ -1,22 +1,27 @@
+$success-green: #4caf50;
+$action-blue: #42a0e2;
+$background-grey: #f3f3f3;
+
 html {
   height: 100vh;
 }
 
-body, #lunchabler-container, #app, #app-content, #side-nav-bar {
+body, #lunchabler-container, #app-content, #main-content, #side-nav-bar {
   height: inherit;
 }
 
 html, body {
   font-family: 'Heebo', serif;
-  background-color: #f3f3f3;
+  background-color: $background-grey;
 }
 
-#app-content {
+#main-content {
   display: flex;
 }
 
 h1 {
   font-size: 30px;
+  margin: 0;
 }
 
 h3 {
@@ -27,5 +32,10 @@ h3 {
   padding: 5px 10px;
 }
 
-$success-green: #4caf50;
-$action-blue: #42a0e2;
+a {
+  text-decoration: none;
+  
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}

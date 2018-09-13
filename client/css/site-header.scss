@@ -1,0 +1,38 @@
+#site-header {
+  background-color: white;
+  border-bottom: 3px solid $background-grey;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  
+  .header-content-left {
+    flex-grow: 1;
+    
+    #site-name {
+      color: black;
+      font-size: 22px;
+      padding: 0 10px;
+      
+      &:hover, &:focus {
+        color: black;
+      }
+    }  
+  }
+  
+  .header-content-right {
+    padding: 0 10px;
+    
+    @media (min-width: 768px) {
+      display: none;
+    }
+    
+    #mobile-nav-menu-icon {
+      padding: 3px 8px;
+      font-size: 13px;
+      
+      &:focus {
+        background-color: white;
+      }
+    }
+  }
+}

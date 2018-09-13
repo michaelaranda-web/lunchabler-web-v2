@@ -6,6 +6,7 @@ import ResultsPage from './results/resultsPage';
 import ManageUsersPage from './manage_users/manageUsersPage';
 import ManageRestaurantsPage from './manage_restaurants/manageRestaurantsPage';
 import RestaurantInfoPage from './restaurant_info/restaurantInfoPage';
+import SiteHeader from './siteHeader';
 import SideNavBar from './sideNavBar';
 
 export class Routes extends React.Component {
@@ -13,15 +14,18 @@ export class Routes extends React.Component {
     return (
       <Router>
         <div id="app-content">
-          <SideNavBar />
-          <Switch>
-            <Route exact path="/" component={HomePage}/>
-            <Route path="/restaurants/:restaurant_id" component={RestaurantInfoPage}/>
-            <Route path="/results" component={ResultsPage}/>
-            <Route path="/start" component={StartPage}/>
-            <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>
-            <Route path="/manage_users" component={ManageUsersPage}/>
-          </Switch>
+          <SiteHeader />
+          <div id="main-content">
+            <SideNavBar />
+            <Switch>
+              <Route exact path="/" component={HomePage}/>
+              <Route path="/restaurants/:restaurant_id" component={RestaurantInfoPage}/>
+              <Route path="/results" component={ResultsPage}/>
+              <Route path="/start" component={StartPage}/>
+              <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>
+              <Route path="/manage_users" component={ManageUsersPage}/>
+            </Switch>
+          </div>
         </div>
       </Router>
     )

@@ -31,16 +31,18 @@ export class RestaurantInfoPage extends React.Component {
   }
   
   renderRecentVisits() {
-    return (
-      <div>
-        <p>Recent visits</p>
-        {
-          this.state.visits.map((visit) => {
-            return <p>{this.formatVisitDate(visit.date)}</p>
-          })
-        }
-      </div>
-    )
+    if (this.state.visits.length > 0) {
+      return (
+        <div>
+          <p>Recent visits</p>
+          {
+            this.state.visits.map((visit) => {
+              return <p>{this.formatVisitDate(visit.date)}</p>
+            })
+          }
+        </div>
+      )
+    }
   }
   
   renderExistingComments(restaurant) {

@@ -58,7 +58,7 @@ export class RestaurantResult extends React.Component {
     return (
       <Modal show={this.state.showSelectRestaurantModal} onHide={() => this.closeSelectRestaurantModal()}>
         <Modal.Header closeButton>
-          <Modal.Title>Select Restaurant</Modal.Title>
+          <Modal.Title>Confirm Selection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>Select {restaurant.name} for lunch today?</p>

@@ -15,7 +15,7 @@ export class ResultsPage extends React.Component {
   
   render() {
     return (
-      <div id="results-page">
+      <div id="results-page" className="page-content">
         {this.renderLoadingScreen()}
         <div id="main-content" className={this.loadingClass()}>
           {
