@@ -9,7 +9,7 @@ export class StartPage extends React.Component {
     return (
       <div id="start-page" className="page-content">
         <h1>LUNCH TIME</h1>
-        <div id="main-content">
+        <div id="start-page-content">
           <h3>1. LUNCH GROUP</h3>
           <p>Specify today's lunch group, so that user preferences can be taken into consideration.</p>
           <LunchGroupSelector />
