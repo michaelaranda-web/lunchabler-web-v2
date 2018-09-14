@@ -28,7 +28,7 @@ export class RestaurantResult extends React.Component {
     if (!!restaurant.imageUrl) {
       return <img src={restaurant.imageUrl} />
     } else {
-      return <i className="fas fa-camera" />
+      return <i className="fas fa-utensils" />
     }
   }
   
@@ -88,7 +88,7 @@ export class RestaurantResult extends React.Component {
           )} />
           <div className="actions-container">
             <div className="select-restaurant" onClick={() => this.showSelectRestaurantModal()}>
-              <i className="fas fa-utensils" />
+              <i className="fas fa-check" />
             </div>
           </div>
           {this.renderSelectRestaurantModal(restaurant)}

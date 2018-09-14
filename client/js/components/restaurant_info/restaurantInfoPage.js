@@ -53,7 +53,7 @@ export class RestaurantInfoPage extends React.Component {
     if (!!restaurant.imageUrl) {
       return <img src={restaurant.imageUrl} />
     } else {
-      return <i className="fas fa-camera" />
+      return <i className="fas fa-utensils" />
     }
   }
   
