@@ -42,6 +42,10 @@
       text-decoration: none;
       cursor: pointer;
       
+      &:hover {
+        background-color: #e4e4e4;
+      }
+      
       &.selected {
         border-color: #4caf50;
         background-color: #4caf50;
@@ -59,23 +63,10 @@
       }
       
       #submit-button {
-        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
-        display: inline-block;
-        background-color: $action-blue;
-        margin: 5px auto;
-        border-radius: 5px;
-        color: #fff;
-        padding: .8em;
-        margin: 0 5px;
-        text-decoration: none;
-        cursor: pointer;
+        @include standard-button($action-blue, #1181b7)
         
         @media (max-width: 767px) {
           width: 95%;
-        }
-        
-        &:hover {
-          background-color: #1181b7;
         }
       }
     }
