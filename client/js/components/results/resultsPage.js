@@ -18,12 +18,16 @@ export class ResultsPage extends React.Component {
       <div id="results-page" className="page-content">
         {this.renderLoadingScreen()}
         <div id="results-page-content" className={this.loadingClass()}>
-          {
-            this.props.sortedRestaurants.map((restaurant, i) => {
-              return <RestaurantResult key={i} rank={i+1} restaurant={restaurant} />
-            })
-          }
-          <Link to="/start">Edit Lunch Group</Link>
+          <div id="restaurant-results">
+            {
+              this.props.sortedRestaurants.map((restaurant, i) => {
+                return <RestaurantResult key={i} rank={i+1} restaurant={restaurant} />
+              })
+            }
+          </div>
+          <div className="button-row">
+            <Link to="/start" id="edit-lunch-group-button">Edit Lunch Group</Link>
+          </div>
         </div>
       </div>
     )

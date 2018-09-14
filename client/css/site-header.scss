@@ -1,7 +1,7 @@
 #site-header {
-  background-color: $site-header-green;
+  background-color: $site-theme-green;
   border-bottom: 3px solid $background-grey;
-  height: 45px;
+  height: 55px;
   display: flex;
   align-items: center;
   
@@ -12,11 +12,7 @@
       color: white;
       font-size: 22px;
       padding: 0 10px;
-      
-      &:hover, &:focus {
-        color: black;
-      }
-    }  
+    }
   }
   
   .header-content-right {
@@ -27,7 +23,7 @@
     }
     
     #mobile-nav-menu-icon {
-      padding: 3px 8px;
+      padding: 5px 10px;
       font-size: 13px;
       
       &:focus {
@@ -43,11 +39,7 @@
       li {
         padding: 4px 0;
         font-weight: bold;
-        font-size: 12px;
-        
-        @media (max-width: 767px) {
-          font-size: 14px;
-        }
+        font-size: 16px;
       }
     }
   }

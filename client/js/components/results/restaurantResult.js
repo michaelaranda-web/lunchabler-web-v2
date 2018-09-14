@@ -61,7 +61,7 @@ export class RestaurantResult extends React.Component {
           <Modal.Title>Confirm Selection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Select {restaurant.name} for lunch today?</p>
+          <p>Select <strong>{restaurant.name}</strong> for lunch today?</p>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.closeSelectRestaurantModal()}>Close</Button>
@@ -75,22 +75,24 @@ export class RestaurantResult extends React.Component {
     var restaurant = this.props.restaurant;
     
     return (
-      <div className="restaurant-result">
-        <Route render={({history}) => (
-          <div className="restaurant-info" onClick={() => this.showRestaurantInfo(history)}>
-            {this.renderRank()}
-            <div className="image-container">
-              {this.renderImage(restaurant)}
+      <div className="restaurant-result-container">
+        {this.renderRank()}
+        <div className="restaurant-result">
+          <Route render={({history}) => (
+            <div className="restaurant-info" onClick={() => this.showRestaurantInfo(history)}>
+              <div className="image-container">
+                {this.renderImage(restaurant)}
+              </div>
+              {this.renderDetails(restaurant)}
             </div>
-            {this.renderDetails(restaurant)}
+          )} />
+          <div className="actions-container">
+            <div className="select-restaurant" onClick={() => this.showSelectRestaurantModal()}>
+              <i className="fas fa-utensils" />
+            </div>
           </div>
-        )} />
-        <div className="actions-container">
-          <div className="select-restaurant" onClick={() => this.showSelectRestaurantModal()}>
-            <i className="fas fa-utensils" />
-          </div>
+          {this.renderSelectRestaurantModal(restaurant)}
         </div>
-        {this.renderSelectRestaurantModal(restaurant)}
       </div>
     )
   }
