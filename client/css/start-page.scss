@@ -18,14 +18,7 @@
     padding-bottom: 50px;
     
     .section {
-      @include box-shadow;
-      
-      background-color: white;
-      padding: 25px;
-      
-      @media (min-width: 768px) {
-        padding: 25px 10px;
-      }
+      @include section;
     }
     
     .user-button {

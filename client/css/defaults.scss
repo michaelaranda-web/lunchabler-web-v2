@@ -1,4 +1,4 @@
-$basic-font-grey: #a0a0a0;
+$basic-font-grey: #636363;
 $success-green: #4caf50;
 $action-blue: #42a0e2;
 $background-grey: #f3f3f3;
@@ -8,6 +8,60 @@ $site-theme-green: #3D9970;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 
                   0 1px 1px 0 rgba(0,0,0,.14), 
                   0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+@mixin section {
+  @include box-shadow;
+  
+  background-color: white;
+  padding: 25px;
+  
+  @media (min-width: 768px) {
+    padding: 25px 10px;
+  }
+}
+
+@mixin standard-button($background-color, $hover-color) {
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+  display: inline-block;
+  background-color: $background-color;
+  margin: 5px auto;
+  border-radius: 5px;
+  color: #fff;
+  padding: .8em;
+  margin: 0 5px;
+  text-decoration: none;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: $hover-color;
+  }
+}
+
+@mixin restaurant-image-container($dimension, $non-mobile-dimension) {
+  flex-shrink: 0;
+  height: $dimension;
+  width: $dimension;
+  background-color: #e0e0e0;
+  margin: 2px 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;   
+  
+  @media (min-width: 415px) {
+    height: $non-mobile-dimension;
+    width: $non-mobile-dimension;
+  }
+  
+  .fa-camera {
+    color: white;
+    font-size: 35px;
+  }
+  
+  img {
+    max-width: 100%;
+  }
 }
 
 html {
@@ -50,21 +104,4 @@ a {
 
 p {
   color: $basic-font-grey;
-}
-
-@mixin standard-button($background-color, $hover-color) {
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
-  display: inline-block;
-  background-color: $background-color;
-  margin: 5px auto;
-  border-radius: 5px;
-  color: #fff;
-  padding: .8em;
-  margin: 0 5px;
-  text-decoration: none;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: $hover-color;
-  }
 }

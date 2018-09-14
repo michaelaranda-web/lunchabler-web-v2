@@ -24,6 +24,39 @@ export class RestaurantInfoPage extends React.Component {
     this.fetchVisits();
   }
   
+  renderGeneralInfo(restaurant) {
+    return (
+      <div id="general-info" className="section">
+        <div id="restaurant-image-container">
+          {this.renderImage(restaurant)}
+        </div>
+        <h1>{restaurant.name}</h1>
+        {this.renderYelpInfo(restaurant)}
+      </div>
+    )
+  }
+  
+  renderYelpInfo(restaurant) {
+    if (!!restaurant.distance) {
+      return (
+        <div id="general-info-content-container">
+          <p>{restaurant.distance} miles</p>
+          <p>{restaurant.displayAddress1}</p>
+          <p>{restaurant.displayAddress2}</p>
+          <a href={restaurant.url} target="_blank">More info at Yelp</a>
+        </div>
+      )  
+    }
+  }
+  
+  renderImage(restaurant) {
+    if (!!restaurant.imageUrl) {
+      return <img src={restaurant.imageUrl} />
+    } else {
+      return <i className="fas fa-camera" />
+    }
+  }
+  
   renderUpdatingMessage() {
     if (this.state.updating) {
       return <h1><strong>Updating...</strong></h1>
@@ -96,8 +129,8 @@ export class RestaurantInfoPage extends React.Component {
     if (!!restaurant) {
       return (
         <div id="restaurant-info-page" className="page-content">
-          <h1>{restaurant.name}</h1>
-            {this.renderUpdatingMessage()}
+          {this.renderGeneralInfo(restaurant)}
+          {this.renderUpdatingMessage()}
           {
             Object.keys(this.props.usersById).map((userId) => {
               var user = this.props.usersById[userId];

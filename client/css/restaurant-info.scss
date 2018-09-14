@@ -1,4 +1,26 @@
 #restaurant-info-page {
+  flex-grow: 1;
+  
+  #general-info {
+    @include section;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    h1 {
+      margin: 20px 0;
+    }
+    
+    #restaurant-image-container {
+      @include restaurant-image-container(100px, 120px);
+    }
+    
+    #general-info-content-container {
+      align-self: left;
+    }
+  }
+  
   .user-preference-options {
     .user-name {
       width: 150px;
