@@ -8,6 +8,7 @@ import ManageRestaurantsPage from './manage_restaurants/manageRestaurantsPage';
 import RestaurantInfoPage from './restaurant_info/restaurantInfoPage';
 import SiteHeader from './siteHeader';
 import SideNavBar from './sideNavBar';
+import ScrollToTop from './scrollToTop';
 
 export class Routes extends React.Component {
   render() {
@@ -26,6 +27,7 @@ export class Routes extends React.Component {
               <Route path="/manage_users" component={ManageUsersPage}/>
             </Switch>
           </div>
+          <ScrollToTop />
         </div>
       </Router>
     )
