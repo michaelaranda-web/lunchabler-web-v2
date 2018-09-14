@@ -17,7 +17,7 @@ export class ResultsPage extends React.Component {
     return (
       <div id="results-page" className="page-content">
         {this.renderLoadingScreen()}
-        <div id="main-content" className={this.loadingClass()}>
+        <div id="results-page-content" className={this.loadingClass()}>
           {
             this.props.sortedRestaurants.map((restaurant, i) => {
               return <RestaurantResult key={i} rank={i+1} restaurant={restaurant} />

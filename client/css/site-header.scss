@@ -1,5 +1,5 @@
 #site-header {
-  background-color: white;
+  background-color: $site-header-green;
   border-bottom: 3px solid $background-grey;
   height: 45px;
   display: flex;
@@ -9,7 +9,7 @@
     flex-grow: 1;
     
     #site-name {
-      color: black;
+      color: white;
       font-size: 22px;
       padding: 0 10px;
       
@@ -32,6 +32,22 @@
       
       &:focus {
         background-color: white;
+      }
+    }
+    
+    .dropdown-menu {
+      list-style: none;
+      margin: 0;
+      padding: 10px;
+      
+      li {
+        padding: 4px 0;
+        font-weight: bold;
+        font-size: 12px;
+        
+        @media (max-width: 767px) {
+          font-size: 14px;
+        }
       }
     }
   }

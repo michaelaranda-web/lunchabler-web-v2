@@ -1,12 +1,32 @@
 #start-page {
   font-size: 14px;
   
+  h1 {
+    @include box-shadow;
+    
+    text-align: center;
+    background-color: white;
+    padding: 15px;
+  }
+  
   h3, p {
     margin: 10px 5px;
   }
   
   #start-page-content {
-    margin-top: 25px;  
+    margin-top: 10px;
+    padding-bottom: 50px;
+    
+    .section {
+      @include box-shadow;
+      
+      background-color: white;
+      padding: 25px;
+      
+      @media (min-width: 768px) {
+        padding: 25px 10px;
+      }
+    }
     
     .user-button {
       @media (max-width: 414px) {
@@ -17,7 +37,7 @@
       background-color: white;
       border: 3px solid lightgrey;
       border-radius: 5px;
-      padding: .5em .8em;
+      padding: .6em .8em;
       margin: 5px;
       text-decoration: none;
       cursor: pointer;
