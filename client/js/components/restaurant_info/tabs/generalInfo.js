@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchRestaurantVisits } from '../../actions/visitsActions';
+import { fetchRestaurantVisits } from '../../../actions/visitsActions';
 import moment from 'moment';
 
 export class GeneralInfo extends React.Component {

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { fetchRestaurants } from './restaurantsActions';
 
 export function fetchPreferences(restaurantId) {
   var restaurantQueryParam = !!restaurantId ? `?restaurant=${restaurantId}` : '';
@@ -20,16 +19,12 @@ export function removePreference(userId, restaurantId) {
   }) 
 }
 
-//TODO: Figure out a way not to have to manually include LunchGroup when refetching restaurants
-export function addPreferenceAndRefetchRestaurants(userId, restaurantId, preference) {
+export function addPreference(userId, restaurantId, preference) {
   return function(dispatch) {
     return axios.post('/api/preferences', {
       userId: userId,
       restaurantId: restaurantId,
       preference: preference
-    })
-    .then(function (response) {
-      return dispatch(fetchRestaurants());
     })
     .catch(function (error) {
       console.log(error);
