@@ -37,13 +37,13 @@ export class RestaurantResult extends React.Component {
     
     switch (this.props.rank) {
       case 1:
-        rankClass = "gold"
+        rankClass = "gold top-result"
         break;
       case 2:
-        rankClass = "silver"
+        rankClass = "silver top-result"
         break;
       case 3:
-        rankClass = "bronze"
+        rankClass = "bronze top-result"
         break;
       default:
         rankClass = "";

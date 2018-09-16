@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPreferences, removePreference, addPreferenceAndRefetchRestaurants } from '../../actions/preferencesActions';
 import { addComment, fetchRestaurants } from '../../actions/restaurantsActions';
-import { fetchRestaurantVisits } from '../../actions/visitsActions';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
+import { GeneralInfo } from './generalInfo';
 
 export class RestaurantInfoPage extends React.Component {
   constructor(props) {
@@ -14,69 +13,14 @@ export class RestaurantInfoPage extends React.Component {
       updating: false,
       preferences: {},
       commentUserInput: "",
-      commentTextInput: "",
-      visits: []
+      commentTextInput: ""
     }
   }
   
   componentDidMount() {
     this.fetchRestaurantPreferences();
-    this.fetchVisits();
   }
   
-  renderGeneralInfo(restaurant) {
-    return (
-      <div id="general-info" className="section">
-        <div id="restaurant-image-container">
-          {this.renderImage(restaurant)}
-        </div>
-        <h1>{restaurant.name}</h1>
-        {this.renderYelpInfo(restaurant)}
-      </div>
-    )
-  }
-  
-  renderYelpInfo(restaurant) {
-    if (!!restaurant.distance) {
-      return (
-        <div id="general-info-content-container">
-          <p>{restaurant.distance} miles</p>
-          <p>{restaurant.displayAddress1}</p>
-          <p>{restaurant.displayAddress2}</p>
-          <a href={restaurant.url} target="_blank">More info at Yelp</a>
-        </div>
-      )  
-    }
-  }
-  
-  renderImage(restaurant) {
-    if (!!restaurant.imageUrl) {
-      return <img src={restaurant.imageUrl} />
-    } else {
-      return <i className="fas fa-utensils" />
-    }
-  }
-  
-  renderUpdatingMessage() {
-    if (this.state.updating) {
-      return <h1><strong>Updating...</strong></h1>
-    }
-  }
-  
-  renderRecentVisits() {
-    if (this.state.visits.length > 0) {
-      return (
-        <div>
-          <p>Recent visits</p>
-          {
-            this.state.visits.map((visit) => {
-              return <p>{this.formatVisitDate(visit.date)}</p>
-            })
-          }
-        </div>
-      )
-    }
-  }
   
   renderExistingComments(restaurant) {
     if (!!restaurant.comments) {
@@ -129,8 +73,7 @@ export class RestaurantInfoPage extends React.Component {
     if (!!restaurant) {
       return (
         <div id="restaurant-info-page" className="page-content">
-          {this.renderGeneralInfo(restaurant)}
-          {this.renderUpdatingMessage()}
+          <GeneralInfo restaurant={restaurant} />
           {
             Object.keys(this.props.usersById).map((userId) => {
               var user = this.props.usersById[userId];
@@ -149,7 +92,6 @@ export class RestaurantInfoPage extends React.Component {
               )
             })
           }
-          {this.renderRecentVisits()}
           {this.renderExistingComments(restaurant)}
           {this.renderAddComments()}
           <Link to="/results">Back to results</Link>
@@ -197,13 +139,6 @@ export class RestaurantInfoPage extends React.Component {
     })
   }
   
-  fetchVisits() {
-    fetchRestaurantVisits(this.props.match.params.restaurant_id)
-      .then(visits =>
-        this.setState({visits: visits})
-      )
-  }
-  
   onPreferenceClick(userId, preference) {
     if (this.state.updating) { return }
     
@@ -230,10 +165,6 @@ export class RestaurantInfoPage extends React.Component {
         this.setState({updating: false});
       })
     });
-  }
-  
-  formatVisitDate(visitDate) {
-    return moment(visitDate).format('MMMM Do YYYY');
   }
   
   currentPreferenceClass(userId, preference) {

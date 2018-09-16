@@ -34,6 +34,10 @@
         &.bronze {
           background-color: #c18b51;
         }
+        
+        &.top-result {
+          font-size: 21px;
+        }
       }
       
       .restaurant-result {
@@ -82,7 +86,7 @@
             text-align: center;
             border: 1px solid grey;
             border-radius: 5px;
-            padding: 2px 8px;
+            padding: 2px 5px;
             cursor: pointer;
             
             background-color: #f7f7f7;
@@ -98,6 +102,8 @@
               font-size: 15px;
               line-height: 15px;
               padding: 2px 0;
+              position: relative;
+              top: 1px;
             }
           }
         }
