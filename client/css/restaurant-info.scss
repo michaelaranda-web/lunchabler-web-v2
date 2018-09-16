@@ -29,6 +29,10 @@
         color: white;
       }
       
+      &:hover:not(.open) {
+        background: #efefef;
+      }
+      
       .fas, .far {
         font-size: 23px;
         
