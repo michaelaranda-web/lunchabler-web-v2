@@ -20,9 +20,9 @@ export class UserPreferences extends React.Component {
     //TODO: If restaurant is null or preferences is empty, return loading page / make a shared loading page for all tabs
     if (!!this.props.restaurant) {
       return (
-        <div id="user-preferences-container">
+        <div id="user-preferences-container" className="restaurant-info-section">
           <span className="section-label">PREFERENCES</span>
-          <div id="user-preferences">
+          <div id="user-preferences" className="section-content">
             {
               Object.keys(this.props.usersById).map((userId) => {
                 var user = this.props.usersById[userId];

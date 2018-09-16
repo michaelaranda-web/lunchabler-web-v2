@@ -43,15 +43,23 @@
     }
   }
   
-  .section-label {
-    background: $site-theme-green;
-    color: white;
-    padding: 3px 15px 1px;
-    font-size: 13px;
-    border-radius: 3px 3px 0 0;
+  .restaurant-info-section {
+    margin-top: 25px;
     
-    @media (min-width: 768px) {
-      font-size: 14px;
+    .section-label {
+      background: $site-theme-green;
+      color: white;
+      padding: 3px 15px 1px;
+      font-size: 13px;
+      border-radius: 3px 3px 0 0;
+      
+      @media (min-width: 768px) {
+        font-size: 14px;
+      }
+    }
+    
+    .section-content {
+      @include section;
     }
   }
   
@@ -76,11 +84,7 @@
   }
   
   #user-preferences-container {
-    margin-top: 25px;
-    
     #user-preferences {
-      @include section;
-      
       .user-preference-options {
         display: flex;
         padding: 5px;
@@ -105,6 +109,7 @@
             font-size: 23px;
             opacity: 0.37;
             padding: 0 2px;
+            cursor: pointer;
             
             &.current-preference {
               opacity: 1.0;
@@ -113,5 +118,9 @@
         }
       }  
     }  
+  }
+  
+  #comments-tab {
+    
   }
 }

@@ -16,12 +16,15 @@ export class Comments extends React.Component {
   renderExistingComments() {
     if (!!this.props.restaurant.comments) {
       return (
-        <div id="existing-comments">
-          {
-            this.props.restaurant.comments.map((comment) => {
-              return <div><p>{comment.user}: </p><p>{comment.text}</p></div>  
-            })
-          }
+        <div id="existing-comments-section" className="restaurant-info-section">
+          <span className="section-label">COMMENTS</span>
+          <div className="section-content">
+            {
+              this.props.restaurant.comments.map((comment) => {
+                return <div><p>{comment.user}: </p><p>{comment.text}</p></div>  
+              })
+            }
+          </div>
         </div>
       )
     }
@@ -29,35 +32,38 @@ export class Comments extends React.Component {
   
   renderAddComments() {
     return (
-      <div id="add-comment-section">
-        <div>
-          <label>
-            User:
-            <input 
-              value={this.state.commentUserInput} 
-              onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
-            />
-          </label>
+      <div id="add-comment-section" className="restaurant-info-section">
+        <span className="section-label">ADD COMMENT</span>
+        <div className="section-content">
+          <div>
+            <label>
+              User:
+              <input 
+                value={this.state.commentUserInput} 
+                onChange={(e) => {this.setState({commentUserInput: e.target.value})}}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Comment:
+              <textarea 
+                value={this.state.commentTextInput}
+                onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
+              />
+            </label>
+          </div>
+          <div>
+            <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
+          </div>
         </div>
-        <div>
-          <label>
-            Comment:
-            <textarea 
-              value={this.state.commentTextInput}
-              onChange={(e) => {this.setState({commentTextInput: e.target.value})}}
-            />
-          </label>
-        </div>
-        <div>
-          <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
-        </div>
-      </div>  
+      </div>
     )
   }
   
   render() {
     return (
-      <div id="add-comments-section">
+      <div id="comments-tab">
         {this.renderExistingComments()}
         {this.renderAddComments()}
       </div>
