@@ -20,26 +20,29 @@ export class UserPreferences extends React.Component {
     //TODO: If restaurant is null or preferences is empty, return loading page / make a shared loading page for all tabs
     if (!!this.props.restaurant) {
       return (
-        <div id="user-preferences">
-          {
-            Object.keys(this.props.usersById).map((userId) => {
-              var user = this.props.usersById[userId];
-              
-              return (
-                <div className="user-preference-options">
-                  <label className="user-name">{user.name}</label>
-                  <div className="preference-options">
-                    <i className={`far fa-grin-beam ${this.currentPreferenceClass(user._id, "yes")}`}
-                       onClick={() => this.onPreferenceClick(user._id, "yes")}></i>
-                    <i className={`far fa-meh ${this.currentPreferenceClass(user._id, "meh")}`}
-                       onClick={() => this.onPreferenceClick(user._id, "meh")}></i>
-                    <i className={`far fa-angry ${this.currentPreferenceClass(user._id, "no")}`}
-                       onClick={() => this.onPreferenceClick(user._id, "no")}></i>
+        <div id="user-preferences-container">
+          <span className="section-label">PREFERENCES</span>
+          <div id="user-preferences">
+            {
+              Object.keys(this.props.usersById).map((userId) => {
+                var user = this.props.usersById[userId];
+                
+                return (
+                  <div className="user-preference-options">
+                    <label className="user-name">{user.name}</label>
+                    <div className="preference-options">
+                      <i className={`far fa-grin-beam ${this.currentPreferenceClass(user._id, "yes")}`}
+                         onClick={() => this.onPreferenceClick(user._id, "yes")}></i>
+                      <i className={`far fa-meh ${this.currentPreferenceClass(user._id, "meh")}`}
+                         onClick={() => this.onPreferenceClick(user._id, "meh")}></i>
+                      <i className={`far fa-angry ${this.currentPreferenceClass(user._id, "no")}`}
+                         onClick={() => this.onPreferenceClick(user._id, "no")}></i>
+                    </div>
                   </div>
-                </div>
-              )
-            })
-          }
+                )
+              })
+            }
+          </div>
         </div>
       )
     } else { return null; }

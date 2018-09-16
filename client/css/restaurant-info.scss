@@ -43,6 +43,18 @@
     }
   }
   
+  .section-label {
+    background: $site-theme-green;
+    color: white;
+    padding: 3px 15px 1px;
+    font-size: 13px;
+    border-radius: 3px 3px 0 0;
+    
+    @media (min-width: 768px) {
+      font-size: 14px;
+    }
+  }
+  
   #general-info {
     @include section;
     
@@ -63,24 +75,43 @@
     }
   }
   
-  .user-preference-options {
-    .user-name {
-      width: 150px;
-    }
+  #user-preferences-container {
+    margin-top: 25px;
+    
+    #user-preferences {
+      @include section;
       
-    .preference-options {
-      display: inline-block;
-      margin-left: 5px;
-      
-      .far {
-        font-size: 16px;
-        opacity: 0.37;
-        padding: 0 2px;
+      .user-preference-options {
+        display: flex;
+        padding: 5px;
         
-        &.current-preference {
-          opacity: 1.0;
+        &:first-of-type {
+          padding-top: 0;
+        }
+        
+        &:last-of-type {
+          padding-bottom: 0;
+        }
+        
+        .user-name {
+          width: 150px;
+        }
+          
+        .preference-options {
+          display: inline-block;
+          margin-left: 5px;
+          
+          .far {
+            font-size: 23px;
+            opacity: 0.37;
+            padding: 0 2px;
+            
+            &.current-preference {
+              opacity: 1.0;
+            }
+          }  
         }
       }  
-    }
+    }  
   }
 }
