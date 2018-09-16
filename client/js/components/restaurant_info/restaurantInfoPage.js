@@ -10,20 +10,20 @@ export class RestaurantInfoPage extends React.Component {
     super(props)
     
     this.state = {
-      openTab: 'general-info'
+      openTab: 1
     }
   }
   
   renderTabs() {
     return (
       <div id="tabs">
-        <div className="tab" onClick={ () => this.switchTab('general-info') }>
+        <div className={`tab ${this.activeTabClass(1)}`} onClick={ () => this.switchTab(1) }>
           <i class="fas fa-align-left"></i>
         </div>
-        <div className="tab" onClick={ () => this.switchTab('preferences') }>
+        <div className={`tab ${this.activeTabClass(2)}`} onClick={ () => this.switchTab(2) }>
           <i class="far fa-grin-beam"></i>
         </div>
-        <div className="tab" onClick={ () => this.switchTab('comments') }>
+        <div className={`tab ${this.activeTabClass(3)}`} onClick={ () => this.switchTab(3) }>
           <i class="far fa-comment-dots"></i>
         </div>
       </div>
@@ -32,10 +32,13 @@ export class RestaurantInfoPage extends React.Component {
   
   renderOpenTab(restaurant) {
     switch(this.state.openTab) {
-      case 'preferences':
+      case 1:
+        return <GeneralInfo restaurant={restaurant} />
+        break;
+      case 2:
         return <UserPreferences restaurant={restaurant} />
         break;
-      case 'comments':
+      case 3:
         return <Comments restaurant={restaurant} />
         break;
       default:
@@ -55,6 +58,10 @@ export class RestaurantInfoPage extends React.Component {
         </div>
       )
     } else { return null; }
+  }
+  
+  activeTabClass(tab) {
+    return this.state.openTab === tab ? 'open' : '';
   }
   
   switchTab(tab) {
