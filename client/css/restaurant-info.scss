@@ -1,6 +1,20 @@
 #restaurant-info-page {
   flex-grow: 1;
   
+  #tabs {
+    display: flex;
+    justify-content: center;
+    
+    .tab {
+      flex-grow: 1;
+      text-align: center;
+      
+      .fas, .far {
+        font-size: 28px;
+      }
+    }
+  }
+  
   #general-info {
     @include section;
     
