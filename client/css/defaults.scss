@@ -74,11 +74,17 @@ body, #lunchabler-container, #app-content, #main-content {
 
 html, body {
   font-family: 'Heebo', serif;
-  background-color: $background-grey;
+}
+
+#app-content {
+  background: #fffed3;
 }
 
 #main-content {
   display: flex;
+  max-width: 1200px;
+  margin: auto;
+  background-color: $background-grey;
 }
 
 h1 {
