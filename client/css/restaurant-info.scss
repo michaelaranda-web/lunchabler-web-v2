@@ -24,7 +24,7 @@
         margin-right: 0;
       }
       
-      &.open {
+      &.active {
         background: #dadada;
         color: white;
       }
@@ -40,6 +40,14 @@
           font-size: 28px;
         }
       }
+    }
+  }
+  
+  .tab-container {
+    display: none;
+    
+    &.active {
+      display: block;
     }
   }
   

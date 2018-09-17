@@ -10,7 +10,7 @@ export class RestaurantInfoPage extends React.Component {
     super(props)
     
     this.state = {
-      openTab: 1
+      activeTab: 1
     }
   }
   
@@ -30,22 +30,6 @@ export class RestaurantInfoPage extends React.Component {
     )
   }
   
-  renderOpenTab(restaurant) {
-    switch(this.state.openTab) {
-      case 1:
-        return <GeneralInfo restaurant={restaurant} />
-        break;
-      case 2:
-        return <UserPreferences restaurant={restaurant} />
-        break;
-      case 3:
-        return <Comments restaurant={restaurant} />
-        break;
-      default:
-        return <GeneralInfo restaurant={restaurant} />
-    }
-  }
-  
   render() {
     var restaurant = this.props.restaurantsById[this.props.match.params.restaurant_id];
     
@@ -53,7 +37,15 @@ export class RestaurantInfoPage extends React.Component {
       return (
         <div id="restaurant-info-page" className="page-content">
           {this.renderTabs()}
-          {this.renderOpenTab(restaurant)}
+          <div className={`tab-container ${this.activeTabClass(1)}`}>
+            <GeneralInfo restaurant={restaurant} />
+          </div>
+          <div className={`tab-container ${this.activeTabClass(2)}`}>
+            <UserPreferences restaurant={restaurant} />
+          </div>
+          <div className={`tab-container ${this.activeTabClass(3)}`}>
+            <Comments restaurant={restaurant} />
+          </div>
           <Link to="/results">Back to results</Link>
         </div>
       )
@@ -61,11 +53,11 @@ export class RestaurantInfoPage extends React.Component {
   }
   
   activeTabClass(tab) {
-    return this.state.openTab === tab ? 'open' : '';
+    return this.state.activeTab === tab ? 'active' : '';
   }
   
   switchTab(tab) {
-    this.setState({openTab: tab})
+    this.setState({activeTab: tab})
   }
 }
 
