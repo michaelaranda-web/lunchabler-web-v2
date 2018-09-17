@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPreferences, removePreference, addPreference } from '../../../actions/preferencesActions';
+import { fetchRestaurants } from '../../../actions/restaurantsActions';
 
 export class UserPreferences extends React.Component {
   constructor(props) {
@@ -75,12 +76,15 @@ export class UserPreferences extends React.Component {
       
       modifyPreferencePromise
         .then(() => {
+          console.log(1)
           return this.fetchRestaurantPreferences();
         })
         .then(() => {
+          console.log(2)
           return this.props.fetchRestaurants();
         })
         .then(() => {
+          console.log(3)
           this.setState({updating: false});
         })
       .catch((err) => {
@@ -106,7 +110,13 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchRestaurants: () => { dispatch(fetchRestaurants()) }
+  }
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(UserPreferences);

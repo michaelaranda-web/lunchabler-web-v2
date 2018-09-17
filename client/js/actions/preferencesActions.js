@@ -20,14 +20,12 @@ export function removePreference(userId, restaurantId) {
 }
 
 export function addPreference(userId, restaurantId, preference) {
-  return function(dispatch) {
-    return axios.post('/api/preferences', {
-      userId: userId,
-      restaurantId: restaurantId,
-      preference: preference
-    })
-    .catch(function (error) {
-      console.log(error);
-    }); 
-  }
+  return axios.post('/api/preferences', {
+    userId: userId,
+    restaurantId: restaurantId,
+    preference: preference
+  })
+  .catch(function (error) {
+    console.log(error);
+  }); 
 }
