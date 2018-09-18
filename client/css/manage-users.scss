@@ -1,10 +1,22 @@
 #manage-users-page {
   width: 100%;
   
+  h1 {
+    @include box-shadow;
+    
+    text-align: center;
+    background-color: white;
+    padding: 15px;
+  }
+  
   #user-list {
+    margin-top: 10px;
+    
     #user-list-accordion {
       .user-list-item {
         .user-list-item-header {
+          border-left: 5px solid $site-theme-green;
+          
           a {
             display: block;
             position: relative;

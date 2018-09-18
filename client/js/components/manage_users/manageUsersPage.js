@@ -21,6 +21,7 @@ export class ManageUsersPage extends React.Component {
   render() {
     return (
       <div id="manage-users-page" className="page-content">
+        <h1>Users</h1>
         <UserList />
         <input 
           value={this.state.nameInput} 

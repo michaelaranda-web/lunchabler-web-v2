@@ -8,7 +8,7 @@ export class StartPage extends React.Component {
   render() {
     return (
       <div id="start-page" className="page-content">
-        <h1>LUNCH TIME</h1>
+        <h1>Lunch Time</h1>
         <div id="start-page-content">
           <div className="section">
             <h3>1. LUNCH GROUP</h3>
