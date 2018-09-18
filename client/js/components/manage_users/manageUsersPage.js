@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addUserAndRefetchUsers } from '../../actions/usersActions';
+import UserList from './userList';
 
 export class ManageUsersPage extends React.Component {
   constructor(props) {
@@ -20,11 +21,7 @@ export class ManageUsersPage extends React.Component {
   render() {
     return (
       <div id="manage-users-page" className="page-content">
-        {
-          Object.keys(this.props.usersById).map((userId) => {
-            return <p>{this.props.usersById[userId].name}</p>
-          })
-        }
+        <UserList />
         <input 
           value={this.state.nameInput} 
           onChange={(e) => this.onNameInputChange(e)}
@@ -57,12 +54,6 @@ export class ManageUsersPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    usersById: state.entities.users.byId
-  }
-}
-
 const mapDispatchToProps = dispatch => {
   return {
     addUserAndRefetchUsers: (user) => { dispatch(addUserAndRefetchUsers(user)) }
@@ -70,6 +61,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default ManageUsersPage = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(ManageUsersPage);

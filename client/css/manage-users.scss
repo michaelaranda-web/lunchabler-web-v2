@@ -1,0 +1,27 @@
+#manage-users-page {
+  width: 100%;
+  
+  #user-list {
+    #user-list-accordion {
+      .user-list-item {
+        .user-list-item-header {
+          a {
+            display: block;
+            position: relative;
+            margin: -10px -15px;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 14px;  
+            background: white;
+            
+            .fas {
+              position: absolute;
+              right: 15px;
+              top: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
