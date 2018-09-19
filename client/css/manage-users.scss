@@ -1,12 +1,15 @@
 #manage-users-page {
   width: 100%;
   
+  @media (min-width: 415px) {
+    font-size: 14px;
+    padding: 25px 45px;
+  }
+  
   h1 {
-    @include box-shadow;
-    
-    text-align: center;
-    background-color: white;
-    padding: 15px;
+    @media (max-width: 414px) {
+      text-align: center;
+    }
   }
   
   #user-list {
