@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPreferences, removePreference, addPreference } from '../../../actions/preferencesActions';
+import { fetchRestaurantPreferences, removePreference, addPreference } from '../../../actions/preferencesActions';
 import { fetchRestaurants } from '../../../actions/restaurantsActions';
 
 export class UserPreferences extends React.Component {
@@ -53,7 +53,7 @@ export class UserPreferences extends React.Component {
     var self = this;
     
     return new Promise((resolve) => {
-      fetchPreferences(this.props.restaurant._id)
+      fetchRestaurantPreferences(this.props.restaurant._id)
         .then(preferences =>
           self.setState({preferences: preferences}, () => {
             resolve();

@@ -1,9 +1,19 @@
 import axios from 'axios';
 
-export function fetchPreferences(restaurantId) {
+export function fetchRestaurantPreferences(restaurantId) {
   var restaurantQueryParam = !!restaurantId ? `?restaurant=${restaurantId}` : '';
   
   return axios.get(`/api/preferences${restaurantQueryParam}`)
+    .then(
+      response => response.data,
+      error => console.log('An error occurred.', error)
+    )
+}
+
+export function fetchUserPreferences(userId) {
+  var userQueryParam = !!userId ? `?user=${userId}` : '';
+  
+  return axios.get(`/api/preferences${userQueryParam}`)
     .then(
       response => response.data,
       error => console.log('An error occurred.', error)

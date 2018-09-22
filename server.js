@@ -20,6 +20,7 @@ const assert = require('assert');
 const RestaurantRanker = require('./db/helpers/restaurantRanker');
 const collectionAsObject = require('./helpers/helpers.js').collectionAsObject;
 const restaurantPreferencesByUserId = require('./helpers/helpers.js').restaurantPreferencesByUserId;
+const userPreferencesByRestaurantId = require('./helpers/helpers.js').userPreferencesByRestaurantId;
 
 const yelp = require('yelp-fusion');
 
@@ -115,6 +116,7 @@ MongoClient.connect(db_url, function(err, client) {
   
   router.get('/api/preferences', function(req, res) {
     var preferencesQuery = {}
+    var responseFormatter;
     
     if (!!req.query.restaurant) {
       if (!ObjectId.isValid(req.query.restaurant)) {
@@ -124,13 +126,24 @@ MongoClient.connect(db_url, function(err, client) {
         preferencesQuery = {
           restaurant: ObjectId(req.query.restaurant)
         }
+        responseFormatter = restaurantPreferencesByUserId;
+      }
+    } else if (!!req.query.user) {
+      if (!ObjectId.isValid(req.query.user)) {
+        res.status(400);
+        res.send("Error fetching preferences for user " + req.query.user);
+      } else {
+        preferencesQuery = {
+          user: ObjectId(req.query.user)
+        }
+        responseFormatter = userPreferencesByRestaurantId;
       }
     }
     
     preferencesCol.find(preferencesQuery).toArray(function(err, docs) {
       assert.equal(err, null);
       
-      res.json(restaurantPreferencesByUserId(docs));
+      res.json(responseFormatter(docs));
     });
   });
   

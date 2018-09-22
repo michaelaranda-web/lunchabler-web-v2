@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addUserAndRefetchUsers } from '../../actions/usersActions';
+import { fetchUserPreferences } from '../../actions/preferencesActions';
 import UserList from './userList';
 
 export class ManageUsersPage extends React.Component {
