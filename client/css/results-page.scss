@@ -83,20 +83,10 @@
           padding: 0 5px;
           
           .select-restaurant {
+            @include gradient-button;
+            
             text-align: center;
-            border: 1px solid grey;
-            border-radius: 5px;
             padding: 2px 5px;
-            cursor: pointer;
-            
-            background-color: #f7f7f7;
-            background: -webkit-linear-gradient(#fff, #e4e4e4);
-            background: linear-gradient(#fff, #e4e4e4);
-            
-            &:hover {
-              background-color: white;
-              background: none;
-            }
             
             .fas {
               font-size: 15px;

@@ -30,7 +30,7 @@ export class UserPreferences extends React.Component {
                 
                 return (
                   <div className="user-preference-options">
-                    <label className="user-name">{user.name}</label>
+                    <label className="preference-label">{user.name}</label>
                     <div className="preference-options">
                       <i className={`far fa-grin-beam ${this.currentPreferenceClass(user._id, "yes")}`}
                          onClick={() => this.onPreferenceClick(user._id, "yes")}></i>

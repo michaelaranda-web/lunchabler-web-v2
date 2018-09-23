@@ -36,6 +36,38 @@
             }
           }
         }
+        
+        .user-list-item-link {
+          padding-right: 35px;
+        }
+        
+        .user-preferences {
+          .preferences-tabs {
+            display: flex;
+            padding: 10px 0 15px;
+            
+            .tab {
+              @include gradient-button;
+              
+              margin: 0 1px;
+              padding: 5px 10px;
+              
+              &.active {
+                background: #ffdba6;
+              }
+            }
+          }
+          
+          .user-preference-options {
+            .preference-label {
+              
+            }
+            
+            .preference-options {
+              
+            }
+          }
+        }
       }
     }
   }

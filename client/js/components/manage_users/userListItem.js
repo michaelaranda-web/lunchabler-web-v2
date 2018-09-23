@@ -35,8 +35,8 @@ export class UserListItem extends React.Component {
         </Panel.Heading>
         <Panel.Body collapsible>
           <div>
-            <a onClick={() => this.setState({showContent: 'settings'})}>Settings</a>
-            <a onClick={() => this.setState({showContent: 'preferences'})}>Manage Preferences</a>
+            <a className="user-list-item-link" onClick={() => this.setState({showContent: 'settings'})}>Settings</a>
+            <a className="user-list-item-link" onClick={() => this.setState({showContent: 'preferences'})}>Manage Preferences</a>
             
             {this.renderUserSettings()}
             {this.renderUserPreferences()}

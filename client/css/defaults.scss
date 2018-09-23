@@ -38,6 +38,21 @@ $site-theme-green: #3D9970;
   }
 }
 
+@mixin gradient-button {
+  border: 1px solid grey;
+  border-radius: 5px;
+  cursor: pointer;
+  
+  background-color: #f7f7f7;
+  background: -webkit-linear-gradient(#fff, #e4e4e4);
+  background: linear-gradient(#fff, #e4e4e4);
+  
+  &:hover {
+    background-color: white;
+    background: none;
+  }
+}
+
 @mixin restaurant-image-container($dimension, $non-mobile-dimension) {
   flex-shrink: 0;
   height: $dimension;
@@ -107,6 +122,7 @@ h3 {
 
 a {
   text-decoration: none;
+  cursor: pointer;
   
   &:hover, &:focus {
     text-decoration: none;
@@ -115,4 +131,41 @@ a {
 
 p {
   color: $basic-font-grey;
+}
+
+.hide {
+  display: none;
+}
+
+.user-preference-options {
+  display: flex;
+  padding: 5px;
+  
+  &:first-of-type {
+    padding-top: 0;
+  }
+  
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+  
+  .preference-label {
+    width: 150px;
+  }
+  
+  .preference-options {
+    display: inline-block;
+    margin-left: 5px;
+    
+    .far {
+      font-size: 23px;
+      opacity: 0.37;
+      padding: 0 2px;
+      cursor: pointer;
+      
+      &.current-preference {
+        opacity: 1.0;
+      }
+    }  
+  }
 }

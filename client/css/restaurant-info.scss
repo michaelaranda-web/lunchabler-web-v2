@@ -91,43 +91,6 @@
     }
   }
   
-  #user-preferences-container {
-    #user-preferences {
-      .user-preference-options {
-        display: flex;
-        padding: 5px;
-        
-        &:first-of-type {
-          padding-top: 0;
-        }
-        
-        &:last-of-type {
-          padding-bottom: 0;
-        }
-        
-        .user-name {
-          width: 150px;
-        }
-          
-        .preference-options {
-          display: inline-block;
-          margin-left: 5px;
-          
-          .far {
-            font-size: 23px;
-            opacity: 0.37;
-            padding: 0 2px;
-            cursor: pointer;
-            
-            &.current-preference {
-              opacity: 1.0;
-            }
-          }  
-        }
-      }  
-    }  
-  }
-  
   #comments-tab {
     
   }
