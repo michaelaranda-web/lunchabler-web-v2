@@ -35,11 +35,15 @@ export class UserListItem extends React.Component {
         </Panel.Heading>
         <Panel.Body collapsible>
           <div>
-            <a className="user-list-item-link" onClick={() => this.setState({showContent: 'settings'})}>Settings</a>
-            <a className="user-list-item-link" onClick={() => this.setState({showContent: 'preferences'})}>Manage Preferences</a>
+            <div className="links-row">
+              <a className="user-list-item-link" onClick={() => this.setState({showContent: 'settings'})}>SETTINGS</a>
+              <a className="user-list-item-link" onClick={() => this.setState({showContent: 'preferences'})}>MANAGE PREFERENCES</a>
+            </div>
             
-            {this.renderUserSettings()}
-            {this.renderUserPreferences()}
+            <div className="user-list-item-body">
+              {this.renderUserSettings()}
+              {this.renderUserPreferences()}
+            </div>
           </div>
         </Panel.Body>
       </Panel>

@@ -37,34 +37,41 @@
           }
         }
         
-        .user-list-item-link {
-          padding-right: 35px;
+        .links-row {
+          .user-list-item-link {
+            padding-right: 35px;
+            font-size: 12px;
+          }
         }
         
-        .user-preferences {
-          .preferences-tabs {
-            display: flex;
-            padding: 10px 0 15px;
-            
-            .tab {
-              @include gradient-button;
+        .user-list-item-body {
+          margin-top: 10px;
+          
+          .user-preferences {
+            .preferences-tabs {
+              display: flex;
+              padding: 10px 0 15px;
               
-              margin: 0 1px;
-              padding: 5px 10px;
-              
-              &.active {
-                background: #ffdba6;
+              .tab {
+                @include gradient-button;
+                
+                margin: 0 1px;
+                padding: 5px 10px;
+                
+                &.active {
+                  background: #ffdba6;
+                }
               }
             }
-          }
-          
-          .user-preference-options {
-            .preference-label {
-              
-            }
             
-            .preference-options {
+            .user-preference-options {
+              .preference-label {
+                
+              }
               
+              .preference-options {
+                
+              }
             }
           }
         }
