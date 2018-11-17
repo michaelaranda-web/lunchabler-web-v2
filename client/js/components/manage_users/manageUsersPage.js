@@ -1,21 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { addUserAndRefetchUsers } from '../../actions/usersActions';
-import { fetchUserPreferences } from '../../actions/preferencesActions';
 import UserList from './userList';
+import AddUser from './addUser';
 
 export class ManageUsersPage extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      nameInput: ''
+      showContent: 'user-list'
     }
   }
   
-  renderErrorMessage() {
-    if (this.state.showErrorMessage) {
-      return <p className="error-message">User cannot be blank.</p>
+  renderContent() {
+    if (this.state.showContent === 'user-list') {
+      return <UserList />
+    } else {
+      return <AddUser />
     }
   }
   
@@ -23,46 +23,26 @@ export class ManageUsersPage extends React.Component {
     return (
       <div id="manage-users-page" className="page-content">
         <h1>Users</h1>
-        <UserList />
-        <input 
-          value={this.state.nameInput} 
-          onChange={(e) => this.onNameInputChange(e)}
-        />
-        <button onClick={() => this.addUser()}>Add User</button>
-        {this.renderErrorMessage()}
+        <div className="tabs">
+          <div className={`tab ${this.activeTabClass('user-list')}`} onClick={ () => this.toggleContent('user-list') }>
+            <i className="fas fa-users"></i>
+          </div>
+          <div className={`tab ${this.activeTabClass('add-user')}`} onClick={ () => this.toggleContent('add-user') }>
+            <i className="fas fa-user-plus"></i>
+          </div>
+        </div>
+        {this.renderContent()}
       </div>
     );
   }
   
-  onNameInputChange(e) {
+  toggleContent(contentKey) {
     this.setState({
-      nameInput: e.target.value,
-      showErrorMessage: false
+      showContent: contentKey
     })
   }
   
-  addUser() {
-    if (this.validateNameInput(this.state.nameInput)) {
-      this.props.addUserAndRefetchUsers(this.state.nameInput);  
-    } else {
-      this.setState({
-        showErrorMessage: true
-      })
-    }
-  }
-  
-  validateNameInput() {
-    return this.state.nameInput != "";
+  activeTabClass(tab) {
+    return this.state.showContent === tab ? 'active' : '';
   }
 }
-
-const mapDispatchToProps = dispatch => {
-  return {
-    addUserAndRefetchUsers: (user) => { dispatch(addUserAndRefetchUsers(user)) }
-  }
-}
-
-export default ManageUsersPage = connect(
-  null,
-  mapDispatchToProps
-)(ManageUsersPage);

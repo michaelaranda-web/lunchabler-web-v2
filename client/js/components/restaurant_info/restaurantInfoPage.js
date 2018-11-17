@@ -16,15 +16,15 @@ export class RestaurantInfoPage extends React.Component {
   
   renderTabs() {
     return (
-      <div id="tabs">
+      <div className="tabs">
         <div className={`tab ${this.activeTabClass(1)}`} onClick={ () => this.switchTab(1) }>
-          <i class="fas fa-align-left"></i>
+          <i className="fas fa-align-left"></i>
         </div>
         <div className={`tab ${this.activeTabClass(2)}`} onClick={ () => this.switchTab(2) }>
-          <i class="far fa-grin-beam"></i>
+          <i className="far fa-grin-beam"></i>
         </div>
         <div className={`tab ${this.activeTabClass(3)}`} onClick={ () => this.switchTab(3) }>
-          <i class="far fa-comment-dots"></i>
+          <i className="far fa-comment-dots"></i>
         </div>
       </div>
     )

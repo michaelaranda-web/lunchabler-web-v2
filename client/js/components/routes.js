@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import HomePage from './home/homePage';
 import StartPage from './start/startPage';
 import ResultsPage from './results/resultsPage';
-import ManageUsersPage from './manage_users/manageUsersPage';
+import { ManageUsersPage } from './manage_users/manageUsersPage';
 import ManageRestaurantsPage from './manage_restaurants/manageRestaurantsPage';
 import RestaurantInfoPage from './restaurant_info/restaurantInfoPage';
 import SiteHeader from './siteHeader';

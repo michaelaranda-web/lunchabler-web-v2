@@ -175,6 +175,48 @@ p {
   display: none;
 }
 
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  
+  .tab {
+    @include box-shadow;
+    
+    flex-grow: 1;
+    text-align: center;
+    background: white;
+    cursor: pointer;
+    padding: 5px;
+    margin: 5px;
+    
+    &:first-of-type {
+      margin-left: 0;
+    }
+    
+    &:last-of-type {
+      margin-right: 0;
+    }
+    
+    &.active {
+      background: #dadada;
+      color: white;
+    }
+    
+    &:hover:not(.open) {
+      background: #efefef;
+    }
+    
+    .fas, .far {
+      font-size: 23px;
+      
+      @media (min-width: 768px) {
+        font-size: 28px;
+      }
+    }
+  }
+}
+
 .user-preference-options {
   display: flex;
   padding: 5px;
