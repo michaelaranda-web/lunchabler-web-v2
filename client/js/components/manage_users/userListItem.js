@@ -9,7 +9,7 @@ export class UserListItem extends React.Component {
     super(props);
     
     this.state = {
-      showContent: ''
+      showContent: 'settings'
     }
   }
   
