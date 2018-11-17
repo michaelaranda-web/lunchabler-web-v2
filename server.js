@@ -63,6 +63,20 @@ MongoClient.connect(db_url, function(err, client) {
     });
   });
   
+  router.patch('/api/users', (req, res) => {
+    usersCol.updateOne(
+      {name: req.body.previousName},
+      {$set: {name: req.body.name}},
+      (err) => {
+        if(err) {
+          console.log(err);
+        }
+        console.log("[Server] Updated User " + req.body.previousName + " to " + req.body.name);
+        res.send(req.body);
+      }
+    );
+  });
+  
   router.get('/api/restaurants', function(req, res) {
     var lunchGroupUserIds = req.query.lunchGroupUserIds || [];
     

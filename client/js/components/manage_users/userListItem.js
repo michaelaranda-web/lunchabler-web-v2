@@ -1,6 +1,7 @@
 import React from 'react';
 import { Panel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import UserSettings from './userSettings';
 import UserPreferences from './userPreferences';
 
 export class UserListItem extends React.Component {
@@ -14,7 +15,7 @@ export class UserListItem extends React.Component {
   
   renderUserSettings() {
     if (this.state.showContent === 'settings') {
-      return <div>settings</div>
+      return <UserSettings userName={this.props.user.name} />
     }
   }
   

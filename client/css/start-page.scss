@@ -49,22 +49,5 @@
         font-weight: bold;
       }
     }
-  
-    .button-row {
-      margin: 15px 0px;
-      text-align: center;
-      
-      @media (min-width: 415px) {
-        text-align: right;
-      }
-      
-      #submit-button {
-        @include standard-button($action-blue, #1181b7)
-        
-        @media (max-width: 414px) {
-          width: 95%;
-        }
-      }
-    }
   }
 }

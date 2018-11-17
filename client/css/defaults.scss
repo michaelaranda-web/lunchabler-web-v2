@@ -35,6 +35,7 @@ $site-theme-green: #3D9970;
   
   &:hover {
     background-color: $hover-color;
+    color: #fff;
   }
 }
 
@@ -127,6 +128,43 @@ a {
 
 p {
   color: $basic-font-grey;
+}
+
+.field {
+  font-size: 11px;
+  padding: 10px 0;
+  
+  @media (max-width: 414px) {
+    font-size: 13px;  
+  }
+  
+  label {
+    display: flex;
+    align-items: center;
+    
+    input {
+      flex-grow: 1;
+      margin-left: 10px;
+      padding: 5px;
+    }
+  }
+}
+
+.submit-button {
+  @include standard-button($action-blue, #1181b7);
+  
+  @media (max-width: 414px) {
+    width: 95%;
+  }
+}
+
+.button-row {
+  margin: 15px 0px;
+  text-align: center;
+  
+  @media (min-width: 415px) {
+    text-align: right;
+  }
 }
 
 .hide {

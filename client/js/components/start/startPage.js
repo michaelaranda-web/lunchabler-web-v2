@@ -29,7 +29,7 @@ export class StartPage extends React.Component {
     return (
       <Route render={({history}) => (
         <a
-          id="submit-button"
+          className="submit-button"
           href="#"
           onClick={() => { this.onGetSuggestionsClick(history) }}
         >
