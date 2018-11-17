@@ -35,7 +35,7 @@ export class Comments extends React.Component {
       <div id="add-comment-section" className="restaurant-info-section">
         <span className="section-label">ADD COMMENT</span>
         <div className="section-content">
-          <div>
+          <div className="field">
             <label>
               User:
               <input 
@@ -44,7 +44,7 @@ export class Comments extends React.Component {
               />
             </label>
           </div>
-          <div>
+          <div className="field">
             <label>
               Comment:
               <textarea 
@@ -53,8 +53,12 @@ export class Comments extends React.Component {
               />
             </label>
           </div>
-          <div>
-            <button onClick={() => this.commentSubmitClick()}>Submit comment</button>
+          <div className="button-row">
+            <a 
+              className="submit-button"
+              onClick={() => this.commentSubmitClick()}>
+              Submit comment
+            </a>
           </div>
         </div>
       </div>
