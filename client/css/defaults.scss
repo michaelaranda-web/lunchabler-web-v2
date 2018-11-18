@@ -1,7 +1,7 @@
 $basic-font-grey: #636363;
 $success-green: #4caf50;
 $action-blue: #42a0e2;
-$background-grey: #f3f3f3;
+$background-color: #f6fcff;
 $site-theme-green: #3D9970;
 
 @mixin box-shadow {
@@ -96,7 +96,9 @@ html, body {
   display: flex;
   max-width: 1200px;
   margin: auto;
-  background-color: $background-grey;
+  background-color: $background-color;
+  background: -webkit-linear-gradient(#f8fdff, #cef0ff);
+  background: linear-gradient(#f8fdff, #cef0ff);
 }
 
 h1 {
