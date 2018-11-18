@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { alphabetizedRestaurants } from '../../helpers/helpers';
+import { RestaurantListItem } from './restaurantListItem';
 
 export class RestaurantList extends React.Component {
   render() {
     return (
       <div id="restaurant-list">
         {
-          Object.keys(this.props.restaurantsById).map((restaurantId) => {
-            return <p>{this.props.restaurantsById[restaurantId].name}</p>
+          alphabetizedRestaurants(this.props.restaurantsById).map((restaurant) => {
+            return <RestaurantListItem restaurant={restaurant} />
           })    
         }
       </div>
