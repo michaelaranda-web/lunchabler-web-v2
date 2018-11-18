@@ -1,17 +1,4 @@
 #manage-users-page {
-  width: 100%;
-  
-  @media (min-width: 415px) {
-    font-size: 14px;
-    padding: 25px 45px;
-  }
-  
-  h1 {
-    @media (max-width: 414px) {
-      text-align: center;
-    }
-  }
-  
   #user-list {
     margin-top: 10px;
     

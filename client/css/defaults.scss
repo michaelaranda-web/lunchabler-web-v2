@@ -115,6 +115,18 @@ h3 {
 
 .page-content {
   padding: 5px 10px;
+  width: 100%;
+  
+  @media (min-width: 415px) {
+    font-size: 14px;
+    padding: 25px 45px;
+  }
+  
+  h1 {
+    @media (max-width: 414px) {
+      text-align: center;
+    }
+  }
 }
 
 a {
