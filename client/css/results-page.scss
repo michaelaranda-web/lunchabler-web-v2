@@ -10,7 +10,7 @@
       display: flex;
       margin: 10px 0;
       background: white;
-      max-width: 450px;
+      max-width: 700px;
       
       .restaurant-rank {
         display: flex;
@@ -98,10 +98,22 @@
       }
     }
     
-    #edit-lunch-group-button {
-      @include standard-button($action-blue, #1181b7)
+    #results-page-button-row {
+      margin: 0 0 20px;
       
-      margin: 15px 0;
+      @media (min-width: 415px) {
+        text-align: left;  
+        margin: 0 0 10px;
+      }
+      
+      .results-page-button {
+        @include standard-button($action-blue, #1181b7)
+        
+        @media (min-width: 415px) {
+          margin: 15px 10px 15px 0;  
+        }
+        
+      }
     }
   }
   
