@@ -194,14 +194,22 @@ p {
   justify-content: center;
   margin-bottom: 10px;
   
+  @media (min-width: 415px) {
+    justify-content: flex-start;
+  }
+  
   .tab {
     @include box-shadow;
+    
+    @media (min-width: 415px) {
+      flex-grow: 0;
+    }
     
     flex-grow: 1;
     text-align: center;
     background: white;
     cursor: pointer;
-    padding: 5px;
+    padding: 5px 20px;
     margin: 5px;
     
     &:first-of-type {
