@@ -112,6 +112,7 @@ MongoClient.connect(db_url, function(err, client) {
     
     let restaurant = {
       name: submittedRestaurant.name,
+      yelpId: submittedRestaurant.yelpId,
       displayAddress1: submittedRestaurant.displayAddress1,
       displayAddress2: submittedRestaurant.displayAddress2,
       distance: submittedRestaurant.distance,

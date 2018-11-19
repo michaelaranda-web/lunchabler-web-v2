@@ -4,6 +4,21 @@ import { addRestaurant, fetchRestaurants } from '../../actions/restaurantsAction
 import { YelpRestaurantParser } from '../../helpers/yelpHelper';
 
 export class YelpSearchResultItem extends React.Component {
+  renderImportLink(yelpRestaurant) {
+    var alreadyImported = false;
+    this.props.restaurants.map((restaurant) => {
+      if (yelpRestaurant.id() === restaurant.yelpId) {
+        alreadyImported = true;
+      }
+    })
+    
+    if (alreadyImported) {
+      return <a className="action-link already-imported">ADDED</a>
+    } else {
+      return <a className="action-link" onClick={ () => this.onImportClick(yelpRestaurant) }>IMPORT</a>
+    }
+  }
+  
   render() {
     const yelpRestaurant = new YelpRestaurantParser(this.props.restaurant);
     
@@ -20,16 +35,16 @@ export class YelpSearchResultItem extends React.Component {
         </div>
         <div className="actions">
           <a className="action-link" href={yelpRestaurant.url()} target="_blank">YELP PAGE</a>
-          <a className="action-link" onClick={ () => this.onImportClick(yelpRestaurant) }>IMPORT</a>
+          {this.renderImportLink(yelpRestaurant)}
         </div>
       </div>
     );
   }
   
-  //TODO: Don't forget to refetch restaurants afterwards.
   onImportClick(yelpRestaurant) {
     addRestaurant({
       name: yelpRestaurant.name(),
+      yelpId: yelpRestaurant.id(),
       imageUrl: yelpRestaurant.imageUrl(),
       displayAddress1: yelpRestaurant.displayAddress1(),
       displayAddress2: yelpRestaurant.displayAddress2(),
@@ -42,6 +57,12 @@ export class YelpSearchResultItem extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    restaurants: state.entities.restaurants.sorted
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     fetchRestaurants: () => { return dispatch(fetchRestaurants()) }
@@ -49,6 +70,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(YelpSearchResultItem);

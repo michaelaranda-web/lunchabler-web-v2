@@ -103,6 +103,10 @@
               &:visited, &:hover, &:active {
                 color: $site-theme-green;
               }
+              
+              &.already-imported {
+                color: grey;
+              }
             }
           }
         }
