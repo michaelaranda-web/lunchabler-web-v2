@@ -10,40 +10,70 @@ export class AddRestaurant extends React.Component {
     
     this.state = {
       searchText: "",
-      searchResults: []
+      searchResults: [],
+      showErrorMessage: false
+    }
+  }
+  
+  renderErrorMessage() {
+    if (this.state.showErrorMessage) {
+      return <p className="error">Please enter a search term.</p>
+    }
+  }
+  
+  renderResults() {
+    if (this.state.searchResults.length > 0) {
+      return (
+        <div className="section" id="yelp-search-results-section">
+          <div id="yelp-search-results">
+            {
+              this.state.searchResults.map((restaurant, i) => {
+                return <YelpSearchResultItem key={i} restaurant={restaurant}/>
+              })
+            }
+          </div>
+        </div>
+      )
     }
   }
   
   render() {
     return (
       <div id="add-restaurants">
-        <img src={YelpIcon} />
-        <p>Search for a restaurant to import from Yelp:</p>
-        <input 
-          id="yelp-search-bar" 
-          onChange={ (e) => this.onInputChange(e) } 
-          onKeyPress={ (e) => this.onKeyPress(e) }
-          value={this.state.searchText}  
-        />
-        <button onClick={ () => this.submitSearch() }>Search</button>
-        {
-          this.state.searchResults.map((restaurant, i) => {
-            return <YelpSearchResultItem key={i} restaurant={restaurant}/>
-          })
-        }
-        
-        <div>
-          <Link to="/results">Results</Link>
+        <div className="section">
+          <img src={YelpIcon} id="yelp-icon" />
+          
+          <p>Search for nearby restaurants:</p>
+          
+          <div id="search-bar-container">
+            <input 
+              id="yelp-search-bar" 
+              onChange={ (e) => this.onInputChange(e) } 
+              onKeyPress={ (e) => this.onKeyPress(e) }
+              value={this.state.searchText}  
+            />
+            <button id="search-button" onClick={ () => this.submitSearch() }>
+              <i className="fas fa-search" />
+            </button>
+          </div>
+          
+          {this.renderErrorMessage()}
         </div>
+        
+        {this.renderResults()}
       </div>
     );
   }
   
   submitSearch() {
+    if (this.state.searchText === "") {
+      this.setState({showErrorMessage: true})
+      return;
+    }
+    
     var self = this;
     axios.get('/api/yelp_search', {params: {searchText: this.state.searchText}})
       .then((response) => {
-        console.log(response.data);
         self.setState({
           searchResults: response.data
         })
@@ -54,7 +84,8 @@ export class AddRestaurant extends React.Component {
   
   onInputChange(e) {
     this.setState({
-      searchText: e.target.value
+      searchText: e.target.value,
+      showErrorMessage: false
     });
   }
   

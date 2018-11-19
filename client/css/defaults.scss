@@ -168,6 +168,10 @@ p {
   }
 }
 
+.section {
+  @include section;
+}
+
 .submit-button {
   @include standard-button($action-blue, #1181b7);
   
@@ -187,6 +191,10 @@ p {
 
 .hide {
   display: none;
+}
+
+.error {
+  color: red;
 }
 
 .tabs {
@@ -233,7 +241,7 @@ p {
       font-size: 23px;
       
       @media (min-width: 768px) {
-        font-size: 28px;
+        font-size: 18px;
       }
     }
   }

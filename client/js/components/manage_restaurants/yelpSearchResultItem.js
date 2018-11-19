@@ -9,13 +9,19 @@ export class YelpSearchResultItem extends React.Component {
     
     return (
       <div className="yelp-search-result-item">
-        <img src={yelpRestaurant.imageUrl()} />
-        <h4>{yelpRestaurant.name()}</h4>
-        <p>{yelpRestaurant.displayAddress1()}</p>
-        <p>{yelpRestaurant.displayAddress2()}</p>
-        <p>{yelpRestaurant.distance()} miles</p>
-        <a href={yelpRestaurant.url()} target="_blank">Yelp Page</a>
-        <button onClick={ () => this.onImportClick(yelpRestaurant) }>Import</button>
+        <div className="image-container">
+          <img src={yelpRestaurant.imageUrl()} />
+        </div>
+        <div className="details">
+          <h4>{yelpRestaurant.name()}</h4>
+          <p>{yelpRestaurant.displayAddress1()}</p>
+          <p>{yelpRestaurant.displayAddress2()}</p>
+          <p>{yelpRestaurant.distance()} miles</p>
+        </div>
+        <div className="actions">
+          <a className="action-link" href={yelpRestaurant.url()} target="_blank">YELP PAGE</a>
+          <a className="action-link" onClick={ () => this.onImportClick(yelpRestaurant) }>IMPORT</a>
+        </div>
       </div>
     );
   }
