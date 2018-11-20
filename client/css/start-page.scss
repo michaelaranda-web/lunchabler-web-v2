@@ -4,14 +4,38 @@
   }
   
   #start-page-content {
-    margin-top: 10px;
+    margin-top: 20px;
     padding-bottom: 50px;
     
-    .section {
-      @include section;
+    #lunch-group-section {
+      h3 {
+        background: linear-gradient(-45deg, #ae81ff, #580fda);
+        padding: 10px;
+        margin: 0;
+        color: white;
+        font-size: 14px;
+        text-align: center;
+        
+        @media (min-width: 415px) {  
+          text-align: left;  
+        }
+      }
       
-      @media (min-width: 415px) {  
-        font-size: 12px;
+      .section {
+        @include section;
+        
+        padding: 10px 10px 25px !important;
+        
+        @media (min-width: 415px) {  
+          font-size: 12px;
+          padding: 10px 10px 25px !important;
+        }
+        
+        .description {
+          @media (max-width: 414px) {
+            margin: 10px 5px 15px;
+          }
+        }
       }
     }
     
