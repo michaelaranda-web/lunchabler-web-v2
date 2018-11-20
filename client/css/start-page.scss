@@ -9,6 +9,10 @@
     
     .section {
       @include section;
+      
+      @media (min-width: 415px) {  
+        font-size: 12px;
+      }
     }
     
     .user-button {

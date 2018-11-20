@@ -10,15 +10,15 @@
     }
     
     #notification-panel {
-      background: linear-gradient(45deg, #ff5144, #ff8880);
+      background: linear-gradient(45deg, $secondary-red, #ff8880);
     }
     
     #last-visit-panel {
-      background: linear-gradient(45deg, #03a9f4, #80d7ff);
+      background: linear-gradient(45deg, $secondary-blue, #80d7ff);
     }
     
     #recent-activity-panel {
-      background: linear-gradient(45deg, #ae81ff, #580fda);
+      background: linear-gradient(45deg, #ae81ff, $secondary-purple);
     }
     
     .activity-panel {

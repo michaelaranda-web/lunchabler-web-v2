@@ -1,13 +1,17 @@
 #manage-restaurants-page {
   .restaurant-list-item {
     position: relative;
-    border-left: 5px solid $site-theme-green;
+    border-left: 5px solid $secondary-blue;
     margin-top: 5px;
     padding: 10px 15px;
     font-weight: bold;
     font-size: 14px;  
     background: white;
     color: #463f3f;
+    
+    @media (min-width: 415px) {
+      font-size: 12px;
+    }
     
     .fas {
       position: absolute;
