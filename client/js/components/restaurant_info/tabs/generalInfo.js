@@ -51,12 +51,6 @@ export class GeneralInfo extends React.Component {
     }
   }
   
-  renderUpdatingMessage() {
-    if (this.state.updating) {
-      return <h1><strong>Updating...</strong></h1>
-    }
-  }
-  
   renderRecentVisits() {
     if (this.state.visits.length > 0) {
       return (
@@ -92,7 +86,6 @@ export class GeneralInfo extends React.Component {
     if (!!this.props.restaurant) {
       return (
         <div id="general-info-tab">
-          {this.renderUpdatingMessage()}
           {this.renderGeneralInfo()}
           {this.renderRecentVisits()}
         </div>
