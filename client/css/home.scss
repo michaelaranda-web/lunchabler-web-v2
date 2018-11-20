@@ -1,0 +1,39 @@
+#home-page {
+  #activity-panels {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: 120px;
+    
+    @media (min-width: 560px) {
+      flex-direction: row
+    }
+    
+    #notification-panel {
+      background: linear-gradient(45deg, #ff5144, #ff8880);
+    }
+    
+    #last-visit-panel {
+      background: linear-gradient(45deg, #03a9f4, #80d7ff);
+    }
+    
+    #recent-activity-panel {
+      background: linear-gradient(45deg, #ae81ff, #580fda);
+    }
+    
+    .activity-panel {
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      
+      @media (min-width: 560px) {
+        width: 30%;
+      }
+      
+      h4 {
+        font-size: 12px;
+        margin: 0 0 10px;
+      }
+    }
+  }
+}
