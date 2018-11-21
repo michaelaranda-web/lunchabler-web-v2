@@ -12,6 +12,10 @@
       background: white;
       max-width: 700px;
       
+      &:hover {
+        background: #f7f7f7;
+      }
+      
       .restaurant-rank {
         display: flex;
         color: white;
@@ -19,7 +23,7 @@
         justify-content: center;
         margin-right: 5px;
         width: 15px;
-        background-color: #3d99707a;
+        background-color: $secondary-purple;
         
         &.gold {
           background-color: #ffd75e;
@@ -81,13 +85,19 @@
           padding: 0 5px;
           
           .select-restaurant {
-            @include gradient-button;
-            
             text-align: center;
-            padding: 2px 5px;
+            padding: 2px 6px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: $site-theme-green;
+            color: white;
+            
+            &:hover {
+              background-color: #82c185;
+            }
             
             .fas {
-              font-size: 15px;
+              font-size: 13px;
               line-height: 15px;
               padding: 2px 0;
               position: relative;

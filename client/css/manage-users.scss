@@ -69,4 +69,43 @@
       }
     }
   }
+  
+  #add-users {
+    padding: 25px 15px;
+    
+    @media (min-width: 415px) {
+      padding: 25px 40px;
+    }
+    
+    #add-user-field-container {
+      display: flex;
+      
+      #add-user-field {
+        flex-grow: 1;
+        padding: 5px;
+      }
+      
+      #add-user-button {
+        background: $site-theme-green;
+        border-radius: 0 4px 4px 0;
+        border: 0;
+        padding: 4px 20px;
+        color: white;
+        font-size: 13px;
+      }
+    }
+    
+    .error-message, .success-message {
+      margin: 10px 0 0;
+      font-size: 13px;
+    }
+    
+    .error-message {
+      color: red;
+    }
+    
+    .success-message {
+      color: #4caf50;
+    }
+  }
 }

@@ -58,8 +58,8 @@
       }
       
       &.selected {
-        border-color: #4caf50;
-        background-color: #4caf50;
+        border-color: $site-theme-green;
+        background-color: $site-theme-green;
         color: white;
         font-weight: bold;
       }

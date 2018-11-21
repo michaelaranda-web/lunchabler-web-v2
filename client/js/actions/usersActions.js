@@ -41,18 +41,18 @@ export function fetchUsers() {
 export function updateUserAndRefetchUsers(updateData) {
   return function(dispatch) {
     axios.patch('/api/users', updateData)
-    .then(function (response) {
-      dispatch(fetchUsers())
-    })
-    .catch(function (error) {
-      console.log(error);
-    }); 
+      .then(function (response) {
+         return dispatch(fetchUsers())
+      })
+      .catch(function (error) {
+        console.log(error);
+      }); 
   }
 }
 
 export function addUserAndRefetchUsers(userName) {
   return function(dispatch) {
-    axios.post('/api/users',{
+    return axios.post('/api/users',{
       name: userName
     })
     .then(function (response) {
