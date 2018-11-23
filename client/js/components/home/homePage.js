@@ -4,8 +4,12 @@ export class HomePage extends React.Component {
   render() {
     return (
       <div id="home-page" className="page-content">
-        <div id="home-page-icon"></div>
-        <span>Instant Ink</span>
+        <div id="header-row">
+          <div id="home-page-icon">
+            <i className="fas fa-home" />
+          </div>
+          <span id="group-name">Instant Ink</span>
+        </div>
         <div id="activity-panels">
           <div id="notification-panel" className="activity-panel section">
             <h4>SUGGESTION</h4>
