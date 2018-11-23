@@ -11,7 +11,7 @@ export class StartPage extends React.Component {
         <h1>Lunch Time</h1>
         <div id="start-page-content">
           <div id="lunch-group-section">
-            <h3>LUNCH GROUP</h3>
+            <h3>1. LUNCH GROUP</h3>
             <div className="section">
               <p className="description">Specify today's lunch group, so that user preferences can be taken into consideration.</p>
               <LunchGroupSelector />
