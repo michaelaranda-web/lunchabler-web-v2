@@ -20,7 +20,7 @@ export default class SideNavBar extends React.Component {
             <li>Manage Restaurants</li>
           </Link>
           <Link to="/manage_users">
-            <li>Users</li>
+            <li>Manage Users</li>
           </Link>
         </ul>
       </div>
