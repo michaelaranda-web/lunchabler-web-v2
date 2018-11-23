@@ -34,12 +34,12 @@ export default class SiteHeader extends React.Component {
                 </MenuItem>
                 <MenuItem>
                   <Link to="/manage_restaurants">
-                    <li>Manage Restaurants</li>
+                    <li>Restaurants</li>
                   </Link>
                 </MenuItem>
                 <MenuItem>
                   <Link to="/manage_users">
-                    <li>Manage Users</li>
+                    <li>Users</li>
                   </Link>
                 </MenuItem>
               </Dropdown.Menu>
