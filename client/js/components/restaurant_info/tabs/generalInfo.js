@@ -52,7 +52,7 @@ export class GeneralInfo extends React.Component {
   }
   
   renderRecentVisits() {
-    if (this.state.visits.length > 0) {
+    if (this.state.visits && this.state.visits.length > 0) {
       return (
         <div>
           <p>Recent visits</p>
