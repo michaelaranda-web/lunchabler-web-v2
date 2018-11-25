@@ -232,14 +232,18 @@ MongoClient.connect(db_url, function(err, client) {
   
   router.get('/api/visits', function(req, res) {
     var visitsQuery = {};
-    var limit = req.query.limit;
+    var limit = parseInt(req.query.limit);
     
     if (!!ObjectId.isValid(req.query.restaurant)) {
       visitsQuery = {restaurant: ObjectId(req.query.restaurant)};
     }
     
     if (!!limit && Number(limit) === limit && limit % 1 === 0) {
-      visitsCol.find(visitsQuery).limit(limit).toArray(function(err, docs) {
+      visitsCol
+        .find(visitsQuery)
+        .sort([['date', -1]])
+        .limit(limit)
+        .toArray(function(err, docs) {
         assert.equal(err, null);
         
         res.json(docs);

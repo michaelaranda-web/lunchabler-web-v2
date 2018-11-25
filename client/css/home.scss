@@ -46,6 +46,10 @@
     
     #last-visit-panel {
       background: linear-gradient(45deg, $secondary-blue, #80d7ff);
+      
+      #last-visit-panel-content {
+        
+      }
     }
     
     #recent-activity-panel {
@@ -54,7 +58,7 @@
     
     .activity-panel {
       color: white;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: bold;
       
       @media (min-width: 560px) {
