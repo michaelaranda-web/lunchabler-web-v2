@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { fetchRestaurantVisits } from '../../../actions/visitsActions';
 import moment from 'moment';
 
@@ -95,7 +96,7 @@ export class GeneralInfo extends React.Component {
   
   fetchVisits() {
     this.setState({updating: true}, () => {
-      fetchRestaurantVisits(this.props.restaurant._id)
+      this.props.fetchRestaurantVisits(this.props.restaurant._id)
         .then(visits =>
           this.setState({visits: visits, updating: false})
         )
@@ -106,3 +107,14 @@ export class GeneralInfo extends React.Component {
     return moment(visitDate).format('MMMM Do YYYY');
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchRestaurantVisits: (restaurantId, numVisits) => { return dispatch(fetchRestaurantVisits(restaurantId, numVisits)) }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(GeneralInfo); 

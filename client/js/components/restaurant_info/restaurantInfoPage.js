@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { GeneralInfo } from './tabs/generalInfo';
+import GeneralInfo from './tabs/generalInfo';
 import UserPreferences from './tabs/userPreferences';
 import Comments from './tabs/comments';
 
