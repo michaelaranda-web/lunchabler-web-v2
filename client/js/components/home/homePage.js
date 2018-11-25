@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ActivityPanel } from './activityPanel';
+import moment from 'moment';
 
 export class HomePage extends React.Component {
   render() {
@@ -31,8 +32,10 @@ export class HomePage extends React.Component {
     var content = "No visits have been recorded yet";
     
     if (this.props.visits.length > 0 && Object.keys(this.props.restaurantsById).length > 0) {
-      var restaurantName = this.props.restaurantsById[this.props.visits[0].restaurant].name;
-      content = `${restaurantName} was recently visited`;
+      var lastVisit = this.props.visits[0];
+      var restaurantName = this.props.restaurantsById[lastVisit.restaurant].name;
+      var visitDate = moment(lastVisit.date).format("MMMM Do, YYYY")
+      content = `${restaurantName} - ${visitDate}`;
     }
     
     return (
