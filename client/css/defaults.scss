@@ -264,6 +264,10 @@ p {
   
   .preference-label {
     width: 150px;
+    
+    @media (min-width: 500px) {
+      width: 200px;
+    }
   }
   
   .preference-options {

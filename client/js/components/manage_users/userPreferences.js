@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { PreferenceOptions } from '../preferenceOptions';
 import { fetchUserPreferences, addPreference } from '../../actions/preferencesActions';
 import { fetchRestaurants } from '../../actions/restaurantsActions';
+import { alphabetizedRestaurants } from '../../helpers/helpers';
 
 export class UserPreferences extends React.Component {
   constructor(props) {
@@ -46,12 +47,12 @@ export class UserPreferences extends React.Component {
   }
   
   render() {
-    if (this.props.sortedRestaurants) {
+    if (this.props.restaurantsById) {
       return (
         <div className="user-preferences">
           {this.renderTabs()}
           {
-            this.props.sortedRestaurants.map((restaurant, i) => {
+            alphabetizedRestaurants(this.props.restaurantsById).map((restaurant, i) => {
               var preferenceForRestaurant = this.state.preferences[restaurant._id];
             
               return (
@@ -120,6 +121,7 @@ export class UserPreferences extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    restaurantsById: state.entities.restaurants.byId,
     sortedRestaurants: state.entities.restaurants.sorted
   }
 }
