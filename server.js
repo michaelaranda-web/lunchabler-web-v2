@@ -180,7 +180,7 @@ MongoClient.connect(db_url, function(err, client) {
   });
   
   router.post('/api/preferences', (req, res) => {
-    var requestBodyValid = ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.body.restaurantId) && ["meh", "no"].includes(req.body.preference);
+    var requestBodyValid = ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.body.restaurantId) && ["yes", "meh", "no"].includes(req.body.preference);
     
     if (requestBodyValid) {
       let preference = {

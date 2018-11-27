@@ -81,7 +81,7 @@ module.exports = class RestaurantRanker {
       }
     });
     
-    return restaurantsWithoutPreferences.concat(restaurantsWithPreferences)
+    return restaurantsWithPreferences.concat(restaurantsWithoutPreferences)
   }
   
   _getRestaurants(callback) {
@@ -89,17 +89,19 @@ module.exports = class RestaurantRanker {
   }
   
   _getPreferenceValue(preference) {
-    if (preference == "meh") {
+    if (preference === "yes") {
       return 1;
+    } else if (preference === "meh") {
+      return 0;
     } else {
-      return 1000;
+      return -5;
     }
   }
   
   restaurantSort(a, b) {
-    if (a.score < b.score) {
+    if (a.score > b.score) {
       return -1;
-    } else if (a.score > b.score) {
+    } else if (a.score < b.score) {
       return 1;
     } else {
       return 0;
