@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PreferenceOptions } from '../preferenceOptions';
-import { fetchUserPreferences, removePreference, addPreference } from '../../actions/preferencesActions';
+import { fetchUserPreferences, addPreference } from '../../actions/preferencesActions';
 import { fetchRestaurants } from '../../actions/restaurantsActions';
 
 export class UserPreferences extends React.Component {
@@ -20,12 +20,6 @@ export class UserPreferences extends React.Component {
   
   componentDidMount() {
     this.fetchUserPreferences(this.props.user._id);
-  }
-  
-  renderUpdating() {
-    if (this.state.updating) {
-      return <h1>Updating</h1>
-    }
   }
   
   renderTabs() {
@@ -64,9 +58,10 @@ export class UserPreferences extends React.Component {
                 <div className={`user-preference-options ${this.showForTabIndex(i)}`}>
                   <label className="preference-label">{restaurant.name}</label>
                   <PreferenceOptions 
-                    currentPreference={preferenceForRestaurant} 
+                    currentPreference={preferenceForRestaurant}
                     onPreferenceClick={(preference) => this.onPreferenceClick(restaurant._id, preference)}
                   />
+                  
                 </div>
               )
             })
@@ -98,32 +93,17 @@ export class UserPreferences extends React.Component {
   }
   
   onPreferenceClick(restaurantId, preference) {
-    if (this.state.updating) { return }
-    
-    this.setState({updating: true}, () => {
-      var modifyPreferencePromise;
-      
-      if (preference == "yes") {
-        modifyPreferencePromise = removePreference(this.props.user._id, restaurantId);
-      } else {
-        modifyPreferencePromise = addPreference(this.props.user._id, restaurantId, preference)
-      }
-      
-      modifyPreferencePromise
-        .then(() => {
-          return this.fetchUserPreferences();
-        })
-        .then(() => {
-          return this.props.fetchRestaurants();
-        })
-        .then(() => {
-          this.setState({updating: false});
-        })
-      .catch((err) => {
-        console.log(err);
-        this.setState({updating: false});
+    return addPreference(this.props.user._id, restaurantId, preference)
+      .then(() => {
+        return this.fetchUserPreferences();
       })
-    });
+      .then(() => {
+        return this.props.fetchRestaurants();
+      })
+      .then(() => {
+        Promise.resolve();
+      })
+    .catch(error => { console.error(error); return Promise.reject(error); });
   }
   
   onTabClick(tabIndex) {

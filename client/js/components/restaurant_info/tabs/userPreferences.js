@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { PreferenceOptions } from '../../preferenceOptions';
 import { fetchRestaurantPreferences, removePreference, addPreference } from '../../../actions/preferencesActions';
 import { fetchRestaurants } from '../../../actions/restaurantsActions';
 
@@ -8,7 +9,6 @@ export class UserPreferences extends React.Component {
     super(props);
     
     this.state = {
-      updating: false,
       preferences: {}
     }
   }
@@ -31,14 +31,10 @@ export class UserPreferences extends React.Component {
                 return (
                   <div className="user-preference-options">
                     <label className="preference-label">{user.name}</label>
-                    <div className="preference-options">
-                      <i className={`far fa-grin-beam ${this.currentPreferenceClass(user._id, "yes")}`}
-                         onClick={() => this.onPreferenceClick(user._id, "yes")}></i>
-                      <i className={`far fa-meh ${this.currentPreferenceClass(user._id, "meh")}`}
-                         onClick={() => this.onPreferenceClick(user._id, "meh")}></i>
-                      <i className={`far fa-angry ${this.currentPreferenceClass(user._id, "no")}`}
-                         onClick={() => this.onPreferenceClick(user._id, "no")}></i>
-                    </div>
+                    <PreferenceOptions 
+                      currentPreference={this.state.preferences[userId]}
+                      onPreferenceClick={(preference) => this.onPreferenceClick(userId, preference)}
+                    />
                   </div>
                 )
               })
@@ -63,40 +59,17 @@ export class UserPreferences extends React.Component {
   }
   
   onPreferenceClick(userId, preference) {
-    if (this.state.updating) { return }
-    
-    this.setState({updating: true}, () => {
-      var modifyPreferencePromise;
-      
-      if (preference == "yes") {
-        modifyPreferencePromise = removePreference(userId, this.props.restaurant._id);
-      } else {
-        modifyPreferencePromise = addPreference(userId, this.props.restaurant._id, preference)
-      }
-      
-      modifyPreferencePromise
-        .then(() => {
-          return this.fetchRestaurantPreferences();
-        })
-        .then(() => {
-          return this.props.fetchRestaurants();
-        })
-        .then(() => {
-          this.setState({updating: false});
-        })
-      .catch((err) => {
-        console.log(err);
-        this.setState({updating: false});
+    return addPreference(userId, this.props.restaurant._id, preference)
+      .then(() => {
+        return this.fetchRestaurantPreferences();
       })
-    });
-  }
-  
-  currentPreferenceClass(userId, preference) {
-    var prefExists = this.state.preferences[userId] == preference;
-    if (prefExists) {
-      return "current-preference";
-    }
-    return "";
+      .then(() => {
+        return this.props.fetchRestaurants();
+      })
+      .then(() => {
+        Promise.resolve();
+      })
+      .catch(error => { console.error(error); return Promise.reject(error); });
   }
 }
 

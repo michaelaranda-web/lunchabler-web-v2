@@ -35,7 +35,4 @@ export function addPreference(userId, restaurantId, preference) {
     restaurantId: restaurantId,
     preference: preference
   })
-  .catch(function (error) {
-    console.log(error);
-  }); 
 }

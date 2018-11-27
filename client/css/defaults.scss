@@ -279,6 +279,15 @@ p {
       &.current-preference {
         opacity: 1.0;
       }
-    }  
+    } 
+    
+    .error {
+      font-size: 13px;
+      
+      @media (min-width: 415px) {
+        display: inline-block;
+        margin-left: 10px;
+      }
+    }
   }
 }
