@@ -92,9 +92,8 @@ export class UserPreferences extends React.Component {
   }
   
   currentPreferenceClass(userId, preference) {
-    var noPref = this.state.preferences[userId] == undefined && preference == "yes";
     var prefExists = this.state.preferences[userId] == preference;
-    if (prefExists || noPref) {
+    if (prefExists) {
       return "current-preference";
     }
     return "";

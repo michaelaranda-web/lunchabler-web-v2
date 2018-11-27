@@ -14,7 +14,5 @@ export function PreferenceOptions(props) {
 }
 
 function currentPreferenceClass(currentPreference, preference) {
-  if (preference === 'yes' && !currentPreference) { return 'current-preference' }
-  
   return currentPreference === preference ? 'current-preference' : '';
 }
