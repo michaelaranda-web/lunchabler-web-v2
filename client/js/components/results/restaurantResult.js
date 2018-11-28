@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { addVisit } from '../../actions/visitsActions';
-import { Modal, Button } from 'react-bootstrap';
+import { SelectRestaurantModal } from './selectRestaurantModal';
 
 export class RestaurantResult extends React.Component {
   constructor(props) {
@@ -54,23 +53,6 @@ export class RestaurantResult extends React.Component {
     )
   }
   
-  renderSelectRestaurantModal(restaurant) {
-    return (
-      <Modal show={this.state.showSelectRestaurantModal} onHide={() => this.closeSelectRestaurantModal()}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Selection</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Select <strong>{restaurant.name}</strong> for lunch today?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => this.closeSelectRestaurantModal()}>Close</Button>
-          <Button onClick={() => this.onSelectRestaurantConfirm()} bsStyle="primary">Confirm</Button>
-        </Modal.Footer>
-      </Modal>  
-    )
-  }
-  
   render() {
     var restaurant = this.props.restaurant;
     
@@ -91,7 +73,11 @@ export class RestaurantResult extends React.Component {
               <i className="fas fa-check" />
             </div>
           </div>
-          {this.renderSelectRestaurantModal(restaurant)}
+          <SelectRestaurantModal
+            restaurant={restaurant}
+            show={this.state.showSelectRestaurantModal}
+            onClose={() => this.onSelectRestaurantModalClose()}
+          />
         </div>
       </div>
     )
@@ -107,17 +93,10 @@ export class RestaurantResult extends React.Component {
     })
   }
   
-  closeSelectRestaurantModal() {
+  onSelectRestaurantModalClose() {
     this.setState({
       showSelectRestaurantModal: false
     })
-  }
-  
-  onSelectRestaurantConfirm() {
-    addVisit(this.props.restaurant._id)
-      .then(() => {
-        this.closeSelectRestaurantModal()
-      });
   }
 }
 
