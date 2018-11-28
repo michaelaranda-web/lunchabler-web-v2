@@ -24,8 +24,28 @@ export class HomePage extends React.Component {
             Derek said 'Meh' to Wahoo's Fish Tacos
           </div>
         </div>
+        <div id="recent-visits" className="section">
+          <h4>Recent Visits</h4>
+          {this.renderRecentVisits()}
+        </div>
       </div>
     )
+  }
+  
+  renderRecentVisits() {
+    if (!this.props.fetchingRestaurants && !this.props.fetchingVisits) {
+      return this.props.visits.map((visit) => {
+        var restaurant = this.props.restaurantsById[visit.restaurant];
+        var visitDate = moment(visit.date).format("MMMM Do, YYYY")
+        
+        return (
+          <div className="visit-row">
+            <div className="visit-restaurant">{restaurant.name}</div>
+            <div className="visit-date">{visitDate}</div>
+          </div>
+        )
+      })
+    }
   }
   
   renderLastVisitPanel() {

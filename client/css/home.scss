@@ -72,4 +72,25 @@
       }
     }
   }
+  
+  #recent-visits {
+    margin: 20px 0;
+    
+    .visit-row {
+      display: flex;
+      justify-content: center;
+      
+      * {
+        flex-grow: 1;
+      }
+      
+      .visit-restaurant {
+        margin-right: 5px;  
+      }
+      
+      .visit-date {
+        color: $site-theme-green;
+      }
+    }
+  }
 }
