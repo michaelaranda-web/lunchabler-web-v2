@@ -79,6 +79,7 @@
     .visit-row {
       display: flex;
       justify-content: center;
+      max-width: 350px;
       
       * {
         flex-grow: 1;
@@ -91,6 +92,7 @@
       .visit-date {
         margin-left: 5px;
         color: $site-theme-green;
+        text-align: right;
       }
     }
   }
