@@ -47,13 +47,17 @@ export class ResultsPage extends React.Component {
   }
   
   allowSelection() {
-    if (this.props.visits && this.props.visits.length > 0) {
-      var lastVisit = this.props.visits[0];
-      var now = new Date();
-      
-      return !moment(lastVisit.date).isSame(now, 'day');
-    } else {
+    if (this.props.fetchingVisits) {
       return false;
+    } else {
+      if (this.props.visits.length === 0) {
+        return true;
+      } else {
+        var lastVisit = this.props.visits[0];
+        var now = new Date();
+        
+        return !moment(lastVisit.date).isSame(now, 'day');
+      }
     }
   }
 }
@@ -62,7 +66,8 @@ const mapStateToProps = state => {
   return {
     fetchingRestaurants: state.entities.restaurants.isFetching,
     sortedRestaurants: state.entities.restaurants.sorted,
-    visits: state.entities.visits.all
+    visits: state.entities.visits.all,
+    fetchingVisits: state.entities.visits.isFetching
   }
 }
 

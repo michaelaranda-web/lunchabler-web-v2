@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addVisit } from '../../actions/visitsActions';
+import { addVisit, fetchRestaurantVisits } from '../../actions/visitsActions';
 import { Modal, Button } from 'react-bootstrap';
 
 export class SelectRestaurantModal extends React.Component {
@@ -58,12 +58,26 @@ export class SelectRestaurantModal extends React.Component {
           this.setState({
             pending: false,
             showAlreadySubmittedError: true
-          });
+          }, () => Promise.resolve());
         } else {
-          this.setState({pending: false}, () => {
-            this.props.onClose();
-          });  
+          this.props.fetchRestaurantVisits()
+            .then(() => {
+              this.setState({pending: false}, () => {
+                this.props.onClose();
+              });  
+            });
         }
-      });
+      })
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchRestaurantVisits: () => { return dispatch(fetchRestaurantVisits()) } 
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SelectRestaurantModal);

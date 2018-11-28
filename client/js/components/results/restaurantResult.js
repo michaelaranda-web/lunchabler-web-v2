@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { SelectRestaurantModal } from './selectRestaurantModal';
+import SelectRestaurantModal from './selectRestaurantModal';
 
 export class RestaurantResult extends React.Component {
   constructor(props) {
