@@ -9,12 +9,33 @@ export class UserPreferences extends React.Component {
     super(props);
     
     this.state = {
+      updating: false,
       preferences: {}
     }
   }
   
   componentDidMount() {
     this.fetchRestaurantPreferences();
+  }
+  
+  renderContent() {
+    if (this.state.updating) {
+      return <div>Loading...</div>
+    } else {
+      return Object.keys(this.props.usersById).map((userId) => {
+        var user = this.props.usersById[userId];
+        
+        return (
+          <div className="user-preference-options">
+            <label className="preference-label">{user.name}</label>
+            <PreferenceOptions 
+              currentPreference={this.state.preferences[userId]}
+              onPreferenceClick={(preference) => this.onPreferenceClick(userId, preference)}
+            />
+          </div>
+        )
+      })
+    }
   }
   
   render() {
@@ -24,21 +45,7 @@ export class UserPreferences extends React.Component {
         <div id="user-preferences-container" className="restaurant-info-section">
           <span className="section-label">PREFERENCES</span>
           <div id="user-preferences" className="section-content">
-            {
-              Object.keys(this.props.usersById).map((userId) => {
-                var user = this.props.usersById[userId];
-                
-                return (
-                  <div className="user-preference-options">
-                    <label className="preference-label">{user.name}</label>
-                    <PreferenceOptions 
-                      currentPreference={this.state.preferences[userId]}
-                      onPreferenceClick={(preference) => this.onPreferenceClick(userId, preference)}
-                    />
-                  </div>
-                )
-              })
-            }
+            {this.renderContent()}
           </div>
         </div>
       )
@@ -48,10 +55,15 @@ export class UserPreferences extends React.Component {
   fetchRestaurantPreferences() {
     var self = this;
     
+    this.setState({updating: true});
+    
     return new Promise((resolve) => {
       fetchRestaurantPreferences(this.props.restaurant._id)
         .then(preferences =>
-          self.setState({preferences: preferences}, () => {
+          self.setState({
+            preferences: preferences,
+            updating: false
+          }, () => {
             resolve();
           })
         )
