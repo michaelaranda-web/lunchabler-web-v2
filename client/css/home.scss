@@ -74,12 +74,17 @@
   }
   
   #recent-visits {
+    max-width: 400px;
+    padding: 20px;
     margin: 20px 0;
+    
+    h4 {
+      margin-top: 0;
+    }
     
     .visit-row {
       display: flex;
       justify-content: center;
-      max-width: 350px;
       
       * {
         flex-grow: 1;
