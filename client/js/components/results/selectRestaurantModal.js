@@ -24,8 +24,15 @@ export class SelectRestaurantModal extends React.Component {
           <p>Select <strong>{restaurant.name}</strong> for lunch today?</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.props.onClose()}>Close</Button>
-          <Button onClick={() => this.onConfirm()} bsStyle="primary">Confirm</Button>
+          <Button 
+            disabled={this.state.pending}
+            onClick={() => this.props.onClose()}>
+            Close
+          </Button>
+          <Button 
+            onClick={() => this.onConfirm()} bsStyle="primary">
+            {this.state.pending ? 'Submitting...' : 'Confirm'}
+          </Button>
         </Modal.Footer>
       </Modal> 
     )
