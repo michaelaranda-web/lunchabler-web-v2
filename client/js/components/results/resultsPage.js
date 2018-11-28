@@ -47,7 +47,7 @@ export class ResultsPage extends React.Component {
   }
   
   allowSelection() {
-    if (this.props.visits) {
+    if (this.props.visits && this.props.visits.length > 0) {
       var lastVisit = this.props.visits[0];
       var now = new Date();
       
