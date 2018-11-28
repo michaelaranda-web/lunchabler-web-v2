@@ -262,20 +262,33 @@ MongoClient.connect(db_url, function(err, client) {
     
     if (requestBodyValid) {
       var now = new Date();
+      var startOfDay = new Date();
+      startOfDay.setHours(0,0,0,0);
       
-      let visit = {
-        restaurant: ObjectId(req.body.restaurantId),
-        date: now
-      };
+      var endOfDay = new Date();
+      endOfDay.setHours(23,59,59,999);
       
-      visitsCol.insertOne(visit)
-        .then(() => {
-          console.log("[Server] Record added: " + req.body.restaurantId + "was visited on " + now);
-          res.send(req.body);
+      visitsCol.findOne({date: {$gte: startOfDay, $lt: endOfDay}})
+        .then((selectionForToday) => {
+          if (selectionForToday) {
+            console.log("[Server] Visit record already exists for today.");
+            res.status(200).send({ code: "ALREADY_SUBMITTED" });
+          } else {
+            let visit = {
+              restaurant: ObjectId(req.body.restaurantId),
+              date: now
+            };
+            
+            visitsCol.insertOne(visit)
+              .then(() => {
+                console.log("[Server] Record added: " + req.body.restaurantId + "was visited on " + now);
+                res.send(req.body);
+              })
+              .catch((err) => {
+                console.log(err);
+              });  
+          }
         })
-        .catch((err) => {
-          console.log(err);
-        });
     } else {
       console.log("[Server] Error while adding visit for " + req.body.restaurantId);
       res.status(400);
