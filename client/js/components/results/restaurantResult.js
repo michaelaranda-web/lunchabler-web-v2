@@ -69,7 +69,7 @@ export class RestaurantResult extends React.Component {
             </div>
           )} />
           <div className="actions-container">
-            <div className="select-restaurant" onClick={() => this.showSelectRestaurantModal()}>
+            <div className={`select-restaurant ${this.selectRestaurantButtonClass()}`} onClick={() => this.showSelectRestaurantModal()}>
               <i className="fas fa-check" />
             </div>
           </div>
@@ -88,15 +88,21 @@ export class RestaurantResult extends React.Component {
   }
   
   showSelectRestaurantModal() {
-    this.setState({
-      showSelectRestaurantModal: true
-    })
+    if (this.props.allowSelection) {
+      this.setState({
+        showSelectRestaurantModal: true
+      })
+    }
   }
   
   onSelectRestaurantModalClose() {
     this.setState({
       showSelectRestaurantModal: false
     })
+  }
+  
+  selectRestaurantButtonClass() {
+    return this.props.allowSelection ? '' : 'disabled';
   }
 }
 

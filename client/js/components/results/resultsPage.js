@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'; 
 import RestaurantResult from './restaurantResult';
+import moment from 'moment';
 
 export class ResultsPage extends React.Component {
   renderLoadingScreen() {
@@ -25,7 +26,12 @@ export class ResultsPage extends React.Component {
           <div id="restaurant-results">
             {
               this.props.sortedRestaurants.map((restaurant, i) => {
-                return <RestaurantResult key={i} rank={i+1} restaurant={restaurant} />
+                return <RestaurantResult 
+                        key={i} 
+                        rank={i+1} 
+                        restaurant={restaurant} 
+                        allowSelection={this.allowSelection()}
+                        />
               })
             }
           </div>
@@ -39,12 +45,24 @@ export class ResultsPage extends React.Component {
       ? 'page-loading' 
       : '';
   }
+  
+  allowSelection() {
+    if (this.props.visits) {
+      var lastVisit = this.props.visits[0];
+      var now = new Date();
+      
+      return !moment(lastVisit.date).isSame(now, 'day');
+    } else {
+      return false;
+    }
+  }
 }
 
 const mapStateToProps = state => {
   return {
     fetchingRestaurants: state.entities.restaurants.isFetching,
-    sortedRestaurants: state.entities.restaurants.sorted
+    sortedRestaurants: state.entities.restaurants.sorted,
+    visits: state.entities.visits.all
   }
 }
 

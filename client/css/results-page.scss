@@ -92,6 +92,14 @@
             background-color: $site-theme-green;
             color: white;
             
+            &.disabled {
+              background-color: #bbbbbb;
+              
+              &:hover {
+                background-color: #bbbbbb;
+              }
+            }
+            
             &:hover {
               background-color: #82c185;
             }
