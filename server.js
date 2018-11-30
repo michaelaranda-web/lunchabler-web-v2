@@ -5,15 +5,19 @@ if (process.env.NODE_ENV !== 'production') {
 var http = require('http');
 var path = require('path');
 var express = require('express');
+const socketIo = require("socket.io");
+const sockets = [];
 
 var router = express();
 var server = http.createServer(router);
+const io = socketIo(server);
 
 var bodyParser = require('body-parser');
 router.use(express.static(path.resolve(__dirname, 'dist')));
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
+const async = require('async');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 const assert = require('assert');
@@ -26,6 +30,27 @@ const yelp = require('yelp-fusion');
 
 var db_url = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_URI : 'mongodb://localhost:27017';
 var dbName = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_DB_NAME : 'lunchabler';
+
+/****** SocketIO functions ******/
+function updateRoster() {
+  async.map(
+    sockets,
+    function (socket) {
+      return socket.name;
+    },
+    function (err, names) {
+      broadcast('roster', names);
+    }
+  );
+  console.log("[SocketIO] Broadcaster roster...");
+}
+
+function broadcast(event, data) {
+  console.log("[SocketIO] Broadcasting...");
+  sockets.forEach(function (socket) {
+    socket.emit(event, data);
+  });
+}
 
 //TODO: Should MongoClient connect/disconnect per db call?
 MongoClient.connect(db_url, function(err, client) {
@@ -294,6 +319,41 @@ MongoClient.connect(db_url, function(err, client) {
       res.status(400);
       res.send("Invalid request made: adding visit for " + req.body.restaurantId);
     }
+  });
+  
+  io.on('connection', function (socket) {
+    sockets.push(socket);
+    console.log("[SocketIO] New connection established.");
+    console.log("[SocketIO] Socket connections:");
+    sockets.forEach(function (socket) {
+      console.log(socket.id + ": " + socket.name);
+    });
+
+    socket.on('disconnect', function () {
+      sockets.splice(sockets.indexOf(socket), 1);
+      updateRoster();
+      console.log("[SocketIO] User has disconnected from socket connection.");
+    });
+
+    socket.on('vote', function (vote) {
+      var text = String(vote || '');
+
+      if (!text) {
+        return;
+      }
+      
+      var data = {
+        name: socket.name,
+        vote: vote
+      };
+
+      broadcast('vote-message', data);
+    });
+
+    socket.on('identify', function (name) {
+      socket.name = String(name || 'Anonymous')
+      updateRoster();  
+    });
   });
   
   router.get('*', function(req, res) {

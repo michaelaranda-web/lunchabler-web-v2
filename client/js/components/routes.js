@@ -6,6 +6,7 @@ import ResultsPage from './results/resultsPage';
 import { ManageUsersPage } from './manage_users/manageUsersPage';
 import { ManageRestaurantsPage } from './manage_restaurants/manageRestaurantsPage';
 import RestaurantInfoPage from './restaurant_info/restaurantInfoPage';
+import { LunchRoomExample} from './lunch_rooms/lunchRoomExample';
 import SiteHeader from './siteHeader';
 import SideNavBar from './sideNavBar';
 import ScrollToTop from './scrollToTop';
@@ -25,6 +26,7 @@ export class Routes extends React.Component {
               <Route path="/start" component={StartPage}/>
               <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>
               <Route path="/manage_users" component={ManageUsersPage}/>
+              <Route path="/lunch_room_example" component={LunchRoomExample}/>
             </Switch>
           </div>
           <ScrollToTop />
