@@ -5,9 +5,9 @@ export class LunchRoomExample extends React.Component {
   constructor(props) {
     super(props);
     
-    var endpoint = 'http://lunchabler-web-v2-michaelaranda-web.c9users.io:8081';
+    var endpoint = 'https://lunchabler.herokuapp.com';
     if (DEVELOPMENT) {
-      endpoint = 'https://lunchabler.herokuapp.com'
+      endpoint = 'http://lunchabler-web-v2-michaelaranda-web.c9users.io:8081'
     }
     
     this.socket = socketIOClient(endpoint);
