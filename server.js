@@ -31,25 +31,34 @@ const yelp = require('yelp-fusion');
 var db_url = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_URI : 'mongodb://localhost:27017';
 var dbName = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_DB_NAME : 'lunchabler';
 
-/****** SocketIO functions ******/
-function updateRoster() {
-  async.map(
-    sockets,
-    function (socket) {
-      return socket.name;
-    },
-    function (err, names) {
-      broadcast('roster', names);
-    }
-  );
-  console.log("[SocketIO] Broadcaster roster...");
-}
+/****** SocketIO/Voting functions ******/
 
 function broadcast(event, data) {
-  console.log("[SocketIO] Broadcasting...");
   sockets.forEach(function (socket) {
     socket.emit(event, data);
   });
+}
+
+function getCurrentVotes(currentDayString, votesCol) {
+  return votesCol.findAndModify(
+          {dateString: currentDayString},
+          null,
+          {$setOnInsert: {dateString: currentDayString}},
+          {new: true, upsert: true})
+            
+}
+
+function updateVotes(voteSubmission, votesCol) {
+  var queryKey = voteSubmission.restaurantId + "." + "score";
+  var voteValue = voteSubmission.vote === "yes" ? 1 : -1;
+  var updateOptions = {upsert: true};
+  var query = {}
+  query[queryKey] = voteValue;
+  
+  return votesCol.updateOne(
+          {dateString: voteSubmission.currentDayString},
+          {$inc: query},
+          updateOptions)
 }
 
 //TODO: Should MongoClient connect/disconnect per db call?
@@ -62,7 +71,7 @@ MongoClient.connect(db_url, function(err, client) {
   const usersCol = db.collection('users');
   const preferencesCol = db.collection('preferences');
   const visitsCol = db.collection('visits');
-  
+  const votesCol = db.collection('votes');
 
   //TODO: Reference https://community.risingstack.com/redis-node-js-introduction-to-caching/ for caching eventual Yelp calls.
 
@@ -323,36 +332,28 @@ MongoClient.connect(db_url, function(err, client) {
   
   io.on('connection', function (socket) {
     sockets.push(socket);
-    console.log("[SocketIO] New connection established.");
-    console.log("[SocketIO] Socket connections:");
-    sockets.forEach(function (socket) {
-      console.log(socket.id + ": " + socket.name);
-    });
-
+    console.log("[SocketIO] New connection established: " + socket.id);
+    
     socket.on('disconnect', function () {
       sockets.splice(sockets.indexOf(socket), 1);
-      updateRoster();
       console.log("[SocketIO] User has disconnected from socket connection.");
     });
 
-    socket.on('vote', function (vote) {
-      var text = String(vote || '');
-
-      if (!text) {
-        return;
-      }
-      
-      var data = {
-        name: socket.name,
-        vote: vote
-      };
-
-      broadcast('vote-message', data);
+    socket.on('vote', function (voteSubmission) {
+      updateVotes(voteSubmission, votesCol)
+        .then(() => {
+          votesCol.findOne({dateString: voteSubmission.currentDayString})
+            .then((updatedVotes) => {
+              broadcast('vote-message', updatedVotes);
+            })
+        })
     });
-
-    socket.on('identify', function (name) {
-      socket.name = String(name || 'Anonymous')
-      updateRoster();  
+    
+    socket.on('get-current-votes', function (req) {
+      getCurrentVotes(req.currentDayString, votesCol)
+            .then((currentVotes) => {
+              broadcast('vote-message', currentVotes.value);
+            })
     });
   });
   
