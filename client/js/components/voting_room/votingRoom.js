@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { VotingOption } from './votingOption';
 import socketIOClient from "socket.io-client";
 import moment from 'moment';
 
@@ -74,11 +75,10 @@ export class VotingRoom extends React.Component {
     if (this.state.votes) {
       return this.state.votes.recommendedRestaurants.map((restaurant) => {
         return (
-          <div>
-            {restaurant.name}
-            <button onClick={() => this.onVote(restaurant._id, "yes")}>Up</button>
-            <button onClick={() => this.onVote(restaurant._id, "no")}>Down</button>
-          </div>
+          <VotingOption 
+            restaurant={restaurant}
+            onVote={this.onVote.bind(this)}
+          />
         )
       })
     }
