@@ -135,9 +135,9 @@ export class VotingRoom extends React.Component {
   }
   
   votedRestaurantsSort(a, b) {
-    if (a.score > b.score) {
+    if (a[1].score > b[1].score) {
       return -1;
-    } else if (a.score < b.score) {
+    } else if (a[1].score < b[1].score) {
       return 1;
     } else {
       return 0;

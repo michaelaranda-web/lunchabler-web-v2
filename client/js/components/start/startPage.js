@@ -30,6 +30,11 @@ export class StartPage extends React.Component {
   }
   
   renderStartVotingButton() {
+    var buttonText = "Start Voting";
+    if (this.props.fetchingRestaurants) {
+      buttonText = "Submitting..."; 
+    }
+    
     return (
       <Route render={({history}) => (
         <a
@@ -37,7 +42,7 @@ export class StartPage extends React.Component {
           href="#"
           onClick={() => { this.onStartVotingClick(history) }}
         >
-          Start Voting
+          {buttonText}
         </a>
       )} />  
     )
@@ -47,7 +52,10 @@ export class StartPage extends React.Component {
     if (this.props.lunchGroup.length > 0) {
       createNewVote(this.props.lunchGroup)
         .then((response) => {
-          history.push(`/voting_room/${response.data.session_id}`)
+          this.props.fetchRestaurants()
+            .then(() => {
+              history.push(`/voting_room/${response.data.session_id}`)
+            })
         })
         .catch(function (error) {
           console.log(error);
@@ -58,13 +66,14 @@ export class StartPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    lunchGroup: state.ui.lunchGroup
+    lunchGroup: state.ui.lunchGroup,
+    fetchingRestaurants: state.entities.restaurants.isFetching,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchRestaurants: () => { dispatch(fetchRestaurants()) }
+    fetchRestaurants: () => { return dispatch(fetchRestaurants()) }
   }
 }
 
