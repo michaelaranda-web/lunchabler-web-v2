@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fetch from 'cross-fetch';
 // import { REQUEST_VOTES, RECEIVE_VOTES, RECEIVE_VOTES_SUCCESS, RECEIVE_VOTES_ERROR } from '../constants/constants';
 
 // function requestVotes() {
@@ -43,6 +44,14 @@ import axios from 'axios';
 //       )
 //   }
 // }
+
+export function getVotes() {
+  return fetch('/api/votes')
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error)
+    );
+}
 
 export function createNewVote(lunchGroup) {
   return axios.post('/api/votes', {

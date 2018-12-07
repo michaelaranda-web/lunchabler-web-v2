@@ -22,6 +22,9 @@ export default class SideNavBar extends React.Component {
           <Link to="/manage_users">
             <li>Users</li>
           </Link>
+          <Link to="/voting_rooms">
+            <li>Voting Rooms</li>
+          </Link>
         </ul>
       </div>
     )

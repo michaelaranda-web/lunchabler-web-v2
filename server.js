@@ -326,8 +326,17 @@ MongoClient.connect(db_url, function(err, client) {
     }
   });
   
+  router.get('/api/votes', function(req, res) {
+    votesCol.find({}).limit(3).toArray(function(err, docs) {
+      assert.equal(err, null);
+      
+      res.json(docs);
+    });
+  });
+  
   router.post('/api/votes', (req, res) => {
     let currentDayString = moment().format("YYYYMMDDhmmssSS");
+    let date = new Date();
     console.log("Lunch group:");
     console.log(req.body.lunchGroup);
     let lunchGroupUserIds = req.query.lunchGroupUserIds || [];
@@ -335,6 +344,7 @@ MongoClient.connect(db_url, function(err, client) {
     new RestaurantRanker(db, lunchGroupUserIds).getRankedRestaurants((restaurants) => {
       votesCol.insertOne(
         {
+          date: date,
           session_id: currentDayString,
           recommendedRestaurants: restaurants
         },
@@ -347,8 +357,6 @@ MongoClient.connect(db_url, function(err, client) {
             res.json(result.ops[0]);
         })
     });
-  
-    
   });
   
   io.on('connection', function (socket) {
