@@ -44,6 +44,8 @@ import axios from 'axios';
 //   }
 // }
 
-export function createNewVote() {
-  return axios.post('/api/votes');
+export function createNewVote(lunchGroup) {
+  return axios.post('/api/votes', {
+    lunchGroup: lunchGroup
+  })
 }

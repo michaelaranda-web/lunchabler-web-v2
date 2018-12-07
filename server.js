@@ -45,7 +45,7 @@ function getCurrentVotes(sessionId, votesCol) {
 }
 
 function updateVotes(voteSubmission, votesCol) {
-  var queryKey = voteSubmission.restaurantId + "." + "score";
+  var queryKey = "votedRestaurants." + voteSubmission.restaurantId + "." + "score";
   var voteValue = voteSubmission.vote === "yes" ? 1 : -1;
   var updateOptions = {upsert: true};
   var query = {}
@@ -328,17 +328,27 @@ MongoClient.connect(db_url, function(err, client) {
   
   router.post('/api/votes', (req, res) => {
     let currentDayString = moment().format("YYYYMMDDhmmssSS");
+    console.log("Lunch group:");
+    console.log(req.body.lunchGroup);
+    let lunchGroupUserIds = req.query.lunchGroupUserIds || [];
+    
+    new RestaurantRanker(db, lunchGroupUserIds).getRankedRestaurants((restaurants) => {
+      votesCol.insertOne(
+        {
+          session_id: currentDayString,
+          recommendedRestaurants: restaurants
+        },
+        null,
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else
+            console.log("[Server] Create new voting session " + result.ops[0]._id);
+            res.json(result.ops[0]);
+        })
+    });
   
-    votesCol.insertOne(
-      {session_id: currentDayString},
-      null,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else
-          console.log("[Server] Create new voting session " + result.ops[0]._id);
-          res.json(result.ops[0]);
-      })
+    
   });
   
   io.on('connection', function (socket) {
