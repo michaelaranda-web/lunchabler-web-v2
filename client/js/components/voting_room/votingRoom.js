@@ -13,7 +13,7 @@ export class VotingRoom extends React.Component {
     }
     
     this.socket = socketIOClient(endpoint);
-    this.currentDayString = moment().format("YYYYMMDD");
+    this.currentDayString = moment().format("YYYYMMDDhmmssSS");
     
     this.state = {
       votes: false
@@ -21,7 +21,7 @@ export class VotingRoom extends React.Component {
   }
   
   componentDidMount() {
-    this.socket.emit("get-current-votes", {currentDayString: this.currentDayString});
+    this.socket.emit("get-current-votes", {sessionId: this.props.match.params.session_id});
     
     this.socket.on("vote-message", newVotes => {
       this.setState({ votes: newVotes })
@@ -75,7 +75,7 @@ export class VotingRoom extends React.Component {
     var voteSubmission = {
       restaurantId: restaurantId,
       vote: vote,
-      currentDayString: this.currentDayString
+      session_id: this.props.match.params.session_id
     }
     this.socket.emit("vote", voteSubmission);
   }

@@ -21,6 +21,7 @@ const async = require('async');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 const assert = require('assert');
+const moment = require('moment');
 const RestaurantRanker = require('./db/helpers/restaurantRanker');
 const collectionAsObject = require('./helpers/helpers.js').collectionAsObject;
 const restaurantPreferencesByUserId = require('./helpers/helpers.js').restaurantPreferencesByUserId;
@@ -39,13 +40,8 @@ function broadcast(event, data) {
   });
 }
 
-function getCurrentVotes(currentDayString, votesCol) {
-  return votesCol.findAndModify(
-          {dateString: currentDayString},
-          null,
-          {$setOnInsert: {dateString: currentDayString}},
-          {new: true, upsert: true})
-            
+function getCurrentVotes(sessionId, votesCol) {
+  return votesCol.findOne({session_id: sessionId});
 }
 
 function updateVotes(voteSubmission, votesCol) {
@@ -56,7 +52,7 @@ function updateVotes(voteSubmission, votesCol) {
   query[queryKey] = voteValue;
   
   return votesCol.updateOne(
-          {dateString: voteSubmission.currentDayString},
+          {session_id: voteSubmission.session_id},
           {$inc: query},
           updateOptions)
 }
@@ -330,6 +326,21 @@ MongoClient.connect(db_url, function(err, client) {
     }
   });
   
+  router.post('/api/votes', (req, res) => {
+    let currentDayString = moment().format("YYYYMMDDhmmssSS");
+  
+    votesCol.insertOne(
+      {session_id: currentDayString},
+      null,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else
+          console.log("[Server] Create new voting session " + result.ops[0]._id);
+          res.json(result.ops[0]);
+      })
+  });
+  
   io.on('connection', function (socket) {
     sockets.push(socket);
     console.log("[SocketIO] New connection established: " + socket.id);
@@ -342,7 +353,7 @@ MongoClient.connect(db_url, function(err, client) {
     socket.on('vote', function (voteSubmission) {
       updateVotes(voteSubmission, votesCol)
         .then(() => {
-          votesCol.findOne({dateString: voteSubmission.currentDayString})
+          votesCol.findOne({session_id: voteSubmission.session_id})
             .then((updatedVotes) => {
               broadcast('vote-message', updatedVotes);
             })
@@ -350,9 +361,9 @@ MongoClient.connect(db_url, function(err, client) {
     });
     
     socket.on('get-current-votes', function (req) {
-      getCurrentVotes(req.currentDayString, votesCol)
+      getCurrentVotes(req.sessionId, votesCol)
             .then((currentVotes) => {
-              broadcast('vote-message', currentVotes.value);
+              broadcast('vote-message', currentVotes);
             })
     });
   });

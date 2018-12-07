@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import LunchGroupSelector from './lunchGroupSelector';
 import { fetchRestaurants } from '../../actions/restaurantsActions';
+import { createNewVote } from '../../actions/votesActions';
 
 export class StartPage extends React.Component {
   render() {
@@ -20,7 +21,7 @@ export class StartPage extends React.Component {
           
           <div>
             <div className="button-row">
-              {this.renderGetSuggestionsButton()}
+              {this.renderStartVotingButton()}
             </div>
           </div>
         </div>
@@ -28,25 +29,30 @@ export class StartPage extends React.Component {
     )
   }
   
-  renderGetSuggestionsButton() {
+  renderStartVotingButton() {
     return (
       <Route render={({history}) => (
         <a
           className="submit-button"
           href="#"
-          onClick={() => { this.onGetSuggestionsClick(history) }}
+          onClick={() => { this.onStartVotingClick(history) }}
         >
-          Get Suggestions
+          Start Voting
         </a>
       )} />  
     )
   }
   
-  onGetSuggestionsClick(history) {
+  onStartVotingClick(history) {
     if (this.props.lunchGroup.length > 0) {
-      this.props.fetchRestaurants();
-      //TODO: Use Promises to chain redirecting to the fetchRestaurants call
-      history.push('/results');
+      createNewVote()
+        .then((response) => {
+          this.props.fetchRestaurants();
+          history.push(`/voting_room/${response.data.session_id}`)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   }
 }

@@ -26,7 +26,7 @@ export class Routes extends React.Component {
               <Route path="/start" component={StartPage}/>
               <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>
               <Route path="/manage_users" component={ManageUsersPage}/>
-              <Route path="/voting_room" component={VotingRoom}/>
+              <Route path="/voting_room/:session_id" component={VotingRoom}/>
             </Switch>
           </div>
           <ScrollToTop />
