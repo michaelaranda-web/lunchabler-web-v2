@@ -24,13 +24,13 @@ export class VotingRoomsPage extends React.Component {
   renderVotingRoomList() {
     if (this.state.votingRooms.length > 0) {
       return this.state.votingRooms.map((votingRoom, i) => {
-        var votingRoomDate = moment(votingRoom.date).format('MMMM Do YYYY, h:mm:ss a');
+        var votingRoomDate = moment(votingRoom.date).format('MMMM Do YYYY, h:mm a');
         
         return (
           <Link to={`/voting_room/${votingRoom.session_id}`}>
-            <div>
-              <h3>{`Voting Room ${i}`}</h3>
-              <p>{`Created on ${votingRoomDate}`}</p>
+            <div className="voting-room-list-item">
+              <h3>{`Voting Room ${i+1}`}</h3>
+              <p>{votingRoomDate}</p>
             </div>
           </Link>
         )
@@ -44,7 +44,7 @@ export class VotingRoomsPage extends React.Component {
     return (
       <div id="voting-rooms-page" className="page-content">
         <h1>Voting Rooms</h1>
-        <div id="voting-rooms-page-content">
+        <div id="voting-rooms-page-content" className="section">
           {this.renderVotingRoomList()}
         </div>
       </div>

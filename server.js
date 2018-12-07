@@ -327,7 +327,10 @@ MongoClient.connect(db_url, function(err, client) {
   });
   
   router.get('/api/votes', function(req, res) {
-    votesCol.find({}).limit(3).toArray(function(err, docs) {
+    votesCol.find({})
+      .sort([['date', -1]])
+      .limit(3)
+      .toArray(function(err, docs) {
       assert.equal(err, null);
       
       res.json(docs);
