@@ -4,6 +4,7 @@ export function restaurantsRankedByVotes(restaurantsObj) {
   return sortedRestaurantArrays.map((restaurantArray) => {
     return {
       id: restaurantArray[0],
+      name: restaurantArray[1].name,
       score: restaurantArray[1].score
     }
   })

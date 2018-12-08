@@ -1,6 +1,6 @@
 import React from 'react';
 import { VotingOption } from './votingOption';
-import Scoreboard from './scoreboard';
+import { Scoreboard } from './scoreboard';
 import socketIOClient from "socket.io-client";
 import moment from 'moment';
 

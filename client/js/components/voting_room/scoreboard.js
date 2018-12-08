@@ -23,7 +23,7 @@ export class Scoreboard extends React.Component {
     
     for (let i = 0; i < this.numRankingsToDisplay; i++) {
       if (restaurants[i]) {
-        var restaurantName = this.props.restaurantsById[restaurants[i].id].name;
+        var restaurantName = restaurants[i].name;
         var restaurantScore = restaurants[i].score;
         rankings.push(
           <div className="scoreboard-row">
@@ -40,7 +40,7 @@ export class Scoreboard extends React.Component {
   }
   
   render() {
-    if (this.props.votedRestaurants && this.props.restaurantsById) {
+    if (this.props.votedRestaurants) {
       var topRankedRestaurants = restaurantsRankedByVotes(this.props.votedRestaurants).slice(0, this.numRankingsToDisplay);
       
       return (
@@ -59,14 +59,3 @@ export class Scoreboard extends React.Component {
     }
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    restaurantsById: state.entities.restaurants.byId
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  null
-)(Scoreboard);
