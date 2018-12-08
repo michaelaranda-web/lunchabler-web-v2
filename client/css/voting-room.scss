@@ -1,0 +1,7 @@
+#voting-room-page {
+  .fa-arrow-alt-circle-up {
+    &.voted-up {
+      color: green;
+    }
+  }
+}

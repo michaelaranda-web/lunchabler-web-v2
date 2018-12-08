@@ -61,9 +61,9 @@ export class VotingRoom extends React.Component {
     )
   }
   
-  onVote(restaurantId, vote) {
+  onVote(restaurant, vote) {
     var voteSubmission = {
-      restaurantId: restaurantId,
+      restaurant: restaurant,
       vote: vote,
       session_id: this.props.match.params.session_id
     }

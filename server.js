@@ -45,15 +45,18 @@ function getCurrentVotes(sessionId, votesCol) {
 }
 
 function updateVotes(voteSubmission, votesCol) {
-  var queryKey = "votedRestaurants." + voteSubmission.restaurantId + "." + "score";
+  var nameQueryKey = "votedRestaurants." + voteSubmission.restaurant._id + "." + "name";
+  var scoreQueryKey = "votedRestaurants." + voteSubmission.restaurant._id + "." + "score";
   var voteValue = voteSubmission.vote === "yes" ? 1 : -1;
   var updateOptions = {upsert: true};
-  var query = {}
-  query[queryKey] = voteValue;
+  var nameQuery = {}
+  var scoreQuery = {}
+  scoreQuery[scoreQueryKey] = voteValue;
+  nameQuery[nameQueryKey] = voteSubmission.restaurant.name;
   
   return votesCol.updateOne(
           {session_id: voteSubmission.session_id},
-          {$inc: query},
+          {$inc: scoreQuery, $set: nameQuery},
           updateOptions)
 }
 

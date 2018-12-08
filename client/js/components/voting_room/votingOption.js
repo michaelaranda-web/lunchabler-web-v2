@@ -5,30 +5,33 @@ export class VotingOption extends React.Component {
     super(props);
     
     this.state = {
-      currentVote: null
+      votedUp: false
     };
+  }
+  
+  voteButtonClass() {
+    return this.state.votedUp ? "voted-up" : ""; 
   }
   
   render() {
       return (
         <div>
           {this.props.restaurant.name}
-          <button onClick={() => this.onVote(this.props.restaurant._id, "yes")}>Up</button>
-          <button onClick={() => this.onVote(this.props.restaurant._id, "no")}>Down</button>
+          <i 
+            onClick={() => this.onVoteButtonClick()} 
+            className={`far fa-arrow-alt-circle-up ${this.voteButtonClass()}`}>
+          </i>
         </div>
       )
           
   }
   
-  onVote(restaurantId, vote) {
-    if (this.state.currentVote === vote) {
-      return;
-    } else {
-      this.setState({
-        currentVote: vote
-      })
-      
-      this.props.onVote(restaurantId, vote); 
-    }
+  onVoteButtonClick() {
+    this.setState({
+      votedUp: !this.state.votedUp
+    }, () => {
+      var vote = this.state.votedUp ? "yes" : "no-preference"
+      this.props.onVote(this.props.restaurant, vote)
+    })
   }
 }
