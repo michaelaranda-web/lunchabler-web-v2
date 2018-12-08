@@ -6,7 +6,7 @@ import ResultsPage from './results/resultsPage';
 import { ManageUsersPage } from './manage_users/manageUsersPage';
 import { ManageRestaurantsPage } from './manage_restaurants/manageRestaurantsPage';
 import RestaurantInfoPage from './restaurant_info/restaurantInfoPage';
-import VotingRoom from './voting_room/votingRoom';
+import { VotingRoom } from './voting_room/votingRoom';
 import { VotingRoomsPage } from './voting_rooms_page/votingRoomsPage';
 import SiteHeader from './siteHeader';
 import SideNavBar from './sideNavBar';
