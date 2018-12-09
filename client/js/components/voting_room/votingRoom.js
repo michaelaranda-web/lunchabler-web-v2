@@ -33,7 +33,7 @@ export class VotingRoom extends React.Component {
     if (this.state.votes) {
       return (
         <Scoreboard
-          votedRestaurants={this.state.votes.votedRestaurants}
+          restaurants={this.state.votes.restaurants}
         />
       )
     }
@@ -41,7 +41,7 @@ export class VotingRoom extends React.Component {
   
   renderRestaurantList() {
     if (this.state.votes) {
-      return this.state.votes.recommendedRestaurants.map((restaurant) => {
+      return this.state.votes.restaurants.map((restaurant) => {
         return (
           <VotingOption 
             restaurant={restaurant}

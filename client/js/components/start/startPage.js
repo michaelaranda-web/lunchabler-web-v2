@@ -52,10 +52,7 @@ export class StartPage extends React.Component {
     if (this.props.lunchGroup.length > 0) {
       createNewVote(this.props.lunchGroup)
         .then((response) => {
-          this.props.fetchRestaurants()
-            .then(() => {
-              history.push(`/voting_room/${response.data.session_id}`)
-            })
+          history.push(`/voting_room/${response.data}`)
         })
         .catch(function (error) {
           console.log(error);

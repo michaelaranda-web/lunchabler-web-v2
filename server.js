@@ -45,18 +45,12 @@ function getCurrentVotes(sessionId, votesCol) {
 }
 
 function updateVotes(voteSubmission, votesCol) {
-  var nameQueryKey = "votedRestaurants." + voteSubmission.restaurant._id + "." + "name";
-  var scoreQueryKey = "votedRestaurants." + voteSubmission.restaurant._id + "." + "score";
   var voteValue = voteSubmission.vote === "yes" ? 1 : -1;
   var updateOptions = {upsert: true};
-  var nameQuery = {}
-  var scoreQuery = {}
-  scoreQuery[scoreQueryKey] = voteValue;
-  nameQuery[nameQueryKey] = voteSubmission.restaurant.name;
   
   return votesCol.updateOne(
-          {session_id: voteSubmission.session_id},
-          {$inc: scoreQuery, $set: nameQuery},
+          {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
+          {$inc: {"restaurants.$.score": voteValue}},
           updateOptions)
 }
 
@@ -343,24 +337,32 @@ MongoClient.connect(db_url, function(err, client) {
   router.post('/api/votes', (req, res) => {
     let currentDayString = moment().format("YYYYMMDDhmmssSS");
     let date = new Date();
-    console.log("Lunch group:");
-    console.log(req.body.lunchGroup);
     let lunchGroupUserIds = req.query.lunchGroupUserIds || [];
     
     new RestaurantRanker(db, lunchGroupUserIds).getRankedRestaurants((restaurants) => {
+      var votingVersionRestaurants = restaurants.map((restaurant) => {
+        return {
+          id: restaurant._id,
+          name: restaurant.name,
+          score: 0
+        }
+      })
+      
       votesCol.insertOne(
         {
           date: date,
           session_id: currentDayString,
-          recommendedRestaurants: restaurants
+          parameters: {},
+          restaurants: votingVersionRestaurants,
+          selection: null
         },
         null,
         (err, result) => {
           if (err) {
             console.log(err);
           } else
-            console.log("[Server] Create new voting session " + result.ops[0]._id);
-            res.json(result.ops[0]);
+            console.log("[Server] Created new voting session " + result.ops[0]._id);
+            res.json(result.ops[0].session_id);
         })
     });
   });

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { restaurantsRankedByVotes } from '../../helpers/votingRoomHelper';
 
 export class Scoreboard extends React.Component {
@@ -18,13 +17,13 @@ export class Scoreboard extends React.Component {
     )
   }
   
-  renderRankings(restaurants) {
+  renderRankings(rankedRestaurants) {
     var rankings = [];
     
     for (let i = 0; i < this.numRankingsToDisplay; i++) {
-      if (restaurants[i]) {
-        var restaurantName = restaurants[i].name;
-        var restaurantScore = restaurants[i].score;
+      if (rankedRestaurants[i]) {
+        var restaurantName = rankedRestaurants[i].name;
+        var restaurantScore = rankedRestaurants[i].score;
         rankings.push(
           <div className="scoreboard-row">
             <span>{restaurantName}</span>
@@ -40,8 +39,8 @@ export class Scoreboard extends React.Component {
   }
   
   render() {
-    if (this.props.votedRestaurants) {
-      var topRankedRestaurants = restaurantsRankedByVotes(this.props.votedRestaurants).slice(0, this.numRankingsToDisplay);
+    if (this.props.restaurants) {
+      var topRankedRestaurants = restaurantsRankedByVotes(this.props.restaurants).slice(0, this.numRankingsToDisplay);
       
       return (
         <div id="scoreboard">
