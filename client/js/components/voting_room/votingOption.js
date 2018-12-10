@@ -15,8 +15,8 @@ export class VotingOption extends React.Component {
   
   render() {
       return (
-        <div>
-          {this.props.restaurant.name}
+        <div className="voting-option">
+          <span className="restaurant-name">{this.props.restaurant.name}</span>
           <i 
             onClick={() => this.onVoteButtonClick()} 
             className={`far fa-arrow-alt-circle-up ${this.voteButtonClass()}`}>

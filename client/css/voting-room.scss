@@ -1,7 +1,36 @@
 #voting-room-page {
-  .fa-arrow-alt-circle-up {
-    &.voted-up {
-      color: green;
+  h1 {
+    padding-bottom: 20px;
+  }
+  
+  #scoreboard-section {
+    margin-bottom: 20px;
+    
+    #scoreboard {
+      .scoreboard-row {
+        .restaurant-name {
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+  
+  .voting-option {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid grey;
+    padding: 5px 0;
+    
+    .restaurant-name {
+      flex-grow: 1;
+    }
+    
+    .fa-arrow-alt-circle-up {
+      font-size: 20px;
+      
+      &.voted-up {
+        color: green;
+      }
     }
   }
 }

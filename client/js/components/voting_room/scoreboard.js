@@ -21,13 +21,13 @@ export class Scoreboard extends React.Component {
     var rankings = [];
     
     for (let i = 0; i < this.numRankingsToDisplay; i++) {
-      if (rankedRestaurants[i]) {
+      if (rankedRestaurants[i] && rankedRestaurants[i].score > 0) {
         var restaurantName = rankedRestaurants[i].name;
         var restaurantScore = rankedRestaurants[i].score;
         rankings.push(
           <div className="scoreboard-row">
-            <span>{restaurantName}</span>
-            <span>{restaurantScore}</span>
+            <span className="restaurant-name">{restaurantName}</span>
+            <span className="restaurant-score">{restaurantScore}</span>
           </div>
         )
       } else {
