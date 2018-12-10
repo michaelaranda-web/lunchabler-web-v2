@@ -42,6 +42,11 @@ export default class SiteHeader extends React.Component {
                     <li>Users</li>
                   </Link>
                 </MenuItem>
+                <MenuItem>
+                  <Link to="/voting_rooms">
+                    <li>Voting Rooms</li>
+                  </Link>
+                </MenuItem>
               </Dropdown.Menu>
             </Dropdown>
           </ButtonToolbar>
