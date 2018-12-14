@@ -8,6 +8,7 @@ import { ManageRestaurantsPage } from './manage_restaurants/manageRestaurantsPag
 import RestaurantInfoPage from './restaurant_info/restaurantInfoPage';
 import { VotingRoom } from './voting_room/votingRoom';
 import { VotingRoomsPage } from './voting_rooms_page/votingRoomsPage';
+import { SignupPage } from './signup_page/signupPage';
 import SiteHeader from './siteHeader';
 import SideNavBar from './sideNavBar';
 import ScrollToTop from './scrollToTop';
@@ -22,6 +23,7 @@ export class Routes extends React.Component {
             <SideNavBar />
             <Switch>
               <Route exact path="/" component={HomePage}/>
+              <Route path="/signup" component={SignupPage}/>
               <Route path="/restaurants/:restaurant_id" component={RestaurantInfoPage}/>
               <Route path="/results" component={ResultsPage}/>
               <Route path="/start" component={StartPage}/>

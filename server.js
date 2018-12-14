@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 var http = require('http');
 var path = require('path');
 var express = require('express');
+const expressSession = require('express-session');
 const socketIo = require("socket.io");
 const sockets = [];
 
@@ -28,6 +29,40 @@ const restaurantPreferencesByUserId = require('./helpers/helpers.js').restaurant
 const userPreferencesByRestaurantId = require('./helpers/helpers.js').userPreferencesByRestaurantId;
 
 const yelp = require('yelp-fusion');
+
+const passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+  
+router.use(
+  expressSession(
+    {
+      secret: "temporarysecret",
+      cookie: {
+        maxAge: 15000
+      }
+    }
+  )
+);
+
+const flash = require('connect-flash');
+const bcrypt = require('bcrypt-nodejs')
+
+function generateHash(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+}
+
+function validPassword(password) {
+  return bcrypt.compareSync(password, this.local.password);
+}
+
+function isLoggedIn(req, res, next) {
+  // if user is authenticated in the session, carry on 
+  if (req.isAuthenticated())
+      return next();
+
+  // if they aren't redirect them to the home page
+  res.redirect('/');
+}
 
 var db_url = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_URI : 'mongodb://localhost:27017';
 var dbName = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_DB_NAME : 'lunchabler';
@@ -65,6 +100,87 @@ MongoClient.connect(db_url, function(err, client) {
   const preferencesCol = db.collection('preferences');
   const visitsCol = db.collection('visits');
   const votesCol = db.collection('votes');
+  
+  passport.use('local-signup', new LocalStrategy({
+        // by default, local strategy uses username and password, we will override with email
+        usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback : true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) {
+      console.log("***email:", email)
+      console.log("***password:", password)
+      // asynchronous
+      // User.findOne wont fire unless data is sent back
+      process.nextTick(function() {
+        // find a user whose email is the same as the forms email
+        // we are checking to see if the user trying to login already exists
+        usersCol.findOne({'email': email}, function(err, user) {
+          if (err)
+            return done(err);
+          if (user) {
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          } else {
+              usersCol.insertOne(
+                {
+                  email: email,
+                  password: generateHash(password)
+                },
+                null,
+                (err, result) => {
+                  if (err)
+                    throw err;
+                  return done(null, result.ops[0]);
+                }
+              )
+            }
+        });    
+      });
+    }
+  ));
+  
+  passport.serializeUser(function (user, cb) {
+    cb(null, user._id);
+  });
+   
+  passport.deserializeUser(function (id, cb) {
+    usersCol.findOne({"_id": ObjectId(id)})
+      .then((user) => {
+        cb(null, user);
+      })
+  });
+  
+  router.use(passport.initialize());
+  router.use(passport.session());
+  router.use(flash());
+  
+  router.post('/api/login',
+    passport.authenticate('local', {
+        // redirect back to /login
+        // if login fails
+        failureRedirect: '/login'
+    }),
+ 
+    // end up at / if login works
+    function (req, res) {
+        res.redirect('/');
+    }
+  );
+  
+  router.post('/api/signup', 
+    passport.authenticate('local-signup',
+      {   
+        successRedirect: '/',
+        failureRedirect: '/signup',
+        failureFlash: true 
+      }
+    )
+  );
+   
+  router.get('/api/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+  });
 
   //TODO: Reference https://community.risingstack.com/redis-node-js-introduction-to-caching/ for caching eventual Yelp calls.
 
