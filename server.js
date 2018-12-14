@@ -51,8 +51,8 @@ function generateHash(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 }
 
-function validPassword(password) {
-  return bcrypt.compareSync(password, this.local.password);
+function validPassword(passwordSubmission, userPassword) {
+  return bcrypt.compareSync(passwordSubmission, userPassword);
 }
 
 function isLoggedIn(req, res, next) {
@@ -101,6 +101,33 @@ MongoClient.connect(db_url, function(err, client) {
   const visitsCol = db.collection('visits');
   const votesCol = db.collection('votes');
   
+  passport.use('local-login', new LocalStrategy({
+        // by default, local strategy uses username and password, we will override with email
+        usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback : true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) { // callback with email and password from our form
+      // find a user whose email is the same as the forms email
+      // we are checking to see if the user trying to login already exists
+      usersCol.findOne({ 'email': email }, function(err, user) {
+        // if there are any errors, return the error before anything else
+        if (err)
+            return done(err);
+
+        // if no user is found, return the message
+        if (!user)
+            return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+
+        // if the user is found but the password is wrong
+        if (!validPassword(password, user.password))
+            return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+
+        // all is well, return successful user
+        return done(null, user);
+      });
+    }));
+  
   passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
@@ -108,8 +135,6 @@ MongoClient.connect(db_url, function(err, client) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-      console.log("***email:", email)
-      console.log("***password:", password)
       // asynchronous
       // User.findOne wont fire unless data is sent back
       process.nextTick(function() {
@@ -154,17 +179,14 @@ MongoClient.connect(db_url, function(err, client) {
   router.use(passport.session());
   router.use(flash());
   
-  router.post('/api/login',
-    passport.authenticate('local', {
-        // redirect back to /login
-        // if login fails
-        failureRedirect: '/login'
-    }),
- 
-    // end up at / if login works
-    function (req, res) {
-        res.redirect('/');
-    }
+  router.post('/api/login', 
+    passport.authenticate('local-login',
+      {   
+        successRedirect: '/',
+        failureRedirect: '/login',
+        failureFlash: true 
+      }
+    )
   );
   
   router.post('/api/signup', 
