@@ -38,7 +38,7 @@ router.use(
     {
       secret: "temporarysecret",
       cookie: {
-        maxAge: 15000
+        maxAge: null
       }
     }
   )
@@ -58,10 +58,11 @@ function validPassword(passwordSubmission, userPassword) {
 function isLoggedIn(req, res, next) {
   // if user is authenticated in the session, carry on 
   if (req.isAuthenticated())
-      return next();
+    return next();
 
   // if they aren't redirect them to the home page
-  res.redirect('/');
+  res.status(401);
+  res.send("User not logged in");
 }
 
 var db_url = (process.env.NODE_ENV == 'production') ? process.env.MONGODB_URI : 'mongodb://localhost:27017';
@@ -179,15 +180,18 @@ MongoClient.connect(db_url, function(err, client) {
   router.use(passport.session());
   router.use(flash());
   
-  router.post('/api/login', 
-    passport.authenticate('local-login',
-      {   
-        successRedirect: '/',
-        failureRedirect: '/login',
-        failureFlash: true 
-      }
-    )
-  );
+  router.get('/api/is_authenticated', function (req, res) {
+    res.json({
+      loggedIn: !!req.user
+    });
+  })
+  
+  router.post('/api/login', passport.authenticate('local-login'), function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.status(200);
+    res.send("Log in successful.");
+  });
   
   router.post('/api/signup', 
     passport.authenticate('local-signup',

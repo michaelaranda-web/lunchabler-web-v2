@@ -1,7 +1,8 @@
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router'
+import { login } from '../../actions/authActions';
 
 export class LoginPage extends React.Component {
   constructor(props) {
@@ -55,12 +56,21 @@ export class LoginPage extends React.Component {
   }
   
   submitLogin() {
-    axios.post('/api/login', {
-      email: this.state.emailInput,
-      password: this.state.passwordInput
-    })
+    this.props.login(this.state.emailInput, this.state.passwordInput)
       .then(() => {
         this.setState({redirect: true})
-      })
+      });
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (user, password) => { return dispatch(login(user, password)) }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginPage);
+
