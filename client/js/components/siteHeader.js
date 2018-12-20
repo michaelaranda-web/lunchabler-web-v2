@@ -22,6 +22,15 @@ export default class SiteHeader extends React.Component {
                 <i class="fas fa-bars"></i>
               </Dropdown.Toggle>
               <Dropdown.Menu pullRight={true}>
+               <MenuItem id="profile-menu-item">
+                  <Link to="/profile">
+                    <li>
+                      <i className="fas fa-user"></i>
+                      <div className="user-name">{this.props.userName || "User"}</div>
+                    </li>
+                  </Link>
+                </MenuItem>
+                <hr />
                 <MenuItem>
                   <Link to="/">
                     <li>Home</li>
