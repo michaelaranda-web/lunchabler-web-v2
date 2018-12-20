@@ -59,6 +59,10 @@ export function login(email, password) {
   }
 }
 
+export function logout() {
+  return fetch('/api/logout');
+}
+
 export function verifyAuthenticated() {
   return function (dispatch, getState) {
     dispatch(verifyAuthenticatedAction());

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from '../actions/authActions';
 import { ButtonToolbar, Dropdown, MenuItem } from 'react-bootstrap';
 
 export class SiteHeader extends React.Component {
@@ -20,6 +21,40 @@ export class SiteHeader extends React.Component {
           </Link>
         </MenuItem>
       )  
+    }
+  }
+  
+  renderLogoutMenuItem() {
+    if (this.props.loggedIn) {
+      return (
+        <MenuItem>
+          <li onClick={logout}>Log out</li>
+        </MenuItem>
+      )  
+    }
+  }
+  
+  renderSignUpLink() {
+    if (!this.props.loggedIn) {
+      return (
+        <MenuItem>
+          <Link to="/login">
+            <li>Log In</li>
+          </Link>
+        </MenuItem>
+      )
+    }
+  }
+  
+  renderLogInLink() {
+    if (!this.props.loggedIn) {
+      return (
+        <MenuItem>
+          <Link to="/signup">
+            <li>Sign Up</li>
+          </Link>
+        </MenuItem>
+      )
     }
   }
   
@@ -46,6 +81,8 @@ export class SiteHeader extends React.Component {
               <Dropdown.Menu pullRight={true}>
                 {this.renderProfileMenuItem()}
                 {this.renderDivider()}
+                {this.renderLogInLink()}
+                {this.renderSignUpLink()}
                 <MenuItem>
                   <Link to="/">
                     <li>Home</li>
@@ -71,6 +108,7 @@ export class SiteHeader extends React.Component {
                     <li>Voting Rooms</li>
                   </Link>
                 </MenuItem>
+                {this.renderLogoutMenuItem()}
               </Dropdown.Menu>
             </Dropdown>
           </ButtonToolbar>
