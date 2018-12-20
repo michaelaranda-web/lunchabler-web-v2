@@ -109,7 +109,13 @@ MongoClient.connect(db_url, function(err, client) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) { // callback with email and password from our form
+      // console.log("***")
+      // console.log("before nextTick")
+    
       process.nextTick(function() {
+        // console.log("***")
+        // console.log("after nextTick")
+        
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         usersCol.findOne({ 'email': email }, function(err, user) {
@@ -190,6 +196,8 @@ MongoClient.connect(db_url, function(err, client) {
   })
   
   router.post('/api/login', passport.authenticate('local-login'), function(req, res) {
+    // console.log("***");
+    // console.log(req.user);
     var user = req.user;
     res.json({
       name: user.name,
@@ -209,7 +217,8 @@ MongoClient.connect(db_url, function(err, client) {
    
   router.get('/api/logout', function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.status(200);
+    res.send("Log out successful");
   });
 
   //TODO: Reference https://community.risingstack.com/redis-node-js-introduction-to-caching/ for caching eventual Yelp calls.

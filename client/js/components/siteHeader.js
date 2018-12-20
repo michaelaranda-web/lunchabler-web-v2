@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { logout } from '../actions/authActions';
 import { ButtonToolbar, Dropdown, MenuItem } from 'react-bootstrap';
 
@@ -27,14 +27,16 @@ export class SiteHeader extends React.Component {
   renderLogoutMenuItem() {
     if (this.props.loggedIn) {
       return (
-        <MenuItem>
-          <li onClick={logout}>Log out</li>
-        </MenuItem>
+        <Route render={({history}) => (
+          <MenuItem>
+            <li onClick={() => this.logout(history)}>Log out</li>
+          </MenuItem>
+        )} />
       )  
     }
   }
   
-  renderSignUpLink() {
+  renderLogInLink() {
     if (!this.props.loggedIn) {
       return (
         <MenuItem>
@@ -46,7 +48,7 @@ export class SiteHeader extends React.Component {
     }
   }
   
-  renderLogInLink() {
+  renderSignUpLink() {
     if (!this.props.loggedIn) {
       return (
         <MenuItem>
@@ -116,6 +118,13 @@ export class SiteHeader extends React.Component {
       </div>
     )
   }
+  
+  logout(history) {
+    this.props.logout()
+      .then(() => {
+        history.push(`/`)
+      })
+  }
 }
 
 const mapStateToProps = state => {
@@ -125,7 +134,13 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => { return dispatch(logout()) }
+  }
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(SiteHeader);

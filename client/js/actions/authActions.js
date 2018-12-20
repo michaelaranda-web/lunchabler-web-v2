@@ -1,5 +1,6 @@
 import { VERIFY_AUTHENTICATED, VERIFY_AUTHENTICATED_SUCCESS, VERIFY_AUTHENTICATED_ERROR,
-          REQUEST_LOGIN, REQUEST_LOGIN_SUCCESS, REQUEST_LOGIN_ERROR } from '../constants/constants';
+          REQUEST_LOGIN, REQUEST_LOGIN_SUCCESS, REQUEST_LOGIN_ERROR,
+          REQUEST_LOGOUT, REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_ERROR } from '../constants/constants';
 import axios from 'axios';
 import fetch from 'cross-fetch';
 
@@ -41,6 +42,24 @@ function loginErrorAction() {
   }
 }
 
+function logoutAction() {
+  return {
+    type: REQUEST_LOGOUT
+  }
+}
+
+function logoutSuccessAction() {
+  return {
+    type: REQUEST_LOGOUT_SUCCESS
+  }
+}
+
+function logoutErrorAction() {
+  return {
+    type: REQUEST_LOGOUT_ERROR
+  }
+}
+
 export function login(email, password) {
   return function (dispatch, getState) {
     dispatch(loginAction());
@@ -60,7 +79,18 @@ export function login(email, password) {
 }
 
 export function logout() {
-  return fetch('/api/logout');
+  return function (dispatch, getState) {
+    dispatch(logoutAction());
+    
+    return fetch('/api/logout')
+      .then(response => {
+        dispatch(logoutSuccessAction());
+      })
+      .catch(error => {
+        dispatch(logoutErrorAction());
+        console.log('An error occurred.', error);
+      });
+  }
 }
 
 export function verifyAuthenticated() {
