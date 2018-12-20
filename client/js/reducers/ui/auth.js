@@ -55,9 +55,19 @@ function isAuthenticated(state = false, action) {
   }
 }
 
+function user(state = {}, action) {
+  switch(action.type) {
+    case REQUEST_LOGIN_SUCCESS:
+      return action.user
+    default:
+      return state
+  }
+}
+
 export const authReducer = combineReducers({
   verifyingAuthenticated: verifyingAuthenticated,
   loggingIn: loggingIn,
   loggingOut: loggingOut,
-  isAuthenticated: isAuthenticated
+  isAuthenticated: isAuthenticated,
+  user: user
 })

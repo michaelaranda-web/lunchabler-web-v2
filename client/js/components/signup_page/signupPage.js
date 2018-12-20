@@ -8,6 +8,7 @@ export class SignupPage extends React.Component {
     
     this.state = {
       redirect: false, 
+      nameInput: '',
       emailInput: '',
       passwordInput: ''
     }
@@ -20,6 +21,15 @@ export class SignupPage extends React.Component {
       <div id="signup-page" className="page-content">
         <h1>Sign Up</h1>
         <div className="section">
+          <div className="field">
+            <label>
+              Name:
+              <input 
+                value={this.state.nameInput} 
+                onChange={(e) => {this.setState({nameInput: e.target.value})}}
+              />
+            </label>
+          </div>
           <div className="field">
             <label>
               Email:
@@ -51,7 +61,9 @@ export class SignupPage extends React.Component {
   }
   
   submitCreateAccount() {
+    //TODO: Refactor into Redux action
     axios.post('/api/signup', {
+      name: this.state.nameInput,
       email: this.state.emailInput,
       password: this.state.passwordInput
     })

@@ -149,6 +149,7 @@ MongoClient.connect(db_url, function(err, client) {
           } else {
               usersCol.insertOne(
                 {
+                  name: req.body.name,
                   email: email,
                   password: generateHash(password)
                 },
@@ -187,21 +188,22 @@ MongoClient.connect(db_url, function(err, client) {
   })
   
   router.post('/api/login', passport.authenticate('local-login'), function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    res.status(200);
-    res.send("Log in successful.");
+    var user = req.user;
+    res.json({
+      name: user.name,
+      email: user.email,
+      "_id": user._id
+    });
   });
   
-  router.post('/api/signup', 
-    passport.authenticate('local-signup',
-      {   
-        successRedirect: '/',
-        failureRedirect: '/signup',
-        failureFlash: true 
-      }
-    )
-  );
+  router.post('/api/signup', passport.authenticate('local-signup'), function(req, res) {
+    var user = req.user;
+    res.json({
+      name: user.name,
+      email: user.email,
+      "_id": user._id
+    });  
+  });
    
   router.get('/api/logout', function (req, res) {
     req.logout();

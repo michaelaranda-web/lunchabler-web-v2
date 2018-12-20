@@ -1,10 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ButtonToolbar, Dropdown, MenuItem } from 'react-bootstrap';
 
-export default class SiteHeader extends React.Component {
+export class SiteHeader extends React.Component {
   constructor(props) {
     super(props);
+  }
+  
+  renderProfileMenuItem() {
+    if (this.props.loggedIn) {
+      return (
+        <MenuItem id="profile-menu-item">
+          <Link to="/profile">
+            <li>
+              <i className="fas fa-user"></i>
+              <div className="user-name">{this.props.userName || "Profile"}</div>
+            </li>
+          </Link>
+        </MenuItem>
+      )  
+    }
+  }
+  
+  renderDivider() {
+    if (this.props.loggedIn) {
+      return <hr />  
+    }
   }
   
   render() {
@@ -22,15 +44,8 @@ export default class SiteHeader extends React.Component {
                 <i class="fas fa-bars"></i>
               </Dropdown.Toggle>
               <Dropdown.Menu pullRight={true}>
-               <MenuItem id="profile-menu-item">
-                  <Link to="/profile">
-                    <li>
-                      <i className="fas fa-user"></i>
-                      <div className="user-name">{this.props.userName || "User"}</div>
-                    </li>
-                  </Link>
-                </MenuItem>
-                <hr />
+                {this.renderProfileMenuItem()}
+                {this.renderDivider()}
                 <MenuItem>
                   <Link to="/">
                     <li>Home</li>
@@ -64,3 +79,15 @@ export default class SiteHeader extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userName: state.ui.auth.user.name,
+    loggedIn: state.ui.auth.isAuthenticated
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(SiteHeader);

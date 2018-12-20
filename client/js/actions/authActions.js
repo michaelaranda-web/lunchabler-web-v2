@@ -28,9 +28,10 @@ function loginAction() {
   }
 }
 
-function loginSuccessAction() {
+function loginSuccessAction(userData) {
   return {
-    type: REQUEST_LOGIN_SUCCESS
+    type: REQUEST_LOGIN_SUCCESS,
+    user: userData
   }
 }
 
@@ -49,7 +50,7 @@ export function login(email, password) {
       password: password
     })
       .then((response) => {
-        dispatch(loginSuccessAction());
+        dispatch(loginSuccessAction(response.data));
       })
       .catch((error) => {
         dispatch(loginErrorAction());
