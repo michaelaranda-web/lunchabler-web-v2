@@ -56,9 +56,11 @@ export class VotingRoom extends React.Component {
     return (
       <div id="voting-room-page" className="page-content">
         <h1>Voting Room</h1>
+        <h3 className="section-header">Current Votes</h3>
         <div id="scoreboard-section" className="section">
           {this.renderScoreboard()}
         </div>
+        <h3 className="section-header">Recommendations</h3>
         <div className="section">
           {this.renderRestaurantList()}
         </div>
