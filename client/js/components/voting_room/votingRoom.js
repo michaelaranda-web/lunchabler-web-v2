@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { VotingOption } from './votingOption';
 import { Scoreboard } from './scoreboard';
 import socketIOClient from "socket.io-client";
@@ -39,6 +40,31 @@ export class VotingRoom extends React.Component {
     }
   }
   
+  renderVotingStatus() {
+    if (this.state.votes) {
+      return (
+        <div id="voting-status">
+          {
+            this.state.votes.parameters.lunchGroup.map((lunchGroupUserId) => {
+              const user = this.props.usersById[lunchGroupUserId];
+              
+              return (
+                <div className="voting-status-row">
+                  <label className="user-name">
+                    {user.name}:
+                  </label>
+                  <span className="user-voting-status">
+                    No votes yet
+                  </span>
+                </div>
+              )
+            })
+          }
+        </div>
+      )
+    }
+  }
+  
   renderRestaurantList() {
     if (this.state.votes) {
       return this.state.votes.restaurants.map((restaurant) => {
@@ -60,6 +86,10 @@ export class VotingRoom extends React.Component {
         <div id="scoreboard-section" className="section">
           {this.renderScoreboard()}
         </div>
+        <h3 className="section-header">Voting Status</h3>
+        <div className="section">
+          {this.renderVotingStatus()}
+        </div>
         <h3 className="section-header">Recommendations</h3>
         <div className="section">
           {this.renderRestaurantList()}
@@ -78,4 +108,14 @@ export class VotingRoom extends React.Component {
   }
 }
 
-// export default connect()
+const mapStateToProps = state => {
+  return {
+    currentUser: state.ui.auth.user,
+    usersById: state.entities.users.byId
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(VotingRoom);

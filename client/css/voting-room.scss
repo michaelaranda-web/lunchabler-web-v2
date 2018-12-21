@@ -7,15 +7,24 @@
     margin-bottom: 10px;
   }
   
-  #scoreboard-section {
+  .section {
     margin-bottom: 20px;
-    
+  }
+  
+  #scoreboard-section {
     #scoreboard {
       .scoreboard-row {
         .restaurant-name {
           padding-right: 10px;
         }
       }
+    }
+  }
+  
+  #voting-status {
+    .voting-status-row {
+      display: flex;
+      justify-content: space-between;
     }
   }
   

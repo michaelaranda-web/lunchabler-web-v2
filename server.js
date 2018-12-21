@@ -492,7 +492,7 @@ MongoClient.connect(db_url, function(err, client) {
   router.post('/api/votes', (req, res) => {
     let currentDayString = moment().format("YYYYMMDDhmmssSS");
     let date = new Date();
-    let lunchGroupUserIds = req.query.lunchGroupUserIds || [];
+    let lunchGroupUserIds = req.body.lunchGroup || [];
     
     new RestaurantRanker(db, lunchGroupUserIds).getRankedRestaurants((restaurants) => {
       var votingVersionRestaurants = restaurants.map((restaurant) => {
@@ -507,7 +507,9 @@ MongoClient.connect(db_url, function(err, client) {
         {
           date: date,
           session_id: currentDayString,
-          parameters: {},
+          parameters: {
+            lunchGroup: lunchGroupUserIds
+          },
           restaurants: votingVersionRestaurants,
           selection: null
         },
