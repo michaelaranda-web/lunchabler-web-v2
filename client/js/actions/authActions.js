@@ -78,6 +78,25 @@ export function login(email, password) {
   }
 }
 
+export function signup(name, email, password) {
+  return function (dispatch, getState) {
+    dispatch(loginAction());
+  
+    return axios.post('/api/signup', {
+      name: name,
+      email: email,
+      password: password
+    })
+      .then((response) => {
+        dispatch(loginSuccessAction(response.data));
+      })
+      .catch((error) => {
+        dispatch(loginErrorAction());
+        console.log('An error occurred.', error);
+      })
+  }
+}
+
 export function logout() {
   return function (dispatch, getState) {
     dispatch(logoutAction());

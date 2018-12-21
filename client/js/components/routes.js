@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import HomePage from './home/homePage';
-import { SignupPage } from './signup_page/signupPage';
+import SignupPage from './signup_page/signupPage';
 import LoginPage from './login_page/loginPage';
 import StartPage from './start/startPage';
 import ResultsPage from './results/resultsPage';

@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Redirect } from 'react-router'
+import { signup } from '../../actions/authActions';
 
 export class SignupPage extends React.Component {
   constructor(props) {
@@ -61,14 +63,24 @@ export class SignupPage extends React.Component {
   }
   
   submitCreateAccount() {
-    //TODO: Refactor into Redux action
-    axios.post('/api/signup', {
-      name: this.state.nameInput,
-      email: this.state.emailInput,
-      password: this.state.passwordInput
-    })
+    this.props.signup(
+      this.state.nameInput,
+      this.state.emailInput,
+      this.state.passwordInput
+    )
       .then(() => {
         this.setState({redirect: true})
       })
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    signup: (name, user, password) => { return dispatch(signup(name, user, password)) }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SignupPage);
