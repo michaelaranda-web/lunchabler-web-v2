@@ -10,7 +10,7 @@ export class VotingRoom extends React.Component {
     
     var endpoint = 'https://lunchabler.herokuapp.com';
     if (DEVELOPMENT) {
-      endpoint = 'http://lunchabler-web-v2-michaelaranda-web.c9users.io:8081'
+      endpoint = 'https://lunchabler-web-v2-michaelaranda-web.c9users.io:8081'
     }
     
     this.socket = socketIOClient(endpoint);
@@ -75,3 +75,5 @@ export class VotingRoom extends React.Component {
     this.socket.emit("vote", voteSubmission);
   }
 }
+
+// export default connect()
