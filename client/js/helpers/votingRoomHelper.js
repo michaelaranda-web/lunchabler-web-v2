@@ -3,9 +3,9 @@ export function restaurantsRankedByVotes(restaurants) {
 }
 
 function sortByVoteScore(a, b) {
-  if (a.score > b.score) {
+  if (a.yesVotes.length > b.noVotes.length) {
     return -1;
-  } else if (a.score < b.score) {
+  } else if (a.yesVotes.length < b.noVotes.length) {
     return 1;
   } else {
     return 0;

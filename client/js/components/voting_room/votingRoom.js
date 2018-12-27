@@ -51,7 +51,7 @@ export class VotingRoom extends React.Component {
               return (
                 <div className="voting-status-row">
                   <label className="user-name">
-                    {user.name}:
+                    {user.name}
                   </label>
                   <span className="user-voting-status">
                     No votes yet
@@ -100,10 +100,12 @@ export class VotingRoom extends React.Component {
   
   onVote(restaurant, vote) {
     var voteSubmission = {
+      user: this.props.currentUser,
       restaurant: restaurant,
       vote: vote,
-      session_id: this.props.match.params.session_id
+      session_id: this.props.match.params.session_id,
     }
+    console.log(voteSubmission)
     this.socket.emit("vote", voteSubmission);
   }
 }

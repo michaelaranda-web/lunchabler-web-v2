@@ -81,13 +81,36 @@ function getCurrentVotes(sessionId, votesCol) {
 }
 
 function updateVotes(voteSubmission, votesCol) {
-  var voteValue = voteSubmission.vote === "yes" ? 1 : -1;
-  var updateOptions = {upsert: true};
+  //TODO: Validate that all necessary vote submission data is present (user, restaurant, vote, etc.)
   
-  return votesCol.updateOne(
-          {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-          {$inc: {"restaurants.$.score": voteValue}},
-          updateOptions)
+  if (voteSubmission.vote === "yes") {
+    return votesCol.updateOne(
+              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
+              {$push: { "restaurants.$.yesVotes": voteSubmission.user.id }})
+          .then(() => {
+            return votesCol.updateOne(
+              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
+              {$pull: { "restaurants.$.noVotes": voteSubmission.user.id }})
+          })
+  } else if (voteSubmission.vote === "no-preference") {
+    return votesCol.updateOne(
+              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
+              {$pull: { "restaurants.$.yesVotes": voteSubmission.user.id }})
+          .then(() => {
+            return votesCol.updateOne(
+              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
+              {$pull: { "restaurants.$.noVotes": voteSubmission.user.id }})
+          })
+  } else {
+    return votesCol.updateOne(
+              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
+              {$push: { "restaurants.$.noVotes": voteSubmission.user.id }})
+          .then(() => {
+            return votesCol.updateOne(
+              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
+              {$pull: { "restaurants.$.yesVotes": voteSubmission.user.id }})
+          })
+  }
 }
 
 //TODO: Should MongoClient connect/disconnect per db call?
@@ -499,7 +522,8 @@ MongoClient.connect(db_url, function(err, client) {
         return {
           id: restaurant._id,
           name: restaurant.name,
-          score: 0
+          yesVotes: [],
+          noVotes: [],
         }
       })
       

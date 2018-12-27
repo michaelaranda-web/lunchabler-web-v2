@@ -5,12 +5,17 @@ export class VotingOption extends React.Component {
     super(props);
     
     this.state = {
-      votedUp: false
+      thumbsUp: false,
+      thumbsDown: false,
     };
   }
   
-  voteButtonClass() {
-    return this.state.votedUp ? "voted-up" : ""; 
+  voteButtonClass(buttonType) {
+    if (buttonType === "thumbs-up") {
+      return this.state.thumbsUp ? "active" : ""; 
+    } else {
+      return this.state.thumbsDown ? "active" : ""; 
+    } 
   }
   
   render() {
@@ -18,20 +23,35 @@ export class VotingOption extends React.Component {
         <div className="voting-option">
           <span className="restaurant-name">{this.props.restaurant.name}</span>
           <i 
-            onClick={() => this.onVoteButtonClick()} 
-            className={`far fa-arrow-alt-circle-up ${this.voteButtonClass()}`}>
+            onClick={() => this.onVoteButtonClick("thumbs-up")}
+            className={`fas fa-thumbs-up ${this.voteButtonClass("thumbs-up")}`}>
+          </i>
+          <i 
+            onClick={() => this.onVoteButtonClick("thumbs-down")}
+            className={`fas fa-thumbs-down ${this.voteButtonClass("thumbs-down")}`}>
           </i>
         </div>
       )
           
   }
   
-  onVoteButtonClick() {
-    this.setState({
-      votedUp: !this.state.votedUp
-    }, () => {
-      var vote = this.state.votedUp ? "yes" : "no-preference"
-      this.props.onVote(this.props.restaurant, vote)
-    })
+  onVoteButtonClick(buttonType) {
+    var vote;
+    
+    if (buttonType === "thumbs-up") {
+      this.setState({
+        thumbsUp: !this.state.thumbsUp
+      }, () => {
+        vote = this.state.thumbsUp ? "yes" : "no-preference";
+        this.props.onVote(this.props.restaurant, vote);
+      })
+    } else {
+      this.setState({
+        thumbsDown: !this.state.thumbsDown
+      }, () => {
+        vote = this.state.thumbsDown ? "no" : "no-preference";
+        this.props.onVote(this.props.restaurant, vote);
+      }) 
+    } 
   }
 }

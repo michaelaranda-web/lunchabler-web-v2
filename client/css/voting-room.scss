@@ -38,11 +38,19 @@
       flex-grow: 1;
     }
     
-    .fa-arrow-alt-circle-up {
+    .fas {
       font-size: 20px;
       
-      &.voted-up {
-        color: green;
+      &.fa-thumbs-up {
+        &.active {
+          color: green;
+        }
+      }
+      
+      &.fa-thumbs-down {
+        &.active {
+          color: red;
+        }
       }
     }
   }
