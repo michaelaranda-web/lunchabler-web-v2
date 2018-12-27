@@ -86,29 +86,29 @@ function updateVotes(voteSubmission, votesCol) {
   if (voteSubmission.vote === "yes") {
     return votesCol.updateOne(
               {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$push: { "restaurants.$.yesVotes": voteSubmission.user.id }})
+              {$push: { "restaurants.$.yesVotes": voteSubmission.user._id }})
           .then(() => {
             return votesCol.updateOne(
               {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$pull: { "restaurants.$.noVotes": voteSubmission.user.id }})
+              {$pull: { "restaurants.$.noVotes": voteSubmission.user._id }})
           })
   } else if (voteSubmission.vote === "no-preference") {
     return votesCol.updateOne(
               {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$pull: { "restaurants.$.yesVotes": voteSubmission.user.id }})
+              {$pull: { "restaurants.$.yesVotes": voteSubmission.user._id }})
           .then(() => {
             return votesCol.updateOne(
               {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$pull: { "restaurants.$.noVotes": voteSubmission.user.id }})
+              {$pull: { "restaurants.$.noVotes": voteSubmission.user._id }})
           })
   } else {
     return votesCol.updateOne(
               {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$push: { "restaurants.$.noVotes": voteSubmission.user.id }})
+              {$push: { "restaurants.$.noVotes": voteSubmission.user._id }})
           .then(() => {
             return votesCol.updateOne(
               {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$pull: { "restaurants.$.yesVotes": voteSubmission.user.id }})
+              {$pull: { "restaurants.$.yesVotes": voteSubmission.user._id }})
           })
   }
 }
