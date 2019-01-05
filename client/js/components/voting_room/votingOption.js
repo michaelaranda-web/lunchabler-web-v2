@@ -40,14 +40,16 @@ export class VotingOption extends React.Component {
     
     if (buttonType === "thumbs-up") {
       this.setState({
-        thumbsUp: !this.state.thumbsUp
+        thumbsUp: !this.state.thumbsUp,
+        thumbsDown: false
       }, () => {
         vote = this.state.thumbsUp ? "yes" : "no-preference";
         this.props.onVote(this.props.restaurant, vote);
       })
     } else {
       this.setState({
-        thumbsDown: !this.state.thumbsDown
+        thumbsDown: !this.state.thumbsDown,
+        thumbsUp: false
       }, () => {
         vote = this.state.thumbsDown ? "no" : "no-preference";
         this.props.onVote(this.props.restaurant, vote);

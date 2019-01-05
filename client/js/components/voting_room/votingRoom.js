@@ -34,6 +34,7 @@ export class VotingRoom extends React.Component {
     if (this.state.votes) {
       return (
         <Scoreboard
+          lunchGroupVotes={this.state.votes.lunchGroupVotes}
           restaurants={this.state.votes.restaurants}
         />
       )
@@ -54,7 +55,11 @@ export class VotingRoom extends React.Component {
                     {user.name}
                   </label>
                   <span className="user-voting-status">
-                    No votes yet
+                    {
+                      this.state.votes.lunchGroupVotes[lunchGroupUserId].length > 0
+                        ? "Submitted votes"
+                        : "No votes yet"
+                    }
                   </span>
                 </div>
               )
@@ -105,7 +110,7 @@ export class VotingRoom extends React.Component {
       vote: vote,
       session_id: this.props.match.params.session_id,
     }
-    console.log(voteSubmission)
+    
     this.socket.emit("vote", voteSubmission);
   }
 }

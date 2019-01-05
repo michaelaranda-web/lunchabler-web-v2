@@ -82,35 +82,27 @@ function getCurrentVotes(sessionId, votesCol) {
 
 function updateVotes(voteSubmission, votesCol) {
   //TODO: Validate that all necessary vote submission data is present (user, restaurant, vote, etc.)
-  
-  if (voteSubmission.vote === "yes") {
-    return votesCol.updateOne(
-              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$push: { "restaurants.$.yesVotes": voteSubmission.user._id }})
-          .then(() => {
-            return votesCol.updateOne(
-              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$pull: { "restaurants.$.noVotes": voteSubmission.user._id }})
-          })
-  } else if (voteSubmission.vote === "no-preference") {
-    return votesCol.updateOne(
-              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$pull: { "restaurants.$.yesVotes": voteSubmission.user._id }})
-          .then(() => {
-            return votesCol.updateOne(
-              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$pull: { "restaurants.$.noVotes": voteSubmission.user._id }})
-          })
-  } else {
-    return votesCol.updateOne(
-              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$push: { "restaurants.$.noVotes": voteSubmission.user._id }})
-          .then(() => {
-            return votesCol.updateOne(
-              {session_id: voteSubmission.session_id, "restaurants.id": ObjectId(voteSubmission.restaurant.id)},
-              {$pull: { "restaurants.$.yesVotes": voteSubmission.user._id }})
-          })
+  var removeExistingVoteUpdateObject = {};
+  removeExistingVoteUpdateObject["lunchGroupVotes." + voteSubmission.user._id] = { 
+    restaurant: voteSubmission.restaurant.id
   }
+  
+  return votesCol.updateOne(
+          {session_id: voteSubmission.session_id},
+          {$pull: removeExistingVoteUpdateObject})
+            .then(() => {
+              if (voteSubmission.vote !== "no-preference") {
+                var newVoteUpdateObject = {};
+                newVoteUpdateObject["lunchGroupVotes." + voteSubmission.user._id] = { 
+                  restaurant: voteSubmission.restaurant.id,
+                  vote: voteSubmission.vote
+                }
+                
+                return votesCol.updateOne(
+                  {session_id: voteSubmission.session_id},
+                  {$push: newVoteUpdateObject})  
+              }
+            })
 }
 
 //TODO: Should MongoClient connect/disconnect per db call?
@@ -512,13 +504,16 @@ MongoClient.connect(db_url, function(err, client) {
     let lunchGroupUserIds = req.body.lunchGroup || [];
     
     new RestaurantRanker(db, lunchGroupUserIds).getRankedRestaurants((restaurants) => {
-      var votingVersionRestaurants = restaurants.map((restaurant) => {
+      const votingVersionRestaurants = restaurants.map((restaurant) => {
         return {
           id: restaurant._id,
           name: restaurant.name,
-          yesVotes: [],
-          noVotes: [],
         }
+      })
+      
+      var lunchGroupVotes = {}
+      lunchGroupUserIds.map((userId) => {
+        lunchGroupVotes[userId] = []
       })
       
       votesCol.insertOne(
@@ -528,6 +523,7 @@ MongoClient.connect(db_url, function(err, client) {
           parameters: {
             lunchGroup: lunchGroupUserIds
           },
+          lunchGroupVotes: lunchGroupVotes,
           restaurants: votingVersionRestaurants,
           selection: null
         },

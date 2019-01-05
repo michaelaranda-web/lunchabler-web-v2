@@ -1,13 +1,7 @@
 import React from 'react';
-import { restaurantsRankedByVotes } from '../../helpers/votingRoomHelper';
+import { getCurrentRestaurantVotes } from '../../helpers/votingRoomHelper';
 
 export class Scoreboard extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    this.numRankingsToDisplay = 3;
-  }
-  
   renderEmptyScoreboardRow() {
     return (
       <div className="scoreboard-row">
@@ -20,14 +14,21 @@ export class Scoreboard extends React.Component {
   renderRankings(rankedRestaurants) {
     var rankings = [];
     
-    for (let i = 0; i < this.numRankingsToDisplay; i++) {
-      if (rankedRestaurants[i] && rankedRestaurants[i].yesVotes.length > 0) {
+    for (let i = 0; i < 5; i++) {
+      if (rankedRestaurants[i] && rankedRestaurants[i].yes.length > 0) {
         var restaurantName = rankedRestaurants[i].name;
-        var restaurantScore = rankedRestaurants[i].yesVotes.length;
-        rankings.push(
-          <div className="scoreboard-row">
+        var restaurantScore = rankedRestaurants[i].yes.length;
+         rankings.push(
+           <div className="scoreboard-row">
             <span className="restaurant-name">{restaurantName}</span>
             <span className="restaurant-score">{restaurantScore}</span>
+            <span className="restaurant-nos">
+              {
+                rankedRestaurants[i].no.length > 0
+                  ? "Number of no's: " + rankedRestaurants[i].no.length
+                  : null
+              }
+            </span>
           </div>
         )
       } else {
@@ -39,8 +40,8 @@ export class Scoreboard extends React.Component {
   }
   
   render() {
-    if (this.props.restaurants) {
-      var topRankedRestaurants = restaurantsRankedByVotes(this.props.restaurants).slice(0, this.numRankingsToDisplay);
+    if (this.props.lunchGroupVotes && this.props.restaurants) {
+      var topRankedRestaurants = getCurrentRestaurantVotes(this.props.lunchGroupVotes, this.props.restaurants)
       
       return (
         <div id="scoreboard">
@@ -51,8 +52,10 @@ export class Scoreboard extends React.Component {
       return (
         <div id="scoreboard">
           {this.renderEmptyScoreboardRow()}
-          {this.renderEmptyScoreboardRow()}
-          {this.renderEmptyScoreboardRow()}
+-         {this.renderEmptyScoreboardRow()}
+-         {this.renderEmptyScoreboardRow()}
+-         {this.renderEmptyScoreboardRow()}
+-         {this.renderEmptyScoreboardRow()}
         </div>
       )
     }
