@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import HomePage from './home/homePage';
 import SignupPage from './signup_page/signupPage';
@@ -12,6 +13,7 @@ import VotingRoom from './voting_room/votingRoom';
 import { VotingRoomsPage } from './voting_rooms_page/votingRoomsPage';
 import SiteHeader from './siteHeader';
 import SideNavBar from './sideNavBar';
+import { PrivateRoute } from './privateRoute';
 import ScrollToTop from './scrollToTop';
 
 export class Routes extends React.Component {
@@ -28,11 +30,11 @@ export class Routes extends React.Component {
               <Route path="/login" component={LoginPage}/>
               <Route path="/restaurants/:restaurant_id" component={RestaurantInfoPage}/>
               <Route path="/results" component={ResultsPage}/>
-              <Route path="/start" component={StartPage}/>
+              <PrivateRoute path="/start" component={StartPage} authenticated={this.props.authenticated}/>
               <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>
               <Route path="/manage_users" component={ManageUsersPage}/>
-              <Route path="/voting_rooms/" component={VotingRoomsPage}/>
-              <Route path="/voting_room/:session_id" component={VotingRoom}/>
+              <PrivateRoute path="/voting_rooms/" component={VotingRoomsPage} authenticated={this.props.authenticated}/>
+              <PrivateRoute path="/voting_room/:session_id" component={VotingRoom} authenticated={this.props.authenticated}/>
             </Switch>
           </div>
           <ScrollToTop />
@@ -41,3 +43,14 @@ export class Routes extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    authenticated: state.ui.auth.isAuthenticated
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(Routes);

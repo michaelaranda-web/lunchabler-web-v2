@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Routes } from './routes';
+import Routes from './routes';
 import { verifyAuthenticated } from '../actions/authActions';
 import { fetchUsers } from '../actions/usersActions';
 import { fetchRestaurants } from '../actions/restaurantsActions';

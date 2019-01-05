@@ -10,10 +10,10 @@ function verifyAuthenticatedAction() {
   }
 }
 
-function verifyAuthenticatedSuccessAction(loggedIn) {
+function verifyAuthenticatedSuccessAction(userData) {
   return {
     type: VERIFY_AUTHENTICATED_SUCCESS,
-    loggedIn: loggedIn
+    userData: userData
   }  
 }
 
@@ -120,8 +120,8 @@ export function verifyAuthenticated() {
       .then(response => {
         return response.json();
       })
-      .then(response => {
-        dispatch(verifyAuthenticatedSuccessAction(response.loggedIn));
+      .then(userData => {
+        dispatch(verifyAuthenticatedSuccessAction(userData));
       })
       .catch(error => {
         dispatch(verifyAuthenticatedErrorAction());

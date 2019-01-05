@@ -200,9 +200,14 @@ MongoClient.connect(db_url, function(err, client) {
   router.use(flash());
   
   router.get('/api/is_authenticated', function (req, res) {
-    res.json({
-      loggedIn: !!req.user
-    });
+    var user = req.user;
+    var userDataResponse = !!user ? {
+      name: user.name,
+      email: user.email,
+      "_id": user._id
+    } : {}
+    
+    res.json(userDataResponse);
   })
   
   router.post('/api/login', passport.authenticate('local-login'), function(req, res) {

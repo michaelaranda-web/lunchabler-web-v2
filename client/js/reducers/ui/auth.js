@@ -47,7 +47,7 @@ function isAuthenticated(state = false, action) {
     case REQUEST_LOGIN_SUCCESS:
       return true
     case VERIFY_AUTHENTICATED_SUCCESS:
-      return action.loggedIn
+      return !!action.userData._id
     case REQUEST_LOGOUT_SUCCESS:
       return false
     default:
@@ -59,6 +59,8 @@ function user(state = {}, action) {
   switch(action.type) {
     case REQUEST_LOGIN_SUCCESS:
       return action.user
+    case VERIFY_AUTHENTICATED_SUCCESS:
+      return action.userData
     default:
       return state
   }
