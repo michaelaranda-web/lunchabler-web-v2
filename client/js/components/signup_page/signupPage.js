@@ -36,6 +36,7 @@ export class SignupPage extends React.Component {
             <label>
               Email:
               <input 
+                type="email"
                 value={this.state.emailInput} 
                 onChange={(e) => {this.setState({emailInput: e.target.value})}}
               />
@@ -45,6 +46,7 @@ export class SignupPage extends React.Component {
             <label>
               Password:
               <input 
+                type="password"
                 value={this.state.passwordInput} 
                 onChange={(e) => {this.setState({passwordInput: e.target.value})}}
               />
