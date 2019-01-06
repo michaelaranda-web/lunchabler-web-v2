@@ -57,8 +57,8 @@ export class VotingRoom extends React.Component {
                   <span className="user-voting-status">
                     {
                       this.state.votes.lunchGroupVotes[lunchGroupUserId].length > 0
-                        ? "Submitted votes"
-                        : "No votes yet"
+                        ? "Voted"
+                        : "--"
                     }
                   </span>
                 </div>
@@ -87,17 +87,23 @@ export class VotingRoom extends React.Component {
     return (
       <div id="voting-room-page" className="page-content">
         <h1>Voting Room</h1>
-        <h3 className="section-header">Current Votes</h3>
-        <div id="scoreboard-section" className="section">
-          {this.renderScoreboard()}
+        <div className="scoreboard-section-container section-container">
+          <h3 className="section-header">Current Votes</h3>
+          <div id="scoreboard-section">
+            {this.renderScoreboard()}
+          </div>
         </div>
-        <h3 className="section-header">Voting Status</h3>
-        <div className="section">
-          {this.renderVotingStatus()}
+        <div className="voting-status-section-container section-container">
+          <h3 className="section-header">Voting Status</h3>
+          <div className="section">
+            {this.renderVotingStatus()}
+          </div>
         </div>
-        <h3 className="section-header">Recommendations</h3>
-        <div className="section">
-          {this.renderRestaurantList()}
+        <div className="recommendations-section-container section-container">
+          <h3 className="section-header">Recommendations</h3>
+          <div className="section">
+            {this.renderRestaurantList()}
+          </div>
         </div>
       </div>
     )

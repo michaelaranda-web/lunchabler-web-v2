@@ -7,25 +7,71 @@
     margin-bottom: 10px;
   }
   
+  .section-container {
+    margin-bottom: 20px;
+  }
+  
   .section {
     margin-bottom: 20px;
   }
   
-  #scoreboard-section {
-    #scoreboard {
-      .scoreboard-row {
-        .restaurant-name {
-          padding-right: 10px;
+  .scoreboard-section-container {
+    @media (min-width: 600px) {
+      width: 60%;
+      display: inline-block;
+      padding-right: 10px;
+    }
+    
+    #scoreboard-section {
+      #scoreboard {
+        .scoreboard-row {
+          display: flex;
+          justify-content: space-between;
+          padding: 20px 15px;
+          margin-bottom: 10px;
+          
+          &.empty {
+            color: white;
+            background: #9a9a9a;
+            justify-content: center;
+          }
+          
+          .restaurant-name {
+            padding-right: 10px;
+            font-weight: bold;
+          }
+          
+          .fas {
+            padding-right: 5px;
+          }
+          
+          .fa-thumbs-up {
+            color: #1c9031;
+          }
+          
+          .fa-thumbs-down {
+            color: #e43636;
+            padding-left: 15px;
+          }
         }
       }
     }
   }
   
-  #voting-status {
-    .voting-status-row {
-      display: flex;
-      justify-content: space-between;
+  .voting-status-section-container {
+    @media (min-width: 600px) {
+      width: 40%;
+      display: inline-block;
+      padding-left: 10px;
+      vertical-align: top;
     }
+    
+    #voting-status {
+      .voting-status-row {
+        display: flex;
+        justify-content: space-between;
+      }
+    }  
   }
   
   .voting-option {
@@ -40,6 +86,8 @@
     
     .fas {
       font-size: 20px;
+      padding: 0 5px;
+      cursor: pointer;
       
       &.fa-thumbs-up {
         &.active {
