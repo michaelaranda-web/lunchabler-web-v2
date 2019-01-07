@@ -33,6 +33,12 @@
   }
   
   .header-content-right {
+    .desktop-header-links {
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
+    
     .btn-toolbar {
       padding: 0 10px;  
       
