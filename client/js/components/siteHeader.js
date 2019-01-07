@@ -66,6 +66,26 @@ export class SiteHeader extends React.Component {
     }
   }
   
+  renderDesktopLinks() {
+    if (this.props.loggedIn) {
+      return (
+        <div className="desktop-header-links">
+          <span className="header-link user-name">{this.props.userName}</span>
+          <Route render={({history}) => (
+            <a className="header-link" onClick={() => this.logout(history)}>Log out</a>
+          )} />
+        </div> 
+      )
+    } else {
+      return (
+        <div className="desktop-header-links">
+          <Link to="/signup"><span className="header-link">Sign Up</span></Link>
+          <Link to="/login"><span className="header-link">Log In</span></Link>
+        </div>
+      )
+    }
+  }
+  
   render() {
     return (
       <div id="site-header">
@@ -75,6 +95,7 @@ export class SiteHeader extends React.Component {
           </Link>
         </div>
         <div className="header-content-right">
+          {this.renderDesktopLinks()}
           <ButtonToolbar pullRight={true} >
             <Dropdown id="mobile-nav-menu-icon" pullRight={true}>
               <Dropdown.Toggle pullRight={true} noCaret>

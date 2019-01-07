@@ -30,11 +30,11 @@ export class Routes extends React.Component {
               <Route path="/login" component={LoginPage}/>
               <Route path="/restaurants/:restaurant_id" component={RestaurantInfoPage}/>
               <Route path="/results" component={ResultsPage}/>
-              <PrivateRoute path="/start" component={StartPage} authenticated={this.props.authenticated}/>
+              <Route path="/start" component={StartPage}/>
               <Route path="/manage_restaurants" component={ManageRestaurantsPage}/>
               <Route path="/manage_users" component={ManageUsersPage}/>
-              <PrivateRoute path="/voting_rooms/" component={VotingRoomsPage} authenticated={this.props.authenticated}/>
-              <PrivateRoute path="/voting_room/:session_id" component={VotingRoom} authenticated={this.props.authenticated}/>
+              <Route path="/voting_rooms/" component={VotingRoomsPage}/>
+              <Route path="/voting_room/:session_id" component={VotingRoom}/>
             </Switch>
           </div>
           <ScrollToTop />

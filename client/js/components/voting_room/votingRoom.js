@@ -23,6 +23,10 @@ export class VotingRoom extends React.Component {
   }
   
   componentDidMount() {
+    if (Object.keys(this.props.currentUser).length === 0 && !sessionStorage.getItem("anonymous-user-id")) {
+      sessionStorage.setItem("anonymous-user-id", "Anonymous" + Date.now());
+    }
+    
     this.socket.emit("get-current-votes", {sessionId: this.props.match.params.session_id});
     
     this.socket.on("vote-message", newVotes => {
@@ -46,13 +50,15 @@ export class VotingRoom extends React.Component {
       return (
         <div id="voting-status">
           {
-            this.state.votes.parameters.lunchGroup.map((lunchGroupUserId) => {
-              const user = this.props.usersById[lunchGroupUserId];
+            Object.keys(this.state.votes.lunchGroupVotes).map((lunchGroupUserId) => {
+              const userName = !!this.props.usersById[lunchGroupUserId] 
+                ? this.props.usersById[lunchGroupUserId].name 
+                : "Anonymous";
               
               return (
                 <div className="voting-status-row">
                   <label className="user-name">
-                    {user.name}
+                    {userName}
                   </label>
                   <span className="user-voting-status">
                     {
@@ -110,8 +116,12 @@ export class VotingRoom extends React.Component {
   }
   
   onVote(restaurant, vote) {
+    var user = Object.keys(this.props.currentUser).length === 0 
+      ? { "_id": sessionStorage.getItem("anonymous-user-id") }
+      : this.props.currentUser;
+    
     var voteSubmission = {
-      user: this.props.currentUser,
+      user: user,
       restaurant: restaurant,
       vote: vote,
       session_id: this.props.match.params.session_id,

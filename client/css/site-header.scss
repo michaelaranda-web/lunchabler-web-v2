@@ -9,6 +9,15 @@
     height: 30px;
   }
   
+  .header-link {
+    color: white;
+    padding-right: 10px;
+    
+    &.user-name {
+      font-weight: bold;
+    }
+  }
+  
   .header-content-left {
     flex-grow: 1;
     
