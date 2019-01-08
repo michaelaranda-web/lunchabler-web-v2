@@ -79,8 +79,17 @@ export class VotingRoom extends React.Component {
   renderRestaurantList() {
     if (this.state.votes) {
       return this.state.votes.restaurants.map((restaurant) => {
+        var userKey = Object.keys(this.props.currentUser).length === 0
+          ? sessionStorage.getItem("anonymous-user-id")
+          : this.props.currentUser["_id"];
+        var existingVote = this.state.votes.lunchGroupVotes[userKey].find((userVotes) => {
+          return userVotes.restaurant === restaurant.id
+        });
+        var existingVoteValue = !!existingVote ? existingVote.vote : null
+        
         return (
           <VotingOption 
+            existingVote={existingVoteValue}
             restaurant={restaurant}
             onVote={this.onVote.bind(this)}
           />

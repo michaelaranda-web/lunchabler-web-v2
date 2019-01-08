@@ -4,9 +4,12 @@ export class VotingOption extends React.Component {
   constructor(props) {
     super(props);
     
+    var initialThumbsUp = this.props.existingVote === "yes";
+    var initialThumbsDown = this.props.existingVote === "no";
+    
     this.state = {
-      thumbsUp: false,
-      thumbsDown: false,
+      thumbsUp: initialThumbsUp || false,
+      thumbsDown: initialThumbsDown || false,
     };
   }
   
