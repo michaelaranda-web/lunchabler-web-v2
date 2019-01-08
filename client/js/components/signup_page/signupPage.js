@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { fetchUsers } from '../../actions/usersActions';
 import { signup } from '../../actions/authActions';
 
 export class SignupPage extends React.Component {
@@ -71,6 +72,9 @@ export class SignupPage extends React.Component {
       this.state.passwordInput
     )
       .then(() => {
+        this.props.fetchUsers();
+      })
+      .then(() => {
         this.setState({redirect: true})
       })
   }
@@ -78,6 +82,7 @@ export class SignupPage extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchUsers: () => { return dispatch(fetchUsers()) },
     signup: (name, user, password) => { return dispatch(signup(name, user, password)) }
   }
 }

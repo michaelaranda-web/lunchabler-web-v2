@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { fetchUsers } from '../../actions/usersActions';
 import { login } from '../../actions/authActions';
 
 export class LoginPage extends React.Component {
@@ -60,6 +61,9 @@ export class LoginPage extends React.Component {
   submitLogin() {
     this.props.login(this.state.emailInput, this.state.passwordInput)
       .then(() => {
+        this.props.fetchUsers();
+      })
+      .then(() => {
         this.setState({redirect: true})
       });
   }
@@ -67,6 +71,7 @@ export class LoginPage extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchUsers: () => { return dispatch(fetchUsers()) },
     login: (user, password) => { return dispatch(login(user, password)) }
   }
 }
