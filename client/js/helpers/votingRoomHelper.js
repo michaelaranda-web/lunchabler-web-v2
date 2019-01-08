@@ -28,8 +28,8 @@ export function getCurrentRestaurantVotes(lunchGroupVotes, restaurants) {
   })
   
   return currentRestaurantVotesArray.sort((a,b) => {
-    if (a.yes < b.yes) { return 1 };
-    if (a.yes > b.yes) { return -1 };
+    if (a.yes.length < b.yes.length) { return 1 };
+    if (a.yes.length > b.yes.length) { return -1 };
     return 0;
   })
 }
