@@ -66,22 +66,28 @@
             opacity: 0.5;
           }
           
-          .restaurant-name {
-            padding-right: 10px;
-            font-weight: bold;
-          }
-          
-          .fas {
-            padding-right: 5px;
-          }
-          
-          .fa-thumbs-up {
-            color: #1c9031;
-          }
-          
-          .fa-thumbs-down {
-            color: #e43636;
-            padding-left: 15px;
+          .restaurant-score-section {
+            display: flex;
+            align-items: center;
+            
+            .restaurant-name {
+              padding-right: 10px;
+              font-weight: bold;
+            }
+            
+            .fas {
+              padding-right: 5px;
+            }
+            
+            .fa-thumbs-up {
+              color: #1c9031;
+            }
+            
+            .fa-times {
+              font-size: 20px;
+              color: #e43636;
+              padding-left: 15px;
+            }
           }
         }
       }
@@ -125,7 +131,9 @@
         }
       }
       
-      &.fa-thumbs-down {
+      &.fa-times {
+        font-size: 25px;
+        
         &.active {
           color: red;
         }

@@ -28,7 +28,7 @@ export class VotingOption extends React.Component {
           </i>
           <i 
             onClick={() => this.onVoteButtonClick("thumbs-down")}
-            className={`fas fa-thumbs-down ${this.voteButtonClass("thumbs-down")}`}>
+            className={`fas fa-times ${this.voteButtonClass("thumbs-down")}`}>
           </i>
         </div>
       )

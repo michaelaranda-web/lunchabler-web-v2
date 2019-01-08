@@ -8,7 +8,7 @@ export class ScoreboardRow extends React.Component {
   renderRestaurantNos(nos) {
     if (nos.length > 0) {
       return [
-        <i className='fas fa-thumbs-down'></i>,
+        <i className='fas fa-times'></i>,
         <span className="restaurant-nos">{nos.length}</span>
       ]
     }
