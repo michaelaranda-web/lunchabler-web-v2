@@ -26,9 +26,38 @@
       #scoreboard {
         .scoreboard-row {
           display: flex;
+          position: relative;
           justify-content: space-between;
-          padding: 20px 15px;
+          padding: 20px 15px 20px 30px;
           margin-bottom: 10px;
+          
+          .restaurant-rank {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            color: white;
+            font-size: 21px;
+            font-weight: bold;
+            margin-right: 5px;
+            width: 15px;
+            background-color: $secondary-purple;
+            
+            &.gold {
+              background-color: #ffd75e;
+            }
+            
+            &.silver {
+              background-color: #b1aeae;
+            }
+            
+            &.bronze {
+              background-color: #c18b51;
+            }
+          }
           
           &.empty {
             color: white;
