@@ -135,11 +135,11 @@ MongoClient.connect(db_url, function(err, client) {
   
           // if no user is found, return the message
           if (!user) {
-            return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+            return done(null, false, { message: 'No user found.' }); 
           }
           // if the user is found but the password is wrong
           if (!validPassword(password, user.password)) {
-            return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+            return done(null, false, { message: 'Incorrect password.' }); 
           }
           // all is well, return successful user
           return done(null, user);
@@ -163,7 +163,7 @@ MongoClient.connect(db_url, function(err, client) {
           if (err)
             return done(err);
           if (user) {
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+            return done(null, false, { message: "Account already exists."});
           } else {
               usersCol.insertOne(
                 {
@@ -212,12 +212,13 @@ MongoClient.connect(db_url, function(err, client) {
   
   router.post('/api/login', passport.authenticate('local-login'), function(req, res) {
     var user = req.user;
-    
-    res.json({
+    var userDataResponse = !!user ? {
       name: user.name,
       email: user.email,
       "_id": user._id
-    });
+    } : {}
+    
+    res.json(userDataResponse);
   });
   
   router.post('/api/signup', passport.authenticate('local-signup'), function(req, res) {
