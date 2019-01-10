@@ -74,6 +74,7 @@ export function login(email, password) {
       .catch((error) => {
         dispatch(loginErrorAction());
         console.log('An error occurred.', error);
+        throw('Login failed.');
       })
   }
 }
@@ -92,7 +93,7 @@ export function signup(name, email, password) {
       })
       .catch((error) => {
         dispatch(loginErrorAction());
-        console.log('An error occurred.', error);
+        throw(error);
       })
   }
 }

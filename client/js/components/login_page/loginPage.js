@@ -12,7 +12,16 @@ export class LoginPage extends React.Component {
     this.state = {
       redirect: false, 
       emailInput: '',
-      passwordInput: ''
+      passwordInput: '',
+      showError: false
+    }
+  }
+  
+  renderErrorMessage() {
+    if (this.state.showError) {
+      return (
+        <div className="error">Email or password is invalid. Please try again.</div>  
+      )
     }
   }
   
@@ -29,7 +38,7 @@ export class LoginPage extends React.Component {
               <input 
                 type="email"
                 value={this.state.emailInput} 
-                onChange={(e) => {this.setState({emailInput: e.target.value})}}
+                onChange={(e) => {this.setState({showError: false, emailInput: e.target.value})}}
               />
             </label>
           </div>
@@ -39,13 +48,14 @@ export class LoginPage extends React.Component {
               <input 
                 type="password"
                 value={this.state.passwordInput} 
-                onChange={(e) => {this.setState({passwordInput: e.target.value})}}
+                onChange={(e) => {this.setState({showError: false, passwordInput: e.target.value})}}
               />
             </label>
           </div>
           <div className="create-account-link-container">
             <span>Don't have an account? </span><Link to="/signup">Click here to create one.</Link>
           </div>
+          {this.renderErrorMessage()}
         </div>
         <div className="button-row">
           <a 
@@ -65,7 +75,14 @@ export class LoginPage extends React.Component {
       })
       .then(() => {
         this.setState({redirect: true})
-      });
+      })
+      .catch(() => {
+        this.setState({
+          emailInput: '',
+          passwordInput: '',
+          showError: true
+        })
+      })
   }
 }
 

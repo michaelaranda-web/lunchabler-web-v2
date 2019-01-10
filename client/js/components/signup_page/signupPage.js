@@ -13,7 +13,16 @@ export class SignupPage extends React.Component {
       redirect: false, 
       nameInput: '',
       emailInput: '',
-      passwordInput: ''
+      passwordInput: '',
+      errorMessage: null,
+    }
+  }
+  
+  renderErrorMessage() {
+    if (!!this.state.errorMessage) {
+      return (
+        <div className="error">{this.state.errorMessage}</div>  
+      )
     }
   }
   
@@ -29,7 +38,7 @@ export class SignupPage extends React.Component {
               Name:
               <input 
                 value={this.state.nameInput} 
-                onChange={(e) => {this.setState({nameInput: e.target.value})}}
+                onChange={(e) => {this.setState({errorMessage: null, nameInput: e.target.value})}}
               />
             </label>
           </div>
@@ -39,7 +48,7 @@ export class SignupPage extends React.Component {
               <input 
                 type="email"
                 value={this.state.emailInput} 
-                onChange={(e) => {this.setState({emailInput: e.target.value})}}
+                onChange={(e) => {this.setState({errorMessage: null, emailInput: e.target.value})}}
               />
             </label>
           </div>
@@ -53,6 +62,7 @@ export class SignupPage extends React.Component {
               />
             </label>
           </div>
+          {this.renderErrorMessage()}
         </div>
         <div className="button-row">
           <a 
@@ -76,6 +86,20 @@ export class SignupPage extends React.Component {
       })
       .then(() => {
         this.setState({redirect: true})
+      })
+      .catch((error) => {
+        var errorMessage = "";
+        switch (error.response.data.errorCode) {
+          case "already_exists":
+            errorMessage = "Account already exists. Please sign in."
+            break;
+          default:
+            errorMessage = "Something went wrong. Please try again."
+        }
+        this.setState({
+          passwordInput: '',
+          errorMessage: errorMessage
+        })
       })
   }
 }

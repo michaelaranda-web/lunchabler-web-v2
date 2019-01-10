@@ -221,13 +221,21 @@ MongoClient.connect(db_url, function(err, client) {
     res.json(userDataResponse);
   });
   
-  router.post('/api/signup', passport.authenticate('local-signup'), function(req, res) {
-    var user = req.user;
-    res.json({
-      name: user.name,
-      email: user.email,
-      "_id": user._id
-    });  
+  router.post('/api/signup', (req, res, next) => {
+    passport.authenticate('local-signup', (err, user, info) => {
+      req.logIn(user, err => {
+        if (err) { 
+          if (!!info && info.message === 'Account already exists.') { return res.status(401).send({"errorCode": "already_exists"}); }
+                    
+          return next(err); 
+        }
+        return res.json({
+          name: user.name,
+          email: user.email,
+          "_id": user._id
+        });
+      });
+    })(req, res, next);
   });
    
   router.get('/api/logout', function (req, res) {
